@@ -50,6 +50,23 @@ protected:
 	/** Handler for when a touch input stops. */
 	void TouchStopped(ETouchIndex::Type FingerIndex, FVector Location);
 
+	/**My Stuff */
+	void PickUpItem();
+
+	bool hasBrain;
+
+	bool hasItem;
+
+	void ReceiveHit(
+		class UPrimitiveComponent * MyComp,
+		class AActor * Other,
+		class UPrimitiveComponent * OtherComp,
+		bool bSelfMoved,
+		FVector HitLocation,
+		FVector HitNormal,
+		FVector NormalImpulse,
+		const FHitResult & Hit) OVERRIDE;
+
 protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;

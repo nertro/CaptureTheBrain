@@ -3,6 +3,8 @@
 #include "CapTheBrain.h"
 #include "CapTheBrainCharacter.h"
 
+#include "CollectableItem.h"
+
 //////////////////////////////////////////////////////////////////////////
 // ACapTheBrainCharacter
 
@@ -124,5 +126,34 @@ void ACapTheBrainCharacter::MoveRight(float Value)
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 		// add movement in that direction
 		AddMovementInput(Direction, Value);
+	}
+}
+
+/**My Stuff */
+void ACapTheBrainCharacter::ReceiveHit(
+class UPrimitiveComponent * MyComp,
+class AActor * Other,
+class UPrimitiveComponent * OtherComp,
+	bool bSelfMoved,
+	FVector HitLocation,
+	FVector HitNormal,
+	FVector NormalImpulse,
+	const FHitResult & Hit)
+{
+	if (Other != nullptr)
+	{
+		if (Other->IsA(ACollectableItem::StaticClass()))
+		{
+			if (Other->GetName().Compare("Brain"))
+			{
+				this->hasBrain = true;
+			}
+			else if (Other->GetName().Compare("SpawnPoint"))
+			{
+				this->hasItem = true;
+
+			}
+			Other->Destroy();
+		}
 	}
 }
