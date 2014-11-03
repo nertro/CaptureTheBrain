@@ -17,13 +17,7 @@ class CAPTHEBRAIN_API ACollectableItem : public AActor
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Item)
 		TSubobjectPtr<class UCapsuleComponent> Capsule;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Item)
-		TSubobjectPtr<class UStaticMeshComponent> MeshComponent;
-
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Item)
 		ASpawnPoint* MySpawnPoint;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
-		UStaticMesh* StaticMesh;
 	
 };

@@ -25,6 +25,15 @@ void ASpawnPoint::SpawnNewItem()
 		SpawnItem->SetActorTransform(this->GetTransform());
 		SpawnItem->MySpawnPoint = this;
 	}
+	else if (BrainBP)
+	{
+		occupied = true;
+		UWorld* const World = GetWorld();
+		ACollectableItem* SpawnItem = (ACollectableItem*)World->SpawnActor(BrainBP);
+		SpawnItem->Capsule->AttachTo(RootComponent);
+		SpawnItem->SetActorTransform(this->GetTransform());
+		SpawnItem->MySpawnPoint = this;
+	}
 }
 
 

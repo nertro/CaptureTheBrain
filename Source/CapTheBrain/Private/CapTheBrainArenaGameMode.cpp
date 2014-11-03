@@ -11,8 +11,8 @@ ACapTheBrainArenaGameMode::ACapTheBrainArenaGameMode(const class FPostConstructI
 	if (PlayerPawnBPClass.Class != NULL)
 	{
 		DefaultPawnClass = PlayerPawnBPClass.Class;
-		
 	}
+	
 }
 
 
