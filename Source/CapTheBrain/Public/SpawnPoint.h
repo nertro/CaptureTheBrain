@@ -20,6 +20,9 @@ class CAPTHEBRAIN_API ASpawnPoint : public AActor
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Spawn)
 		TSubclassOf<class ACollectableItem> ItemBP;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Spawn)
+		TSubclassOf<class ACollectableItem> BrainBP;
+
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Spawn)
 		bool occupied;
 

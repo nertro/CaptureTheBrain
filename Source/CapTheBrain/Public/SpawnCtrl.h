@@ -15,6 +15,10 @@ class CAPTHEBRAIN_API ASpawnCtrl : public AActor
 
 	virtual void Tick(float)override;
 
+	virtual void BeginPlay()override;
+
+	void SpawnBrain();
+
 private:
 	float delay;
 	float timer;

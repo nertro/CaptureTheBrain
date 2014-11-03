@@ -15,6 +15,12 @@ ASpawnCtrl::ASpawnCtrl(const class FPostConstructInitializeProperties& PCIP)
 	timer = 0;
 }
 
+void ASpawnCtrl::BeginPlay()
+{
+	Super::BeginPlay();
+	this->SpawnBrain();
+}
+
 void ASpawnCtrl::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
@@ -36,6 +42,20 @@ void ASpawnCtrl::Tick(float DeltaSeconds)
 		}
 
 		timer = 0;
+	}
+}
+
+void ASpawnCtrl::SpawnBrain()
+{
+	UWorld* World = GetWorld();
+	FString name = "BrainSpawnPoint";
+	for (TActorIterator<ASpawnPoint>SpawnItr(GetWorld()); SpawnItr; ++SpawnItr)
+	{
+		int32 comp = SpawnItr->GetName().Compare(name);
+		if (SpawnItr->GetName().Compare(name) == 0 && !SpawnItr->occupied)
+		{
+			SpawnItr->SpawnNewItem();
+		}
 	}
 }
 
