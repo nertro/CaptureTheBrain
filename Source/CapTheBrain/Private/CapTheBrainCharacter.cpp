@@ -110,7 +110,9 @@ void ACapTheBrainCharacter::MoveForward(float Value)
 
 		// get forward vector
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-		AddMovementInput(Direction, Value/1.5);
+		AddMovementInput(Direction, Value/SpeedBuffer);
+
+		//Set Animation
 	}
 }
 
@@ -125,7 +127,9 @@ void ACapTheBrainCharacter::MoveRight(float Value)
 		// get right vector 
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 		// add movement in that direction
-		AddMovementInput(Direction, Value/1.5);
+		AddMovementInput(Direction, Value/SpeedBuffer);
+
+		//Set Animation
 	}
 }
 

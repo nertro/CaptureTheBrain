@@ -24,6 +24,12 @@ class ACapTheBrainCharacter : public ACharacter
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseLookUpRate;
 
+	/**Speed Buffer witch can be changed per item */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
+		float SpeedBuffer = 1.5;
+
+	/**Animations*/
+
 protected:
 
 	/** Called for forwards/backward input */
@@ -71,5 +77,7 @@ protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 	// End of APawn interface
+
+
 };
 
