@@ -29,6 +29,8 @@ class ACapTheBrainCharacter : public ACharacter
 		float SpeedBuffer = 1.5;
 
 	/**Animations*/
+	UFUNCTION(BlueprintImplementableEvent, Category = Animations)
+		void FallDown();
 
 protected:
 
