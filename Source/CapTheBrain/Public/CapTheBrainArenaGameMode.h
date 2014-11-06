@@ -13,6 +13,8 @@ class CAPTHEBRAIN_API ACapTheBrainArenaGameMode : public AGameMode
 {
 	GENERATED_UCLASS_BODY()
 
+/*
+	virtual void StartNewPlayer(APlayerController*) override;
 	
-	
+	virtual void BeginPlay() override;*/
 };

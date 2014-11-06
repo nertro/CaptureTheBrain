@@ -1,5 +1,6 @@
 // Copyright 1998-2014 Epic Games, Inc. All Rights Reserved.
 #pragma once
+#include "CharacterHUD.h"
 #include "GameFramework/Character.h"
 #include "CapTheBrainCharacter.generated.h"
 
@@ -28,9 +29,7 @@ class ACapTheBrainCharacter : public ACharacter
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 		float SpeedBuffer = 1.5;
 
-	/**Animations*/
-	UFUNCTION(BlueprintImplementableEvent, Category = Animations)
-		void FallDown();
+	virtual void Tick(float deltaSeconds) override;
 
 protected:
 
@@ -59,11 +58,19 @@ protected:
 	void TouchStopped(ETouchIndex::Type FingerIndex, FVector Location);
 
 	/**My Stuff */
+	ACharacterHUD* myControllerHUD;
+
 	void PickUpItem();
 
 	bool hasBrain;
 
 	bool hasItem;
+
+	bool isSlow, isFast, hasShield;
+
+	enum ItemTypes{Slow, Fast, Shield, Swap, Zapp};
+
+	ItemTypes currentItem;
 
 	void ReceiveHit(
 		class UPrimitiveComponent * MyComp,
@@ -74,6 +81,15 @@ protected:
 		FVector HitNormal,
 		FVector NormalImpulse,
 		const FHitResult & Hit) OVERRIDE;
+
+	void CollectItem();
+
+	void UseItem();
+
+	void TickItem(float deltaSeconds);
+
+	float slowTimer, fastTimer, shieldTimer;
+	float itemTimerDelay = 5.;
 
 protected:
 	// APawn interface

@@ -4,6 +4,9 @@
 #include "CapTheBrainCharacter.h"
 
 #include "CollectableItem.h"
+#include "CharacterHUD.h"
+#include "ItemPickup.h"
+#include "BrainPickup.h"
 
 //////////////////////////////////////////////////////////////////////////
 // ACapTheBrainCharacter
@@ -53,6 +56,8 @@ void ACapTheBrainCharacter::SetupPlayerInputComponent(class UInputComponent* Inp
 	check(InputComponent);
 	InputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	InputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
+
+	InputComponent->BindAction("Fire", IE_Pressed, this, &ACapTheBrainCharacter::UseItem);
 
 	InputComponent->BindAxis("MoveForward", this, &ACapTheBrainCharacter::MoveForward);
 	InputComponent->BindAxis("MoveRight", this, &ACapTheBrainCharacter::MoveRight);
@@ -134,6 +139,13 @@ void ACapTheBrainCharacter::MoveRight(float Value)
 }
 
 /**My Stuff */
+void ACapTheBrainCharacter::Tick(float deltaSeconds)
+{
+	Super::Tick(deltaSeconds);
+
+	TickItem(deltaSeconds);
+}
+
 void ACapTheBrainCharacter::ReceiveHit(
 class UPrimitiveComponent * MyComp,
 class AActor * Other,
@@ -148,16 +160,97 @@ class UPrimitiveComponent * OtherComp,
 	{
 		if (Other->IsA(ACollectableItem::StaticClass()))
 		{
-			if (Other->GetName().Compare("Brain"))
+			if (Other->IsA(ABrainPickup::StaticClass()))
 			{
 				this->hasBrain = true;
 			}
-			else if (Other->GetName().Compare("SpawnPoint"))
+			else if (Other->IsA(AItemPickup::StaticClass()) &! hasItem)
 			{
-				this->hasItem = true;
-
+				CollectItem();
 			}
 			Other->Destroy();
+		}
+	}
+}
+
+void ACapTheBrainCharacter::CollectItem()
+{
+	this->hasItem = true;
+	if (!myControllerHUD)
+	{
+		APlayerController* ctrler = Cast<APlayerController>(Controller);
+		myControllerHUD = Cast<ACharacterHUD>(ctrler->GetHUD());
+	}
+
+	myControllerHUD->PlayerHasItem = true;
+	FRandomStream* str = new FRandomStream();
+	str->GenerateNewSeed();
+	currentItem = (ItemTypes)str->RandRange(0, 4);
+	myControllerHUD->currentItem = (int)currentItem;
+}
+
+void ACapTheBrainCharacter::UseItem()
+{
+	if (hasItem)
+	{
+		if (currentItem == ItemTypes::Slow)
+		{
+			SpeedBuffer *= 2.;
+			isSlow = true;
+		}
+		else if (currentItem == ItemTypes::Fast)
+		{
+			SpeedBuffer /= 3.;
+			isFast = true;
+		}
+		else if (currentItem == ItemTypes::Shield)
+		{
+			SpeedBuffer /= 3.;
+			hasShield = true;
+		}
+		else if (currentItem == ItemTypes::Zapp)
+		{
+			SpeedBuffer /= 3.;
+		}
+		else if (currentItem == ItemTypes::Swap)
+		{
+			SpeedBuffer /= 3.;
+		}
+
+		hasItem = false;
+		myControllerHUD->PlayerHasItem = false;
+	}
+}
+
+void ACapTheBrainCharacter::TickItem(float deltaSeconds)
+{
+	if (isSlow)
+	{
+		slowTimer += deltaSeconds;
+		if (slowTimer > itemTimerDelay)
+		{
+			isSlow = false;
+			slowTimer = 0;
+			SpeedBuffer /= 2.;
+		}
+	}
+	if (isFast)
+	{
+		fastTimer += deltaSeconds;
+		if (fastTimer > itemTimerDelay)
+		{
+			isFast = false;
+			fastTimer = 0;
+			SpeedBuffer *= 3.;;
+		}
+	}
+	if (hasShield)
+	{
+		shieldTimer += deltaSeconds;
+		if (shieldTimer > itemTimerDelay)
+		{
+			hasShield = false;
+			shieldTimer = 0;
 		}
 	}
 }
