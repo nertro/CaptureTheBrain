@@ -99,6 +99,9 @@ protected:
 	float itemTimerDelay = 5.;
 	std::vector<ACapTheBrainCharacter*> otherPlayers;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Spawn)
+		TSubclassOf<class ACollectableItem> BrainBP;
+
 protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;

@@ -165,7 +165,10 @@ class UPrimitiveComponent * OtherComp,
 			{
 				this->hasBrain = true;
 				ACollectableItem* other = (ACollectableItem*)Other;
-				other->MySpawnPoint->occupied = false;
+				if (other->MySpawnPoint)
+				{
+					other->MySpawnPoint->occupied = false;
+				}
 				Other->Destroy();
 			}
 			else if (Other->IsA(AItemPickup::StaticClass()) &! hasItem)
@@ -221,8 +224,19 @@ void ACapTheBrainCharacter::UseItem()
 		{
 			for (std::vector<ACapTheBrainCharacter*>::iterator itr = otherPlayers.begin(); itr != otherPlayers.end(); itr++)
 			{
-				(*itr)->SetActorLocation((*itr)->startPosition);
-				(*itr)->SetActorRotation((*itr)->startRotation);
+				if (!(*itr)->hasShield)
+				{
+					if ((*itr)->hasBrain)
+					{
+						FVector newBrainLocation = (*itr)->GetActorLocation();
+						(*itr)->SetActorLocation((*itr)->startPosition);
+						(*itr)->SetActorRotation((*itr)->startRotation);
+
+						UWorld* const World = GetWorld();
+						ACollectableItem* Brain = (ACollectableItem*)World->SpawnActor(BrainBP);
+						Brain->SetActorLocation(newBrainLocation);
+					}
+				}
 			}
 		}
 		else if (currentItem == ItemTypes::Swap)
