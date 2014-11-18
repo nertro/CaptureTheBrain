@@ -204,17 +204,22 @@ void ACapTheBrainCharacter::UseItem()
 	{
 		if (currentItem == ItemTypes::Slow)
 		{
-			
 			for (std::vector<ACapTheBrainCharacter*>::iterator itr = otherPlayers.begin(); itr != otherPlayers.end(); itr++)
 			{
-				(*itr)->SpeedBuffer *= 10.;
-				(*itr)->isSlow = true;
+				if (!(*itr)->hasShield &! (*itr)->isSlow)
+				{
+					(*itr)->SpeedBuffer *= 10.;
+					(*itr)->isSlow = true;
+				}
 			}
 		}
 		else if (currentItem == ItemTypes::Fast)
 		{
-			SpeedBuffer /= 3.;
-			isFast = true;
+			if (!isFast)
+			{
+				SpeedBuffer /= 3.;
+				isFast = true;
+			}
 		}
 		else if (currentItem == ItemTypes::Shield)
 		{
@@ -224,24 +229,21 @@ void ACapTheBrainCharacter::UseItem()
 		{
 			for (std::vector<ACapTheBrainCharacter*>::iterator itr = otherPlayers.begin(); itr != otherPlayers.end(); itr++)
 			{
-				if (!(*itr)->hasShield)
+				if (!(*itr)->hasShield && (*itr)->hasBrain)
 				{
-					if ((*itr)->hasBrain)
-					{
-						FVector newBrainLocation = (*itr)->GetActorLocation();
-						(*itr)->SetActorLocation((*itr)->startPosition);
-						(*itr)->SetActorRotation((*itr)->startRotation);
+					FVector newBrainLocation = (*itr)->GetActorLocation();
+					(*itr)->SetActorLocation((*itr)->startPosition);
+					(*itr)->SetActorRotation((*itr)->startRotation);
 
-						UWorld* const World = GetWorld();
-						ACollectableItem* Brain = (ACollectableItem*)World->SpawnActor(BrainBP);
-						Brain->SetActorLocation(newBrainLocation);
-					}
+					UWorld* const World = GetWorld();
+					ACollectableItem* Brain = (ACollectableItem*)World->SpawnActor(BrainBP);
+					Brain->SetActorLocation(newBrainLocation);
 				}
 			}
 		}
 		else if (currentItem == ItemTypes::Swap)
 		{
-			SpeedBuffer /= 3.;
+
 		}
 
 		hasItem = false;
