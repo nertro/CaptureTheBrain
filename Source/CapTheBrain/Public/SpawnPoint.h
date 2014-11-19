@@ -18,6 +18,8 @@ class CAPTHEBRAIN_API ASpawnPoint : public AActor
 	TSubobjectPtr<class UBoxComponent> SpawnBox;
 
 	void SpawnNewItem();
+	void SpawnNewBrain();
+	void SpawnNewBase();
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Spawn)
 		TSubclassOf<class ACollectableItem> ItemBP;

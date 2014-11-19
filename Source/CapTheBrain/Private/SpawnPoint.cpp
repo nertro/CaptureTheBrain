@@ -25,7 +25,11 @@ void ASpawnPoint::SpawnNewItem()
 		SpawnItem->SetActorTransform(this->GetTransform());
 		SpawnItem->MySpawnPoint = this;
 	}
-	else if (BrainBP)
+}
+
+void ASpawnPoint::SpawnNewBrain()
+{
+	if (BrainBP)
 	{
 		occupied = true;
 		UWorld* const World = GetWorld();
@@ -34,7 +38,11 @@ void ASpawnPoint::SpawnNewItem()
 		SpawnItem->SetActorTransform(this->GetTransform());
 		SpawnItem->MySpawnPoint = this;
 	}
-	else if (BrainBaseBP)
+}
+
+void ASpawnPoint::SpawnNewBase()
+{
+	if (BrainBaseBP)
 	{
 		occupied = true;
 		UWorld* const World = GetWorld();

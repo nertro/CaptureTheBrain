@@ -23,12 +23,12 @@ class CAPTHEBRAIN_API ASpawnCtrl : public AActor
 	void SpawnBrain();
 
 	void SpawnBrainBase();
+	bool brainBaseSet;
 
 private:
 	float delay;
 	float timer;
 	bool beginPlayReady;
-	bool brainBaseSet;
 	int currentSpawn;
 
 	std::vector<ASpawnPoint*> itemSpawnPoints;

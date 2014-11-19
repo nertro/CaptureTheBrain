@@ -196,6 +196,7 @@ class UPrimitiveComponent * OtherComp,
 				other->MySpawnPoint->occupied = false;
 				Other->Destroy();
 				spawnCtrl->SpawnBrain();
+				spawnCtrl->brainBaseSet = false;
 				score++;
 			}
 		}
@@ -263,7 +264,14 @@ void ACapTheBrainCharacter::UseItem()
 		}
 		else if (currentItem == ItemTypes::Swap)
 		{
-
+			if (spawnCtrl->brainBaseSet)
+			{
+				for (TActorIterator<ABrainBase> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+				{
+					ActorItr->Destroy();
+				}
+				spawnCtrl->SpawnBrainBase();
+			}
 		}
 
 		hasItem = false;

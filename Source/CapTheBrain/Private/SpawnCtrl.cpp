@@ -65,17 +65,22 @@ void ASpawnCtrl::Tick(float DeltaSeconds)
 
 void ASpawnCtrl::SpawnBrain()
 {
-	BrainSpawnPoint->SpawnNewItem();
+	BrainSpawnPoint->SpawnNewBrain();
 }
 
 void ASpawnCtrl::SpawnBrainBase()
 {
 	float pointNo = FMath::FRandRange(0, brainBases.size());
 	int newPoint = (int)pointNo;
-	if (!brainBases[newPoint]->occupied && currentSpawn != newPoint)
+	if (currentSpawn != newPoint)
 	{
 		currentSpawn = newPoint;
-		brainBases[newPoint]->SpawnNewItem();
+		brainBases[newPoint]->SpawnNewBase();
+		brainBaseSet = true;
+	}
+	else
+	{
+		SpawnBrainBase();
 	}
 }
 
