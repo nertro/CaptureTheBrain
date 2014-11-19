@@ -3,6 +3,7 @@
 #include "CapTheBrain.h"
 #include "SpawnCtrl.h"
 
+#include "CollectableItem.h"
 #include "SpawnPoint.h"
 #include "EngineUtils.h"
 
@@ -14,91 +15,67 @@ ASpawnCtrl::ASpawnCtrl(const class FPostConstructInitializeProperties& PCIP)
 	delay = 4.5f;
 	timer = 0;
 	brainBaseSet = false;
+	beginPlayReady = false;
+	currentSpawn = 300;
 }
 
 void ASpawnCtrl::BeginPlay()
 {
 	Super::BeginPlay();
-	this->SpawnBrain();
 
 	for (TActorIterator<ASpawnPoint>SpawnItr(GetWorld()); SpawnItr; ++SpawnItr)
 	{
-		if (SpawnItr->GetName().Compare("SpawnPoint") == 1)
+		if (SpawnItr->ItemBP)
 		{
 			itemSpawnPoints.push_back(*SpawnItr);
 		}
-	}
-
-	for (TActorIterator<ASpawnPoint>SpawnItr(GetWorld()); SpawnItr; ++SpawnItr)
-	{
-		if (SpawnItr->GetName().Compare("BrainBase") == 1)
+		else if (SpawnItr->BrainBaseBP)
 		{
 			brainBases.push_back(*SpawnItr);
 		}
-	}
-
-	for (TActorIterator<ASpawnPoint>SpawnItr(GetWorld()); SpawnItr; ++SpawnItr)
-	{
-		if (SpawnItr->GetName().Compare("BrainSpawnPoint") == 0)
+		else if (SpawnItr->BrainBP)
 		{
 			BrainSpawnPoint = *SpawnItr;
 		}
 	}
+
+	this->SpawnBrain();
+
+	beginPlayReady = true;
 }
 
 void ASpawnCtrl::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
-	timer += DeltaSeconds;
-	if (timer > delay)
+	if (beginPlayReady)
 	{
-		UWorld* World = GetWorld();
-		float pointNo = FMath::FRandRange(1, 4);
-		int newPoint = (int)pointNo;
-		FString name = "SpawnPoint";
-		name.AppendInt(newPoint);
-		for (TActorIterator<ASpawnPoint>SpawnItr(GetWorld()); SpawnItr; ++SpawnItr)
+		timer += DeltaSeconds;
+		if (timer > delay)
 		{
-			int32 comp = SpawnItr->GetName().Compare(name);
-			if (SpawnItr->GetName().Compare(name) == 0 && !SpawnItr->occupied)
+			float pointNo = FMath::FRandRange(0, itemSpawnPoints.size());
+			int newPoint = (int)pointNo;
+			if (!itemSpawnPoints[newPoint]->occupied)
 			{
-				SpawnItr->SpawnNewItem();
+				itemSpawnPoints[newPoint]->SpawnNewItem();
 			}
+			timer = 0;
 		}
-
-		timer = 0;
 	}
 }
 
 void ASpawnCtrl::SpawnBrain()
 {
-	UWorld* World = GetWorld();
-	FString name = "BrainSpawnPoint";
-	for (TActorIterator<ASpawnPoint>SpawnItr(GetWorld()); SpawnItr; ++SpawnItr)
-	{
-		int32 comp = SpawnItr->GetName().Compare(name);
-		if (SpawnItr->GetName().Compare(name) == 0 && !SpawnItr->occupied)
-		{
-			SpawnItr->SpawnNewItem();
-		}
-	}
+	BrainSpawnPoint->SpawnNewItem();
 }
 
 void ASpawnCtrl::SpawnBrainBase()
 {
-	UWorld* World = GetWorld();
-	float pointNo = FMath::FRandRange(1, 3);
+	float pointNo = FMath::FRandRange(0, brainBases.size());
 	int newPoint = (int)pointNo;
-	FString name = "BrainBase";
-	name.AppendInt(newPoint);
-	for (TActorIterator<ASpawnPoint>SpawnItr(GetWorld()); SpawnItr; ++SpawnItr)
+	if (!brainBases[newPoint]->occupied && currentSpawn != newPoint)
 	{
-		int32 comp = SpawnItr->GetName().Compare(name);
-		if (SpawnItr->GetName().Compare(name) == 0 && !SpawnItr->occupied)
-		{
-			currentSpawn = newPoint;
-			SpawnItr->SpawnNewItem();
-		}
+		currentSpawn = newPoint;
+		brainBases[newPoint]->SpawnNewItem();
 	}
 }
 

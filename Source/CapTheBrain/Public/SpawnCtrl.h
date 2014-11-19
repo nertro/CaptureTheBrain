@@ -27,6 +27,7 @@ class CAPTHEBRAIN_API ASpawnCtrl : public AActor
 private:
 	float delay;
 	float timer;
+	bool beginPlayReady;
 	bool brainBaseSet;
 	int currentSpawn;
 

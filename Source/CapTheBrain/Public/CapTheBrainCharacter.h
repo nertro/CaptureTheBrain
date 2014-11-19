@@ -2,6 +2,7 @@
 #pragma once
 #include "CharacterHUD.h"
 #include "GameFramework/Character.h"
+#include "SpawnCtrl.h"
 #include <vector>
 
 #include "CapTheBrainCharacter.generated.h"
@@ -99,8 +100,12 @@ protected:
 	float itemTimerDelay = 5.;
 	std::vector<ACapTheBrainCharacter*> otherPlayers;
 
+	ASpawnCtrl* spawnCtrl;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Spawn)
 		TSubclassOf<class ACollectableItem> BrainBP;
+
+	int score;
 
 protected:
 	// APawn interface

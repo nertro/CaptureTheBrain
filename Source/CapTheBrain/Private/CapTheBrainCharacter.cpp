@@ -8,6 +8,8 @@
 #include "CharacterHUD.h"
 #include "ItemPickup.h"
 #include "BrainPickup.h"
+#include "BrainBase.h"
+#include "SpawnCtrl.h"
 #include <vector>
 
 //////////////////////////////////////////////////////////////////////////
@@ -141,6 +143,15 @@ void ACapTheBrainCharacter::Tick(float deltaSeconds)
 				otherPlayers.push_back(*ActorItr);
 			}
 		}
+
+		for (TActorIterator<ASpawnCtrl>SpawnItr(GetWorld()); SpawnItr; ++SpawnItr)
+		{
+			if (!spawnCtrl)
+			{
+				spawnCtrl = *SpawnItr;
+			}
+		}
+
 		firstUpdate = false;
 	}
 
@@ -169,6 +180,7 @@ class UPrimitiveComponent * OtherComp,
 				{
 					other->MySpawnPoint->occupied = false;
 				}
+				spawnCtrl->SpawnBrainBase();
 				Other->Destroy();
 			}
 			else if (Other->IsA(AItemPickup::StaticClass()) &! hasItem)
@@ -177,6 +189,14 @@ class UPrimitiveComponent * OtherComp,
 				ACollectableItem* other = (ACollectableItem*)Other;
 				other->MySpawnPoint->occupied = false;
 				Other->Destroy();
+			}
+			else if (Other->IsA(ABrainBase::StaticClass()) && hasBrain)
+			{
+				ACollectableItem* other = (ACollectableItem*)Other;
+				other->MySpawnPoint->occupied = false;
+				Other->Destroy();
+				spawnCtrl->SpawnBrain();
+				score++;
 			}
 		}
 	}
