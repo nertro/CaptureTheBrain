@@ -2,11 +2,13 @@
 
 #include "CapTheBrain.h"
 #include "CapTheBrainCharacter.h"
+#include "EngineUtils.h"
 
 #include "CollectableItem.h"
 #include "CharacterHUD.h"
 #include "ItemPickup.h"
 #include "BrainPickup.h"
+#include <vector>
 
 //////////////////////////////////////////////////////////////////////////
 // ACapTheBrainCharacter
@@ -14,6 +16,7 @@
 ACapTheBrainCharacter::ACapTheBrainCharacter(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
 {
+	firstUpdate = true;
 	// Set size for collision capsule
 	CapsuleComponent->InitCapsuleSize(42.f, 96.0f);
 
@@ -70,27 +73,13 @@ void ACapTheBrainCharacter::SetupPlayerInputComponent(class UInputComponent* Inp
 	InputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 	InputComponent->BindAxis("LookUpRate", this, &ACapTheBrainCharacter::LookUpAtRate);
 
-	// handle touch devices
-	InputComponent->BindTouch(IE_Pressed, this, &ACapTheBrainCharacter::TouchStarted);
-	InputComponent->BindTouch(IE_Released, this, &ACapTheBrainCharacter::TouchStopped);
 }
 
-
-void ACapTheBrainCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
+void ACapTheBrainCharacter::BeginPlay()
 {
-	// jump, but only on the first touch
-	if (FingerIndex == ETouchIndex::Touch1)
-	{
-		Jump();
-	}
-}
-
-void ACapTheBrainCharacter::TouchStopped(ETouchIndex::Type FingerIndex, FVector Location)
-{
-	if (FingerIndex == ETouchIndex::Touch1)
-	{
-		StopJumping();
-	}
+	Super::BeginPlay();
+	startPosition = this->GetActorLocation();
+	startRotation = this->GetActorRotation();
 }
 
 void ACapTheBrainCharacter::TurnAtRate(float Rate)
@@ -143,6 +132,18 @@ void ACapTheBrainCharacter::Tick(float deltaSeconds)
 {
 	Super::Tick(deltaSeconds);
 
+	if (firstUpdate)
+	{
+		for (TActorIterator<ACapTheBrainCharacter> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+		{
+			if (*ActorItr != this)
+			{
+				otherPlayers.push_back(*ActorItr);
+			}
+		}
+		firstUpdate = false;
+	}
+
 	TickItem(deltaSeconds);
 }
 
@@ -163,12 +164,20 @@ class UPrimitiveComponent * OtherComp,
 			if (Other->IsA(ABrainPickup::StaticClass()))
 			{
 				this->hasBrain = true;
+				ACollectableItem* other = (ACollectableItem*)Other;
+				if (other->MySpawnPoint)
+				{
+					other->MySpawnPoint->occupied = false;
+				}
+				Other->Destroy();
 			}
 			else if (Other->IsA(AItemPickup::StaticClass()) &! hasItem)
 			{
 				CollectItem();
+				ACollectableItem* other = (ACollectableItem*)Other;
+				other->MySpawnPoint->occupied = false;
+				Other->Destroy();
 			}
-			Other->Destroy();
 		}
 	}
 }
@@ -195,26 +204,46 @@ void ACapTheBrainCharacter::UseItem()
 	{
 		if (currentItem == ItemTypes::Slow)
 		{
-			SpeedBuffer *= 2.;
-			isSlow = true;
+			for (std::vector<ACapTheBrainCharacter*>::iterator itr = otherPlayers.begin(); itr != otherPlayers.end(); itr++)
+			{
+				if (!(*itr)->hasShield &! (*itr)->isSlow)
+				{
+					(*itr)->SpeedBuffer *= 10.;
+					(*itr)->isSlow = true;
+				}
+			}
 		}
 		else if (currentItem == ItemTypes::Fast)
 		{
-			SpeedBuffer /= 3.;
-			isFast = true;
+			if (!isFast)
+			{
+				SpeedBuffer /= 3.;
+				isFast = true;
+			}
 		}
 		else if (currentItem == ItemTypes::Shield)
 		{
-			SpeedBuffer /= 3.;
 			hasShield = true;
 		}
 		else if (currentItem == ItemTypes::Zapp)
 		{
-			SpeedBuffer /= 3.;
+			for (std::vector<ACapTheBrainCharacter*>::iterator itr = otherPlayers.begin(); itr != otherPlayers.end(); itr++)
+			{
+				if (!(*itr)->hasShield && (*itr)->hasBrain)
+				{
+					FVector newBrainLocation = (*itr)->GetActorLocation();
+					(*itr)->SetActorLocation((*itr)->startPosition);
+					(*itr)->SetActorRotation((*itr)->startRotation);
+
+					UWorld* const World = GetWorld();
+					ACollectableItem* Brain = (ACollectableItem*)World->SpawnActor(BrainBP);
+					Brain->SetActorLocation(newBrainLocation);
+				}
+			}
 		}
 		else if (currentItem == ItemTypes::Swap)
 		{
-			SpeedBuffer /= 3.;
+
 		}
 
 		hasItem = false;
@@ -231,7 +260,7 @@ void ACapTheBrainCharacter::TickItem(float deltaSeconds)
 		{
 			isSlow = false;
 			slowTimer = 0;
-			SpeedBuffer /= 2.;
+			SpeedBuffer /= 10.;
 		}
 	}
 	if (isFast)

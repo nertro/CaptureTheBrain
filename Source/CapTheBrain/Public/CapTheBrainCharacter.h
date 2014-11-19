@@ -2,6 +2,8 @@
 #pragma once
 #include "CharacterHUD.h"
 #include "GameFramework/Character.h"
+#include <vector>
+
 #include "CapTheBrainCharacter.generated.h"
 
 UCLASS(config=Game)
@@ -10,26 +12,27 @@ class ACapTheBrainCharacter : public ACharacter
 	GENERATED_UCLASS_BODY()
 
 	/** Camera boom positioning the camera behind the character */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 	TSubobjectPtr<class USpringArmComponent> CameraBoom;
 
 	/** Follow camera */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
-	TSubobjectPtr<class UCameraComponent> FollowCamera;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
+		TSubobjectPtr<class UCameraComponent> FollowCamera;
 
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
-	float BaseTurnRate;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
+		float BaseTurnRate;
 
 	/** Base look up/down rate, in deg/sec. Other scaling may affect final rate. */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
-	float BaseLookUpRate;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
+		float BaseLookUpRate;
 
 	/**Speed Buffer witch can be changed per item */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 		float SpeedBuffer = 1.5;
 
 	virtual void Tick(float deltaSeconds) override;
+	virtual void BeginPlay() override;
 
 protected:
 
@@ -39,14 +42,14 @@ protected:
 	/** Called for side to side input */
 	void MoveRight(float Value);
 
-	/** 
-	 * Called via input to turn at a given rate. 
+	/**
+	 * Called via input to turn at a given rate.
 	 * @param Rate	This is a normalized rate, i.e. 1.0 means 100% of desired turn rate
 	 */
 	void TurnAtRate(float Rate);
 
 	/**
-	 * Called via input to turn look up/down at a given rate. 
+	 * Called via input to turn look up/down at a given rate.
 	 * @param Rate	This is a normalized rate, i.e. 1.0 means 100% of desired turn rate
 	 */
 	void LookUpAtRate(float Rate);
@@ -60,6 +63,10 @@ protected:
 	/**My Stuff */
 	ACharacterHUD* myControllerHUD;
 
+	FVector startPosition;
+	FRotator startRotation;
+	bool firstUpdate;
+
 	void PickUpItem();
 
 	bool hasBrain;
@@ -68,14 +75,14 @@ protected:
 
 	bool isSlow, isFast, hasShield;
 
-	enum ItemTypes{Slow, Fast, Shield, Swap, Zapp};
+	enum ItemTypes{ Slow, Fast, Shield, Swap, Zapp };
 
 	ItemTypes currentItem;
 
 	void ReceiveHit(
-		class UPrimitiveComponent * MyComp,
-		class AActor * Other,
-		class UPrimitiveComponent * OtherComp,
+	class UPrimitiveComponent * MyComp,
+	class AActor * Other,
+	class UPrimitiveComponent * OtherComp,
 		bool bSelfMoved,
 		FVector HitLocation,
 		FVector HitNormal,
@@ -90,6 +97,10 @@ protected:
 
 	float slowTimer, fastTimer, shieldTimer;
 	float itemTimerDelay = 5.;
+	std::vector<ACapTheBrainCharacter*> otherPlayers;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Spawn)
+		TSubclassOf<class ACollectableItem> BrainBP;
 
 protected:
 	// APawn interface

@@ -3,6 +3,9 @@
 #pragma once
 
 #include "GameFramework/Actor.h"
+#include <vector>
+#include "SpawnPoint.h"
+
 #include "SpawnCtrl.generated.h"
 
 /**
@@ -19,8 +22,15 @@ class CAPTHEBRAIN_API ASpawnCtrl : public AActor
 
 	void SpawnBrain();
 
+	void SpawnBrainBase();
+
 private:
 	float delay;
 	float timer;
-	
+	bool brainBaseSet;
+	int currentSpawn;
+
+	std::vector<ASpawnPoint*> itemSpawnPoints;
+	std::vector<ASpawnPoint*> brainBases;
+	ASpawnPoint* BrainSpawnPoint;
 };

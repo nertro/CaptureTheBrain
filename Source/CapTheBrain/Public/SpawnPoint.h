@@ -2,6 +2,8 @@
 
 #pragma once
 #include "GameFramework/Actor.h"
+#include <vector>
+
 #include "SpawnPoint.generated.h"
 
 /**
@@ -22,6 +24,9 @@ class CAPTHEBRAIN_API ASpawnPoint : public AActor
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Spawn)
 		TSubclassOf<class ACollectableItem> BrainBP;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Spawn)
+		TSubclassOf<class ACollectableItem> BrainBaseBP;
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Spawn)
 		bool occupied;
