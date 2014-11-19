@@ -200,6 +200,17 @@ class UPrimitiveComponent * OtherComp,
 				score++;
 			}
 		}
+		else if (Other->IsA(ACapTheBrainCharacter::StaticClass()))
+		{
+			ACapTheBrainCharacter* other = (ACapTheBrainCharacter*)Other;
+			if (hasBrain)
+			{
+				SetActorLocation(other->startPosition);
+				SetActorRotation(other->startRotation);
+				hasBrain = false;
+				other->hasBrain = true;
+			}
+		}
 	}
 }
 
