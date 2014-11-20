@@ -156,6 +156,15 @@ void ACapTheBrainCharacter::Tick(float deltaSeconds)
 	}
 
 	TickItem(deltaSeconds);
+	if (isLoosingBrain)
+	{
+		FVector acloc = this->GetActorLocation();
+		float dist = startPosition.Z - GetActorLocation().Z;
+		if (isLoosingBrain && dist <= 100)
+		{
+			isLoosingBrain = false;
+		}
+	}
 }
 
 void ACapTheBrainCharacter::ReceiveHit(
@@ -203,11 +212,12 @@ class UPrimitiveComponent * OtherComp,
 		else if (Other->IsA(ACapTheBrainCharacter::StaticClass()))
 		{
 			ACapTheBrainCharacter* other = (ACapTheBrainCharacter*)Other;
-			if (hasBrain)
+			if (hasBrain &! other->isLoosingBrain)
 			{
 				SetActorLocation(other->startPosition);
 				SetActorRotation(other->startRotation);
 				hasBrain = false;
+				isLoosingBrain = true;
 				other->hasBrain = true;
 			}
 		}

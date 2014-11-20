@@ -26,13 +26,12 @@ void ACharacterHUD::DrawBasicUIElements(float screenWidth, float screenHeight)
 	if (TimerImg && SplatterImg && BrainImg)
 	{
 		float offset = screenWidth / screenHeight;
-		Super::DrawTexture(TimerImg, UIPaddingLeft, screenHeight - (2*UIPaddingBottomRight) , screenWidth, screenHeight, 0, 0, offset, 1, FLinearColor::White, BLEND_Translucent, UIImgScale, false, 0, FVector2D::ZeroVector);
 		Super::DrawTexture(SplatterImg, UIPaddingLeft, screenHeight - UIPaddingBottomRight, screenWidth, screenHeight, 0, 0, offset, 1, FLinearColor::White, BLEND_Translucent, UIImgScale, false, 0, FVector2D::ZeroVector);
 		Super::DrawTexture(BrainImg, screenWidth - UIPaddingBottomRight, screenHeight - UIPaddingBottomRight, screenWidth, screenHeight, 0, 0, offset, 1, FLinearColor::White, BLEND_Translucent, UIImgScale, false, 0, FVector2D::ZeroVector);
 	}
 }
 
-void ACharacterHUD::DrawCounterAndTimeElements(float screenWidth, float screenHeight)
+void ACharacterHUD::DrawCounterElements(float screenWidth, float screenHeight)
 {
 	float offset = screenWidth / screenHeight;
 	if (PlayerHasItem)

@@ -46,7 +46,7 @@ class CAPTHEBRAIN_API ACharacterHUD : public AHUD
 		FString BrainCount;
 
 	UFUNCTION(BlueprintCallable, Category = HUD)
-		void DrawCounterAndTimeElements(float screenWidth, float screenHeight);
+		void DrawCounterElements(float screenWidth, float screenHeight);
 
 	/**Item that are not always visible*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Spawn)

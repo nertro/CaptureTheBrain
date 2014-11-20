@@ -72,6 +72,8 @@ protected:
 
 	bool hasBrain;
 
+	bool isLoosingBrain;
+
 	bool hasItem;
 
 	bool isSlow, isFast, hasShield;
