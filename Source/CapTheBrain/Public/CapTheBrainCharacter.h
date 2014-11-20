@@ -3,6 +3,7 @@
 #include "CharacterHUD.h"
 #include "GameFramework/Character.h"
 #include "SpawnCtrl.h"
+#include "Arrow.h"
 #include <vector>
 
 #include "CapTheBrainCharacter.generated.h"
@@ -31,6 +32,9 @@ class ACapTheBrainCharacter : public ACharacter
 	/**Speed Buffer witch can be changed per item */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 		float SpeedBuffer = 1.5;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Spawn)
+		TSubclassOf<class AArrow> ArrowBP;
 
 	virtual void Tick(float deltaSeconds) override;
 	virtual void BeginPlay() override;
@@ -98,11 +102,15 @@ protected:
 
 	void TickItem(float deltaSeconds);
 
+	void SpawnArrow();
+
 	float slowTimer, fastTimer, shieldTimer;
 	float itemTimerDelay = 5.;
 	std::vector<ACapTheBrainCharacter*> otherPlayers;
 
 	ASpawnCtrl* spawnCtrl;
+
+	AArrow* arrow;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Spawn)
 		TSubclassOf<class ACollectableItem> BrainBP;

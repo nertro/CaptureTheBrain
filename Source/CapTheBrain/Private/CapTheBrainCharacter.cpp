@@ -5,12 +5,9 @@
 #include "EngineUtils.h"
 
 #include "CollectableItem.h"
-#include "CharacterHUD.h"
 #include "ItemPickup.h"
 #include "BrainPickup.h"
 #include "BrainBase.h"
-#include "SpawnCtrl.h"
-#include <vector>
 
 //////////////////////////////////////////////////////////////////////////
 // ACapTheBrainCharacter
@@ -191,6 +188,7 @@ class UPrimitiveComponent * OtherComp,
 				}
 				spawnCtrl->SpawnBrainBase();
 				Other->Destroy();
+				SpawnArrow();
 			}
 			else if (Other->IsA(AItemPickup::StaticClass()) &! hasItem)
 			{
@@ -207,6 +205,7 @@ class UPrimitiveComponent * OtherComp,
 				spawnCtrl->SpawnBrain();
 				spawnCtrl->brainBaseSet = false;
 				score++;
+				arrow->Destroy();
 			}
 		}
 		else if (Other->IsA(ACapTheBrainCharacter::StaticClass()))
@@ -219,6 +218,8 @@ class UPrimitiveComponent * OtherComp,
 				hasBrain = false;
 				isLoosingBrain = true;
 				other->hasBrain = true;
+				arrow->Destroy();
+				other->SpawnArrow();
 			}
 		}
 	}
@@ -250,7 +251,7 @@ void ACapTheBrainCharacter::UseItem()
 			{
 				if (!(*itr)->hasShield &! (*itr)->isSlow)
 				{
-					(*itr)->SpeedBuffer *= 10.;
+					(*itr)->SpeedBuffer *= 5.;
 					(*itr)->isSlow = true;
 				}
 			}
@@ -259,7 +260,7 @@ void ACapTheBrainCharacter::UseItem()
 		{
 			if (!isFast)
 			{
-				SpeedBuffer /= 3.;
+				SpeedBuffer /= 5.;
 				isFast = true;
 			}
 		}
@@ -276,6 +277,8 @@ void ACapTheBrainCharacter::UseItem()
 					FVector newBrainLocation = (*itr)->GetActorLocation();
 					(*itr)->SetActorLocation((*itr)->startPosition);
 					(*itr)->SetActorRotation((*itr)->startRotation);
+					(*itr)->arrow->Destroy();
+					(*itr)->hasBrain = false;
 
 					UWorld* const World = GetWorld();
 					ACollectableItem* Brain = (ACollectableItem*)World->SpawnActor(BrainBP);
@@ -333,3 +336,14 @@ void ACapTheBrainCharacter::TickItem(float deltaSeconds)
 	}
 }
 
+void ACapTheBrainCharacter::SpawnArrow()
+{
+	if (ArrowBP)
+	{
+		UWorld* const World = GetWorld();
+		arrow = (AArrow*)World->SpawnActor(ArrowBP);
+		arrow->Capsule->AttachTo(RootComponent);
+		arrow->SetActorTransform(this->GetTransform());
+		arrow->SetActorRelativeLocation(FVector(0, 0, 180));
+	}
+}
