@@ -25,4 +25,5 @@ void ABrainPickup::AttachToHead(ACapTheBrainCharacter* player)
 	FTransform socketLocation = player->Mesh->GetSocketTransform("brainSocket");
 	SetActorTransform(socketLocation);*/
 	this->RootComponent->SnapTo(player->Mesh , "brainSocket");
+	GotCollected = true;
 }

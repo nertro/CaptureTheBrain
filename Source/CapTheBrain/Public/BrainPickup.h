@@ -20,6 +20,9 @@ class CAPTHEBRAIN_API ABrainPickup : public ACollectableItem
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
 		USkeletalMesh* SkeletalMesh;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Item)
+		bool GotCollected;
 	
 	void AttachToHead(ACapTheBrainCharacter* player);
 };
