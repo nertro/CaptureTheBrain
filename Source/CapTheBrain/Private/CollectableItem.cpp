@@ -9,7 +9,6 @@ ACollectableItem::ACollectableItem(const class FPostConstructInitializePropertie
 {
 	Capsule = PCIP.CreateDefaultSubobject<UCapsuleComponent>(this, TEXT("CapsuleCollider"));
 	Capsule->InitCapsuleSize(40.f, 70.f);
-	Capsule->SetSimulatePhysics(true);
 	Capsule->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	Capsule->SetCollisionObjectType(ECollisionChannel::ECC_WorldStatic);
 	Capsule->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Block);

@@ -3,6 +3,8 @@
 #pragma once
 
 #include "CollectableItem.h"
+#include "CapTheBrainCharacter.h"
+
 #include "BrainPickup.generated.h"
 
 /**
@@ -19,4 +21,5 @@ class CAPTHEBRAIN_API ABrainPickup : public ACollectableItem
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
 		USkeletalMesh* SkeletalMesh;
 	
+	void AttachToHead(ACapTheBrainCharacter* player);
 };

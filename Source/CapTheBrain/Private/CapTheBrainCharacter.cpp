@@ -71,7 +71,6 @@ void ACapTheBrainCharacter::SetupPlayerInputComponent(class UInputComponent* Inp
 	InputComponent->BindAxis("TurnRate", this, &ACapTheBrainCharacter::TurnAtRate);
 	InputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 	InputComponent->BindAxis("LookUpRate", this, &ACapTheBrainCharacter::LookUpAtRate);
-
 }
 
 void ACapTheBrainCharacter::BeginPlay()
@@ -178,16 +177,16 @@ class UPrimitiveComponent * OtherComp,
 	{
 		if (Other->IsA(ACollectableItem::StaticClass()))
 		{
-			if (Other->IsA(ABrainPickup::StaticClass()))
+			if (Other->IsA(ABrainPickup::StaticClass()) &! hasBrain)
 			{
 				this->hasBrain = true;
-				ACollectableItem* other = (ACollectableItem*)Other;
+				ABrainPickup* other = (ABrainPickup*)Other;
 				if (other->MySpawnPoint)
 				{
 					other->MySpawnPoint->occupied = false;
 				}
 				spawnCtrl->SpawnBrainBase();
-				Other->Destroy();
+				other->AttachToHead(this);
 				SpawnArrow();
 			}
 			else if (Other->IsA(AItemPickup::StaticClass()) &! hasItem)
@@ -204,6 +203,7 @@ class UPrimitiveComponent * OtherComp,
 				Other->Destroy();
 				spawnCtrl->SpawnBrain();
 				spawnCtrl->brainBaseSet = false;
+				hasBrain = false;
 				score++;
 				arrow->Destroy();
 			}
@@ -216,8 +216,8 @@ class UPrimitiveComponent * OtherComp,
 				SetActorLocation(other->startPosition);
 				SetActorRotation(other->startRotation);
 				hasBrain = false;
-				isLoosingBrain = true;
 				other->hasBrain = true;
+				isLoosingBrain = true;
 				arrow->Destroy();
 				other->SpawnArrow();
 			}
