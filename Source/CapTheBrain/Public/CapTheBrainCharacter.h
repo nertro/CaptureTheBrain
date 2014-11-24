@@ -8,6 +8,8 @@
 
 #include "CapTheBrainCharacter.generated.h"
 
+class ABrainPickup;
+
 UCLASS(config=Game)
 class ACapTheBrainCharacter : public ACharacter
 {
@@ -111,6 +113,7 @@ protected:
 	ASpawnCtrl* spawnCtrl;
 
 	AArrow* arrow;
+	ABrainPickup* brain;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Spawn)
 		TSubclassOf<class ACollectableItem> BrainBP;

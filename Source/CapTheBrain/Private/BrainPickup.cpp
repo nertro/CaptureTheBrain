@@ -17,7 +17,10 @@ ABrainPickup::ABrainPickup(const class FPostConstructInitializeProperties& PCIP)
 void ABrainPickup::AttachToHead(ACapTheBrainCharacter* player)
 {
 	RootComponent = MeshComponent;
-	Capsule->Deactivate();
+	if (Capsule->IsActive())
+	{
+		Capsule->Deactivate();
+	}
 	/*AttachRootComponentTo(player->Mesh);
 	FTransform socketLocation = player->Mesh->GetSocketTransform("brainSocket");
 	SetActorTransform(socketLocation);*/

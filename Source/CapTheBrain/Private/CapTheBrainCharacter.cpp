@@ -180,13 +180,13 @@ class UPrimitiveComponent * OtherComp,
 			if (Other->IsA(ABrainPickup::StaticClass()) &! hasBrain)
 			{
 				this->hasBrain = true;
-				ABrainPickup* other = (ABrainPickup*)Other;
-				if (other->MySpawnPoint)
+				brain = (ABrainPickup*)Other;
+				if (brain->MySpawnPoint)
 				{
-					other->MySpawnPoint->occupied = false;
+					brain->MySpawnPoint->occupied = false;
 				}
 				spawnCtrl->SpawnBrainBase();
-				other->AttachToHead(this);
+				brain->AttachToHead(this);
 				SpawnArrow();
 			}
 			else if (Other->IsA(AItemPickup::StaticClass()) &! hasItem)
@@ -203,6 +203,8 @@ class UPrimitiveComponent * OtherComp,
 				Other->Destroy();
 				spawnCtrl->SpawnBrain();
 				spawnCtrl->brainBaseSet = false;
+
+				brain->Destroy();
 				hasBrain = false;
 				score++;
 				arrow->Destroy();
@@ -217,6 +219,7 @@ class UPrimitiveComponent * OtherComp,
 				SetActorRotation(other->startRotation);
 				hasBrain = false;
 				other->hasBrain = true;
+				brain->AttachToHead(other);
 				isLoosingBrain = true;
 				arrow->Destroy();
 				other->SpawnArrow();
@@ -278,6 +281,7 @@ void ACapTheBrainCharacter::UseItem()
 					(*itr)->SetActorLocation((*itr)->startPosition);
 					(*itr)->SetActorRotation((*itr)->startRotation);
 					(*itr)->arrow->Destroy();
+					(*itr)->brain->Destroy();
 					(*itr)->hasBrain = false;
 
 					UWorld* const World = GetWorld();
