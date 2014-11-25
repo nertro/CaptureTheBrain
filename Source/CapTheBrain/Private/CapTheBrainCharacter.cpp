@@ -208,22 +208,22 @@ class UPrimitiveComponent * OtherComp,
 			else if (Other->IsA(AItemPickup::StaticClass()) &! hasItem)
 			{
 				CollectItem();
-				ACollectableItem* other = (ACollectableItem*)Other;
+				AItemPickup* other = (AItemPickup*)Other;
 				other->MySpawnPoint->occupied = false;
 				Other->Destroy();
 			}
 			else if (Other->IsA(ABrainBase::StaticClass()) && hasBrain)
 			{
-				ACollectableItem* other = (ACollectableItem*)Other;
+				ABrainBase* other = (ABrainBase*)Other;
 				other->MySpawnPoint->occupied = false;
 				Other->Destroy();
 				spawnCtrl->SpawnBrain();
 				spawnCtrl->brainBaseSet = false;
 
-				brain->Destroy();
 				hasBrain = false;
 				score++;
 				arrow->Destroy();
+				brain->Destroy();
 			}
 		}
 		else if (Other->IsA(ACapTheBrainCharacter::StaticClass()))
@@ -234,6 +234,7 @@ class UPrimitiveComponent * OtherComp,
 				GotHit = true;
 				hasBrain = false;
 				other->hasBrain = true;
+				other->brain = brain;
 				brain->AttachToHead(other);
 				isLoosingBrain = true;
 				arrow->Destroy();
