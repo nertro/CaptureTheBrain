@@ -105,6 +105,11 @@ void ACapTheBrainCharacter::MoveForward(float Value)
 		AddMovementInput(Direction, Value/SpeedBuffer);
 
 		//Set Animation
+
+		if (arrow)
+		{
+			arrow->PointToBase();
+		}
 	}
 }
 
@@ -122,6 +127,11 @@ void ACapTheBrainCharacter::MoveRight(float Value)
 		AddMovementInput(Direction, Value/SpeedBuffer);
 
 		//Set Animation
+
+		if (arrow)
+		{
+			arrow->PointToBase();
+		}
 	}
 }
 
@@ -154,11 +164,17 @@ void ACapTheBrainCharacter::Tick(float deltaSeconds)
 	TickItem(deltaSeconds);
 	if (isLoosingBrain)
 	{
-		FVector acloc = this->GetActorLocation();
-		float dist = startPosition.Z - GetActorLocation().Z;
-		if (isLoosingBrain && dist <= 100)
+		if (FellDown)
 		{
-			isLoosingBrain = false;
+			GotHit = false;
+			SetActorLocation(startPosition);
+			SetActorRotation(startRotation);
+			FVector acloc = this->GetActorLocation();
+			float dist = startPosition.Z - GetActorLocation().Z;
+			if (isLoosingBrain && dist <= 100)
+			{
+				isLoosingBrain = false;
+			}
 		}
 	}
 }
@@ -215,8 +231,7 @@ class UPrimitiveComponent * OtherComp,
 			ACapTheBrainCharacter* other = (ACapTheBrainCharacter*)Other;
 			if (hasBrain &! other->isLoosingBrain)
 			{
-				SetActorLocation(other->startPosition);
-				SetActorRotation(other->startRotation);
+				GotHit = true;
 				hasBrain = false;
 				other->hasBrain = true;
 				brain->AttachToHead(other);

@@ -17,9 +17,8 @@ AArrow::AArrow(const class FPostConstructInitializeProperties& PCIP)
 	MeshComponent->SetRelativeLocation(FVector(-20, -3, -20));
 }
 
-void AArrow::Tick(float deltaSeconds)
+void AArrow::PointToBase()
 {
-	Super::Tick(deltaSeconds);
 	if (!base)
 	{
 		for (TActorIterator<ABrainBase> ActorItr(GetWorld()); ActorItr; ++ActorItr)

@@ -38,6 +38,12 @@ class ACapTheBrainCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Spawn)
 		TSubclassOf<class AArrow> ArrowBP;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
+		bool GotHit = false;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Camera)
+		bool FellDown = false;
+
 	virtual void Tick(float deltaSeconds) override;
 	virtual void BeginPlay() override;
 

@@ -26,6 +26,6 @@ class CAPTHEBRAIN_API AArrow : public AActor
 
 	ABrainBase* base;
 
-	virtual void Tick(float deltaSeconds) override;
+	void PointToBase();
 	
 };
