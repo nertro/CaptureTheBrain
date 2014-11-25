@@ -315,6 +315,7 @@ void ACapTheBrainCharacter::UseItem()
 					ActorItr->Destroy();
 				}
 				spawnCtrl->SpawnBrainBase();
+				arrow->GetBase();
 			}
 		}
 

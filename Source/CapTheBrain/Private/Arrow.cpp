@@ -21,15 +21,20 @@ void AArrow::PointToBase()
 {
 	if (!base)
 	{
-		for (TActorIterator<ABrainBase> ActorItr(GetWorld()); ActorItr; ++ActorItr)
-		{
-			base = *ActorItr;
-		}
+		GetBase();
 	}
 	else
 	{
 		FVector direction = GetActorLocation() - base->GetActorLocation();
 		SetActorRotation(direction.Rotation());
+	}
+}
+
+void AArrow::GetBase()
+{
+	for (TActorIterator<ABrainBase> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+	{
+		base = *ActorItr;
 	}
 }
 

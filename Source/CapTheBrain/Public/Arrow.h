@@ -27,5 +27,7 @@ class CAPTHEBRAIN_API AArrow : public AActor
 	ABrainBase* base;
 
 	void PointToBase();
+
+	void GetBase();
 	
 };
