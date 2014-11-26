@@ -365,6 +365,6 @@ void ACapTheBrainCharacter::SpawnArrow()
 		arrow = (AArrow*)World->SpawnActor(ArrowBP);
 		arrow->Capsule->AttachTo(RootComponent);
 		arrow->SetActorTransform(this->GetTransform());
-		arrow->SetActorRelativeLocation(FVector(0, 0, 180));
+		arrow->SetActorRelativeLocation(FVector(0, 0, ArrowZLocation));
 	}
 }

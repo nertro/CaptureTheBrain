@@ -44,6 +44,9 @@ class ACapTheBrainCharacter : public ACharacter
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Camera)
 		bool FellDown = false;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Camera)
+		float ArrowZLocation = 180;
+
 	virtual void Tick(float deltaSeconds) override;
 	virtual void BeginPlay() override;
 
