@@ -38,3 +38,8 @@ void AArrow::GetBase()
 	}
 }
 
+void AArrow::DeleteBasePointer()
+{
+	base = NULL;
+}
+

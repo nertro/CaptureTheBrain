@@ -106,7 +106,7 @@ void ACapTheBrainCharacter::MoveForward(float Value)
 
 		//Set Animation
 
-		if (arrow)
+		if (hasBrain && arrow)
 		{
 			arrow->PointToBase();
 		}
@@ -128,7 +128,7 @@ void ACapTheBrainCharacter::MoveRight(float Value)
 
 		//Set Animation
 
-		if (arrow)
+		if (hasBrain && arrow)
 		{
 			arrow->PointToBase();
 		}
@@ -222,7 +222,7 @@ class UPrimitiveComponent * OtherComp,
 
 				hasBrain = false;
 				score++;
-				arrow->Destroy();
+				DestroyArrowPointer();
 				brain->Destroy();
 			}
 		}
@@ -237,7 +237,7 @@ class UPrimitiveComponent * OtherComp,
 				other->brain = brain;
 				brain->AttachToHead(other);
 				isLoosingBrain = true;
-				arrow->Destroy();
+				DestroyArrowPointer();
 				other->SpawnArrow();
 			}
 		}
@@ -296,7 +296,7 @@ void ACapTheBrainCharacter::UseItem()
 					FVector newBrainLocation = (*itr)->GetActorLocation();
 					(*itr)->SetActorLocation((*itr)->startPosition);
 					(*itr)->SetActorRotation((*itr)->startRotation);
-					(*itr)->arrow->Destroy();
+					(*itr)->DestroyArrowPointer();
 					(*itr)->brain->Destroy();
 					(*itr)->hasBrain = false;
 
@@ -315,7 +315,13 @@ void ACapTheBrainCharacter::UseItem()
 					ActorItr->Destroy();
 				}
 				spawnCtrl->SpawnBrainBase();
-				arrow->GetBase();
+				for (std::vector<ACapTheBrainCharacter*>::iterator itr = otherPlayers.begin(); itr != otherPlayers.end(); itr++)
+				{
+					if ((*itr)->hasBrain)
+					{
+						(*itr)->arrow->GetBase();
+					}
+				}
 			}
 		}
 
@@ -367,4 +373,11 @@ void ACapTheBrainCharacter::SpawnArrow()
 		arrow->SetActorTransform(this->GetTransform());
 		arrow->SetActorRelativeLocation(FVector(0, 0, ArrowZLocation));
 	}
+}
+
+void ACapTheBrainCharacter::DestroyArrowPointer()
+{
+	arrow->DeleteBasePointer();
+	arrow->Destroy();
+	arrow = NULL;
 }

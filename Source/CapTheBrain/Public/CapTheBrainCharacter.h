@@ -115,6 +115,8 @@ protected:
 
 	void SpawnArrow();
 
+	void DestroyArrowPointer();
+
 	float slowTimer, fastTimer, shieldTimer;
 	float itemTimerDelay = 5.;
 	std::vector<ACapTheBrainCharacter*> otherPlayers;
