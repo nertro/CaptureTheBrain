@@ -50,6 +50,9 @@ class ACapTheBrainCharacter : public ACharacter
 	virtual void Tick(float deltaSeconds) override;
 	virtual void BeginPlay() override;
 
+	bool hasItem;
+	bool isSlow, isFast, hasShield;
+
 protected:
 
 	/** Called for forwards/backward input */
@@ -88,10 +91,6 @@ protected:
 	bool hasBrain;
 
 	bool isLoosingBrain;
-
-	bool hasItem;
-
-	bool isSlow, isFast, hasShield;
 
 	enum ItemTypes{ Slow, Fast, Shield, Swap, Zapp };
 
