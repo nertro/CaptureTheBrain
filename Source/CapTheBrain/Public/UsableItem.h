@@ -14,8 +14,6 @@ public:
 
 	virtual void Use(ACapTheBrainCharacter* player){}
 	virtual void Use(std::vector<ACapTheBrainCharacter*> otherPlayers){}
-	virtual void Tick(ACapTheBrainCharacter* player){}
-	virtual void Tick(std::vector<ACapTheBrainCharacter*> otherPlayers){}
 	virtual void ResetState(ACapTheBrainCharacter* player){}
 	virtual void ResetState(std::vector<ACapTheBrainCharacter*> otherPlayers){}
 

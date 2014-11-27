@@ -254,9 +254,9 @@ void ACapTheBrainCharacter::CollectItem()
 	}
 
 	myControllerHUD->PlayerHasItem = true;
-	/*FRandomStream* str = new FRandomStream();
+	FRandomStream* str = new FRandomStream();
 	str->GenerateNewSeed();
-	currentItem = (ItemTypes)str->RandRange(0, 4);*/
+	currentItem = (ItemTypes)str->RandRange(0, 4);
 	myControllerHUD->currentItem = (int)currentItem;
 }
 
