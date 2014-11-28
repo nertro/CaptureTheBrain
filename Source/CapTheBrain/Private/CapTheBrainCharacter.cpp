@@ -78,6 +78,8 @@ void ACapTheBrainCharacter::BeginPlay()
 	Super::BeginPlay();
 	startPosition = this->GetActorLocation();
 	startRotation = this->GetActorRotation();
+	APlayerController* ctrler = Cast<APlayerController>(Controller);
+	myControllerHUD = Cast<ACharacterHUD>(ctrler->GetHUD());
 }
 
 void ACapTheBrainCharacter::TurnAtRate(float Rate)
@@ -247,12 +249,6 @@ class UPrimitiveComponent * OtherComp,
 void ACapTheBrainCharacter::CollectItem()
 {
 	this->hasItem = true;
-	if (!myControllerHUD)
-	{
-		APlayerController* ctrler = Cast<APlayerController>(Controller);
-		myControllerHUD = Cast<ACharacterHUD>(ctrler->GetHUD());
-	}
-
 	myControllerHUD->PlayerHasItem = true;
 	FRandomStream* str = new FRandomStream();
 	str->GenerateNewSeed();
