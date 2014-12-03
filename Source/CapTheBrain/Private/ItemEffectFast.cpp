@@ -13,11 +13,12 @@ ItemEffectFast::~ItemEffectFast()
 
 void ItemEffectFast::Activate(ACapTheBrainCharacter* player)
 {
+	player->hasItem = false;
 	this->ChangeUI(player);
-	this->ChangeSpeed(player, .1, false);
+	this->ChangeSpeed(player, 10, false);
 }
 
 void ItemEffectFast::Deactivate(ACapTheBrainCharacter* player)
 {
-	this->ChangeSpeed(player, 10, false);
+	this->ResetSpeed(player, 10);
 }

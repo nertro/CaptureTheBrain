@@ -5,7 +5,9 @@
 #include "CapTheBrainCharacter.h"
 #include "ItemEffectSlow.h"
 #include "ItemEffectFast.h"
-#include "ItemEffect.h"
+#include "ItemEffectShield.h"
+#include "ItemEffectSwap.h"
+#include "ItemEffectZapp.h"
 #include "BrainBase.h"
 
 /**

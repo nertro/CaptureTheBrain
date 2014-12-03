@@ -48,6 +48,9 @@ class ACapTheBrainCharacter : public ACharacter
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Camera)
 		float ArrowZLocation = 180;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Spawn)
+		TSubclassOf<class ACollectableItem> BrainBP;
+
 	virtual void Tick(float deltaSeconds) override;
 	virtual void BeginPlay() override;
 
@@ -59,6 +62,15 @@ class ACapTheBrainCharacter : public ACharacter
 
 	float slowTimer, fastTimer, shieldTimer;
 	float itemTimerDelay = 5.;
+
+	ASpawnCtrl* spawnCtrl;
+	AArrow* arrow;
+	void DestroyArrowPointer();
+	ABrainPickup* brain;
+	bool hasBrain;
+
+	FVector startPosition;
+	FRotator startRotation;
 
 protected:
 
@@ -87,13 +99,9 @@ protected:
 	void TouchStopped(ETouchIndex::Type FingerIndex, FVector Location);
 
 	/**My Stuff */
-	FVector startPosition;
-	FRotator startRotation;
 	bool firstUpdate;
 
 	void PickUpItem();
-
-	bool hasBrain;
 
 	bool isLoosingBrain;
 
@@ -119,17 +127,7 @@ protected:
 
 	void SpawnArrow();
 
-	void DestroyArrowPointer();
-
 	std::vector<ACapTheBrainCharacter*> otherPlayers;
-
-	ASpawnCtrl* spawnCtrl;
-
-	AArrow* arrow;
-	ABrainPickup* brain;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Spawn)
-		TSubclassOf<class ACollectableItem> BrainBP;
 
 	int score;
 

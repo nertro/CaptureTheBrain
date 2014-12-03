@@ -20,6 +20,7 @@ protected:
 	void ChangeUI(ACapTheBrainCharacter* player);
 	void MakeSound();
 	void ChangeSpeed(ACapTheBrainCharacter* player, float speedChange, bool onOthers);
+	void ResetSpeed(ACapTheBrainCharacter* player, float speedChange);
 
 	bool onOthers;
 };

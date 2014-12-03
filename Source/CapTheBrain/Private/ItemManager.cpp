@@ -9,6 +9,9 @@ ItemManager::ItemManager()
 {
 	itemEffects.push_back(new ItemEffectFast());
 	itemEffects.push_back(new ItemEffectSlow());
+	itemEffects.push_back(new ItemEffectShield());
+	itemEffects.push_back(new ItemEffectSwap());
+	itemEffects.push_back(new ItemEffectZapp());
 }
 
 ItemManager::~ItemManager()
@@ -33,6 +36,15 @@ void ItemManager::TickEffect(ACapTheBrainCharacter* player, float deltaSeconds)
 		{
 			player->slowTimer = 0;
 			itemEffects[1]->Deactivate(player);
+		}
+	}
+	else if (player->hasShield)
+	{
+		player->shieldTimer += deltaSeconds;
+		if (player->shieldTimer >= player->itemTimerDelay)
+		{
+			player->shieldTimer = 0;
+			itemEffects[2]->Deactivate(player);
 		}
 	}
 }

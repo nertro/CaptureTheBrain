@@ -161,6 +161,8 @@ void ACapTheBrainCharacter::Tick(float deltaSeconds)
 			}
 		}
 
+		ItemManager::GetInstance()->players.push_back(this);
+
 		firstUpdate = false;
 	}
 
@@ -249,117 +251,16 @@ class UPrimitiveComponent * OtherComp,
 
 void ACapTheBrainCharacter::CollectItem()
 {
-	/*this->hasItem = true;
-	myControllerHUD->PlayerHasItem = true;
-	FRandomStream* str = new FRandomStream();
-	str->GenerateNewSeed();
-	currentItem = (ItemTypes)str->RandRange(0, 4);
-	myControllerHUD->currentItem = (int)currentItem;*/
 	ItemManager::GetInstance()->SetItem(this);
 }
 
 void ACapTheBrainCharacter::UseItem()
 {
-	/*if (hasItem)
-	{
-		if (currentItem == ItemTypes::Slow)
-		{
-			for (std::vector<ACapTheBrainCharacter*>::iterator itr = otherPlayers.begin(); itr != otherPlayers.end(); itr++)
-			{
-				if (!(*itr)->hasShield &! (*itr)->isSlow)
-				{
-					(*itr)->SpeedBuffer *= 5.;
-					(*itr)->isSlow = true;
-				}
-			}
-		}
-		else if (currentItem == ItemTypes::Fast)
-		{
-			if (!isFast)
-			{
-				SpeedBuffer /= 5.;
-				isFast = true;
-			}
-		}
-		else if (currentItem == ItemTypes::Shield)
-		{
-			hasShield = true;
-		}
-		else if (currentItem == ItemTypes::Zapp)
-		{
-			for (std::vector<ACapTheBrainCharacter*>::iterator itr = otherPlayers.begin(); itr != otherPlayers.end(); itr++)
-			{
-				if (!(*itr)->hasShield && (*itr)->hasBrain)
-				{
-					FVector newBrainLocation = (*itr)->GetActorLocation();
-					(*itr)->SetActorLocation((*itr)->startPosition);
-					(*itr)->SetActorRotation((*itr)->startRotation);
-					(*itr)->DestroyArrowPointer();
-					(*itr)->brain->Destroy();
-					(*itr)->hasBrain = false;
-
-					UWorld* const World = GetWorld();
-					ACollectableItem* Brain = (ACollectableItem*)World->SpawnActor(BrainBP);
-					Brain->SetActorLocation(newBrainLocation);
-				}
-			}
-		}
-		else if (currentItem == ItemTypes::Swap)
-		{
-			if (spawnCtrl->brainBaseSet)
-			{
-				for (TActorIterator<ABrainBase> ActorItr(GetWorld()); ActorItr; ++ActorItr)
-				{
-					ActorItr->Destroy();
-				}
-				spawnCtrl->SpawnBrainBase();
-				for (std::vector<ACapTheBrainCharacter*>::iterator itr = otherPlayers.begin(); itr != otherPlayers.end(); itr++)
-				{
-					if ((*itr)->hasBrain)
-					{
-						(*itr)->arrow->GetBase();
-					}
-				}
-			}
-		}
-
-		hasItem = false;
-		myControllerHUD->PlayerHasItem = false;*/
-	//}
 	currentItem->Activate(this);
 }
 
 void ACapTheBrainCharacter::TickItem(float deltaSeconds)
 {
-	/*if (isSlow)
-	{
-		slowTimer += deltaSeconds;
-		if (slowTimer > itemTimerDelay)
-		{
-			isSlow = false;
-			slowTimer = 0;
-			SpeedBuffer /= 10.;
-		}
-	}
-	if (isFast)
-	{
-		fastTimer += deltaSeconds;
-		if (fastTimer > itemTimerDelay)
-		{
-			isFast = false;
-			fastTimer = 0;
-			SpeedBuffer *= 3.;;
-		}
-	}
-	if (hasShield)
-	{
-		shieldTimer += deltaSeconds;
-		if (shieldTimer > itemTimerDelay)
-		{
-			hasShield = false;
-			shieldTimer = 0;
-		}
-	}*/
 	ItemManager::GetInstance()->TickEffect(this, deltaSeconds);
 }
 

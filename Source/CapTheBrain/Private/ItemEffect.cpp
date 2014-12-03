@@ -16,7 +16,6 @@ ItemEffect::~ItemEffect()
 void ItemEffect::ChangeUI(ACapTheBrainCharacter* player)
 {
 	player->myControllerHUD->PlayerHasItem = false;
-	player->hasItem = false;
 }
 
 void ItemEffect::MakeSound()
@@ -28,7 +27,7 @@ void ItemEffect::ChangeSpeed(ACapTheBrainCharacter* player, float speedChange, b
 	{
 		for (std::vector<ACapTheBrainCharacter*>::iterator itr = ItemManager::GetInstance()->players.begin(); itr != ItemManager::GetInstance()->players.end(); itr++)
 		{
-			if (*itr != player)
+			if ((*itr) != player && !(*itr)->hasShield && !(*itr)->isSlow)
 			{
 				(*itr)->SpeedBuffer *= speedChange;
 				(*itr)->isSlow = true;
@@ -37,7 +36,24 @@ void ItemEffect::ChangeSpeed(ACapTheBrainCharacter* player, float speedChange, b
 	}
 	else
 	{
+		if (!player->isFast)
+		{
+			player->SpeedBuffer /= speedChange;
+			player->isFast = true;
+		}
+	}
+}
+
+void ItemEffect::ResetSpeed(ACapTheBrainCharacter* player, float speedChange)
+{
+	if (player->isSlow)
+	{
+		player->SpeedBuffer /= speedChange;
+		player->isSlow = false;
+	}
+	else
+	{
 		player->SpeedBuffer *= speedChange;
-		player->isFast = true;
+		player->isFast = false;
 	}
 }
