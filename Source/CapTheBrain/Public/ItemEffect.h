@@ -2,8 +2,8 @@
 
 #pragma once
 #include <vector>
-#include "CapTheBrainCharacter.h"
 
+class ACapTheBrainCharacter;
 /**
  * 
  */
@@ -13,17 +13,13 @@ public:
 	ItemEffect();
 	~ItemEffect();
 
-protected:
-	virtual void Activate() = 0;
+	virtual void Activate(ACapTheBrainCharacter*) = 0;
+	virtual void Deactivate(ACapTheBrainCharacter*) = 0;
 
+protected:
 	void ChangeUI(ACapTheBrainCharacter* player);
 	void MakeSound();
 	void ChangeSpeed(ACapTheBrainCharacter* player, float speedChange, bool onOthers);
-	void ActivateTick(ACapTheBrainCharacter* player, bool onOthers);
-	void DeactivateTick(ACapTheBrainCharacter* player, bool onOther);
 
 	bool onOthers;
-private:
-	void AddPlayer(ACapTheBrainCharacter* player);
-	void RemovePlayer(ACapTheBrainCharacter* player);
 };

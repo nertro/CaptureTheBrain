@@ -14,6 +14,8 @@ class CAPTHEBRAIN_API ACharacterHUD : public AHUD
 {
 	GENERATED_UCLASS_BODY()
 
+	bool PlayerHasItem;
+
 	virtual void BeginPlay() override;
 
 	/** Basic UI Elements*/
@@ -63,8 +65,6 @@ class CAPTHEBRAIN_API ACharacterHUD : public AHUD
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Spawn)
 		UTexture2D* ZappImg;
-
-	bool PlayerHasItem;
 
 	int currentItem;
 

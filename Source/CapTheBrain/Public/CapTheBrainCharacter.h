@@ -5,6 +5,7 @@
 #include "SpawnCtrl.h"
 #include "Arrow.h"
 #include <vector>
+#include "ItemEffect.h"
 
 #include "CapTheBrainCharacter.generated.h"
 
@@ -53,6 +54,12 @@ class ACapTheBrainCharacter : public ACharacter
 	bool hasItem;
 	bool isSlow, isFast, hasShield;
 
+	ACharacterHUD* myControllerHUD;
+	ItemEffect* currentItem;
+
+	float slowTimer, fastTimer, shieldTimer;
+	float itemTimerDelay = 5.;
+
 protected:
 
 	/** Called for forwards/backward input */
@@ -80,8 +87,6 @@ protected:
 	void TouchStopped(ETouchIndex::Type FingerIndex, FVector Location);
 
 	/**My Stuff */
-	ACharacterHUD* myControllerHUD;
-
 	FVector startPosition;
 	FRotator startRotation;
 	bool firstUpdate;
@@ -92,9 +97,9 @@ protected:
 
 	bool isLoosingBrain;
 
-	enum ItemTypes{ Slow, Fast, Shield, Swap, Zapp };
+	//enum ItemTypes{ Slow, Fast, Shield, Swap, Zapp };
 
-	ItemTypes currentItem;
+	//ItemTypes currentItem;
 
 	void ReceiveHit(
 	class UPrimitiveComponent * MyComp,
@@ -116,8 +121,6 @@ protected:
 
 	void DestroyArrowPointer();
 
-	float slowTimer, fastTimer, shieldTimer;
-	float itemTimerDelay = 5.;
 	std::vector<ACapTheBrainCharacter*> otherPlayers;
 
 	ASpawnCtrl* spawnCtrl;

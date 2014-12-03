@@ -8,6 +8,7 @@
 #include "ItemPickup.h"
 #include "BrainPickup.h"
 #include "BrainBase.h"
+#include "ItemManager.h"
 
 //////////////////////////////////////////////////////////////////////////
 // ACapTheBrainCharacter
@@ -248,17 +249,18 @@ class UPrimitiveComponent * OtherComp,
 
 void ACapTheBrainCharacter::CollectItem()
 {
-	this->hasItem = true;
+	/*this->hasItem = true;
 	myControllerHUD->PlayerHasItem = true;
 	FRandomStream* str = new FRandomStream();
 	str->GenerateNewSeed();
 	currentItem = (ItemTypes)str->RandRange(0, 4);
-	myControllerHUD->currentItem = (int)currentItem;
+	myControllerHUD->currentItem = (int)currentItem;*/
+	ItemManager::GetInstance()->SetItem(this);
 }
 
 void ACapTheBrainCharacter::UseItem()
 {
-	if (hasItem)
+	/*if (hasItem)
 	{
 		if (currentItem == ItemTypes::Slow)
 		{
@@ -322,13 +324,14 @@ void ACapTheBrainCharacter::UseItem()
 		}
 
 		hasItem = false;
-		myControllerHUD->PlayerHasItem = false;
-	}
+		myControllerHUD->PlayerHasItem = false;*/
+	//}
+	currentItem->Activate(this);
 }
 
 void ACapTheBrainCharacter::TickItem(float deltaSeconds)
 {
-	if (isSlow)
+	/*if (isSlow)
 	{
 		slowTimer += deltaSeconds;
 		if (slowTimer > itemTimerDelay)
@@ -356,7 +359,8 @@ void ACapTheBrainCharacter::TickItem(float deltaSeconds)
 			hasShield = false;
 			shieldTimer = 0;
 		}
-	}
+	}*/
+	ItemManager::GetInstance()->TickEffect(this, deltaSeconds);
 }
 
 void ACapTheBrainCharacter::SpawnArrow()
