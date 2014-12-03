@@ -2,7 +2,7 @@
 
 #include "CapTheBrain.h"
 #include "SpawnPoint.h"
-
+#include "ActorAdministrator.h"
 #include "CollectableItem.h"
 
 
@@ -50,6 +50,7 @@ void ASpawnPoint::SpawnNewBase()
 		SpawnItem->Capsule->AttachTo(RootComponent);
 		SpawnItem->SetActorTransform(this->GetTransform());
 		SpawnItem->MySpawnPoint = this;
+		ActorAdministrator::GetInstance()->brainBase = (ABrainBase*)SpawnItem;
 	}
 }
 

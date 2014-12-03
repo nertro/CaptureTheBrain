@@ -5,6 +5,7 @@
 
 #include "CollectableItem.h"
 #include "SpawnPoint.h"
+#include "ActorAdministrator.h"
 #include "EngineUtils.h"
 
 
@@ -40,6 +41,7 @@ void ASpawnCtrl::BeginPlay()
 	}
 
 	this->SpawnBrain();
+	ActorAdministrator::GetInstance()->spawnCtrl = this;
 
 	beginPlayReady = true;
 }

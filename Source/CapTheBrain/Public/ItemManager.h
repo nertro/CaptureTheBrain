@@ -28,7 +28,6 @@ public:
 
 	~ItemManager();
 
-	std::vector<ACapTheBrainCharacter*> players;
 	void RemovePlayer(ACapTheBrainCharacter*);
 	void SetItem(ACapTheBrainCharacter*);
 	void TickEffect(ACapTheBrainCharacter*, float);

@@ -5,11 +5,11 @@
 #include "SpawnCtrl.h"
 #include "Arrow.h"
 #include <vector>
-#include "ItemEffect.h"
 
 #include "CapTheBrainCharacter.generated.h"
 
 class ABrainPickup;
+class ItemEffect;
 
 UCLASS(config=Game)
 class ACapTheBrainCharacter : public ACharacter
@@ -63,10 +63,7 @@ class ACapTheBrainCharacter : public ACharacter
 	float slowTimer, fastTimer, shieldTimer;
 	float itemTimerDelay = 5.;
 
-	ASpawnCtrl* spawnCtrl;
-	AArrow* arrow;
 	void DestroyArrowPointer();
-	ABrainPickup* brain;
 	bool hasBrain;
 
 	FVector startPosition;
@@ -126,8 +123,6 @@ protected:
 	void TickItem(float deltaSeconds);
 
 	void SpawnArrow();
-
-	std::vector<ACapTheBrainCharacter*> otherPlayers;
 
 	int score;
 

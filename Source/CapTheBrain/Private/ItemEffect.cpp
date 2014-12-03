@@ -25,7 +25,7 @@ void ItemEffect::ChangeSpeed(ACapTheBrainCharacter* player, float speedChange, b
 {
 	if (onOthers)
 	{
-		for (std::vector<ACapTheBrainCharacter*>::iterator itr = ItemManager::GetInstance()->players.begin(); itr != ItemManager::GetInstance()->players.end(); itr++)
+		for (std::vector<ACapTheBrainCharacter*>::iterator itr = ActorAdministrator::GetInstance()->players.begin(); itr != ActorAdministrator::GetInstance()->players.end(); itr++)
 		{
 			if ((*itr) != player && !(*itr)->hasShield && !(*itr)->isSlow)
 			{

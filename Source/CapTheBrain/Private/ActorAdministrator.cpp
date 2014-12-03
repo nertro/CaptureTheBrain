@@ -3,6 +3,8 @@
 #include "CapTheBrain.h"
 #include "ActorAdministrator.h"
 
+ActorAdministrator* ActorAdministrator::instance = 0;
+
 ActorAdministrator::ActorAdministrator()
 {
 }

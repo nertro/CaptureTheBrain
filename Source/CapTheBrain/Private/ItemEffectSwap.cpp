@@ -27,19 +27,10 @@ void ItemEffectSwap::Deactivate(ACapTheBrainCharacter* player)
 
 void ItemEffectSwap::SwapBase(ACapTheBrainCharacter* player)
 {
-	if (player->spawnCtrl->brainBaseSet)
+	if (ActorAdministrator::GetInstance()->spawnCtrl->brainBaseSet)
 	{
-		for (TActorIterator<ABrainBase> ActorItr(player->GetWorld()); ActorItr; ++ActorItr)
-		{
-			ActorItr->Destroy();
-		}
-		player->spawnCtrl->SpawnBrainBase();
-		for (std::vector<ACapTheBrainCharacter*>::iterator itr = ItemManager::GetInstance()->players.begin(); itr != ItemManager::GetInstance()->players.end(); itr++)
-		{
-			if ((*itr)->hasBrain)
-			{
-				(*itr)->arrow->GetBase();
-			}
-		}
+		ActorAdministrator::GetInstance()->brainBase->Destroy();
+		ActorAdministrator::GetInstance()->spawnCtrl->SpawnBrainBase();
+		ActorAdministrator::GetInstance()->arrow->GetBase();
 	}
 }
