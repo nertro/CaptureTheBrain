@@ -29,7 +29,5 @@ class CAPTHEBRAIN_API AArrow : public AActor
 	void PointToBase();
 
 	void GetBase();
-
-	void DeleteBasePointer();
 	
 };
