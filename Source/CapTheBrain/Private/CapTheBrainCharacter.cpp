@@ -8,6 +8,11 @@
 #include "ItemPickup.h"
 #include "BrainPickup.h"
 #include "BrainBase.h"
+#include "ItemEffect.h"
+#include "ActorAdministrator.h"
+#include "ItemManager.h"
+
+#define ActorAdmin ActorAdministrator::GetInstance()
 
 //////////////////////////////////////////////////////////////////////////
 // ACapTheBrainCharacter
@@ -78,6 +83,8 @@ void ACapTheBrainCharacter::BeginPlay()
 	Super::BeginPlay();
 	startPosition = this->GetActorLocation();
 	startRotation = this->GetActorRotation();
+	APlayerController* ctrler = Cast<APlayerController>(Controller);
+	myControllerHUD = Cast<ACharacterHUD>(ctrler->GetHUD());
 }
 
 void ACapTheBrainCharacter::TurnAtRate(float Rate)
@@ -106,9 +113,9 @@ void ACapTheBrainCharacter::MoveForward(float Value)
 
 		//Set Animation
 
-		if (arrow)
+		if (hasBrain && ActorAdmin->arrow)
 		{
-			arrow->PointToBase();
+			ActorAdmin->arrow->PointToBase();
 		}
 	}
 }
@@ -128,9 +135,9 @@ void ACapTheBrainCharacter::MoveRight(float Value)
 
 		//Set Animation
 
-		if (arrow)
+		if (hasBrain && ActorAdmin->arrow)
 		{
-			arrow->PointToBase();
+			ActorAdmin->arrow->PointToBase();
 		}
 	}
 }
@@ -142,40 +149,19 @@ void ACapTheBrainCharacter::Tick(float deltaSeconds)
 
 	if (firstUpdate)
 	{
-		for (TActorIterator<ACapTheBrainCharacter> ActorItr(GetWorld()); ActorItr; ++ActorItr)
-		{
-			if (*ActorItr != this)
-			{
-				otherPlayers.push_back(*ActorItr);
-			}
-		}
-
-		for (TActorIterator<ASpawnCtrl>SpawnItr(GetWorld()); SpawnItr; ++SpawnItr)
-		{
-			if (!spawnCtrl)
-			{
-				spawnCtrl = *SpawnItr;
-			}
-		}
+		ActorAdmin->players.push_back(this);
 
 		firstUpdate = false;
 	}
 
 	TickItem(deltaSeconds);
-	if (isLoosingBrain)
+	if (FellDown)
 	{
-		if (FellDown)
-		{
-			GotHit = false;
-			SetActorLocation(startPosition);
-			SetActorRotation(startRotation);
-			FVector acloc = this->GetActorLocation();
-			float dist = startPosition.Z - GetActorLocation().Z;
-			if (isLoosingBrain && dist <= 100)
-			{
-				isLoosingBrain = false;
-			}
-		}
+		GotHit = false;
+		FellDown = false;
+		ActorAdmin->brain->DetachFromHead(this, this->GetActorLocation());
+		SetActorLocation(startPosition);
+		SetActorRotation(startRotation);
 	}
 }
 
@@ -193,16 +179,15 @@ class UPrimitiveComponent * OtherComp,
 	{
 		if (Other->IsA(ACollectableItem::StaticClass()))
 		{
-			if (Other->IsA(ABrainPickup::StaticClass()) &! hasBrain)
+			if (Other->IsA(ABrainPickup::StaticClass()) &! hasBrain &! GotHit)
 			{
 				this->hasBrain = true;
-				brain = (ABrainPickup*)Other;
-				if (brain->MySpawnPoint)
+				if (ActorAdmin->brain->MySpawnPoint)
 				{
-					brain->MySpawnPoint->occupied = false;
+					ActorAdmin->brain->MySpawnPoint->occupied = false;
 				}
-				spawnCtrl->SpawnBrainBase();
-				brain->AttachToHead(this);
+				ActorAdmin->spawnCtrl->SpawnBrainBase();
+				ActorAdmin->brain->AttachToHead(this);
 				SpawnArrow();
 			}
 			else if (Other->IsA(AItemPickup::StaticClass()) &! hasItem)
@@ -217,27 +202,24 @@ class UPrimitiveComponent * OtherComp,
 				ABrainBase* other = (ABrainBase*)Other;
 				other->MySpawnPoint->occupied = false;
 				Other->Destroy();
-				spawnCtrl->SpawnBrain();
-				spawnCtrl->brainBaseSet = false;
-
+				ActorAdmin->arrow->Destroy();
+				ActorAdmin->brain->Destroy();
+				ActorAdmin->spawnCtrl->SpawnBrain();
+				ActorAdmin->spawnCtrl->brainBaseSet = false;
 				hasBrain = false;
 				score++;
-				arrow->Destroy();
-				brain->Destroy();
 			}
 		}
 		else if (Other->IsA(ACapTheBrainCharacter::StaticClass()))
 		{
 			ACapTheBrainCharacter* other = (ACapTheBrainCharacter*)Other;
-			if (hasBrain &! other->isLoosingBrain)
+			if (hasBrain &! other->GotHit)
 			{
 				GotHit = true;
 				hasBrain = false;
 				other->hasBrain = true;
-				other->brain = brain;
-				brain->AttachToHead(other);
-				isLoosingBrain = true;
-				arrow->Destroy();
+				ActorAdmin->arrow->Destroy();
+				ActorAdmin->brain->AttachToHead(other);
 				other->SpawnArrow();
 			}
 		}
@@ -246,115 +228,17 @@ class UPrimitiveComponent * OtherComp,
 
 void ACapTheBrainCharacter::CollectItem()
 {
-	this->hasItem = true;
-	if (!myControllerHUD)
-	{
-		APlayerController* ctrler = Cast<APlayerController>(Controller);
-		myControllerHUD = Cast<ACharacterHUD>(ctrler->GetHUD());
-	}
-
-	myControllerHUD->PlayerHasItem = true;
-	FRandomStream* str = new FRandomStream();
-	str->GenerateNewSeed();
-	currentItem = (ItemTypes)str->RandRange(0, 4);
-	myControllerHUD->currentItem = (int)currentItem;
+	ItemManager::GetInstance()->SetItem(this);
 }
 
 void ACapTheBrainCharacter::UseItem()
 {
-	if (hasItem)
-	{
-		if (currentItem == ItemTypes::Slow)
-		{
-			for (std::vector<ACapTheBrainCharacter*>::iterator itr = otherPlayers.begin(); itr != otherPlayers.end(); itr++)
-			{
-				if (!(*itr)->hasShield &! (*itr)->isSlow)
-				{
-					(*itr)->SpeedBuffer *= 5.;
-					(*itr)->isSlow = true;
-				}
-			}
-		}
-		else if (currentItem == ItemTypes::Fast)
-		{
-			if (!isFast)
-			{
-				SpeedBuffer /= 5.;
-				isFast = true;
-			}
-		}
-		else if (currentItem == ItemTypes::Shield)
-		{
-			hasShield = true;
-		}
-		else if (currentItem == ItemTypes::Zapp)
-		{
-			for (std::vector<ACapTheBrainCharacter*>::iterator itr = otherPlayers.begin(); itr != otherPlayers.end(); itr++)
-			{
-				if (!(*itr)->hasShield && (*itr)->hasBrain)
-				{
-					FVector newBrainLocation = (*itr)->GetActorLocation();
-					(*itr)->SetActorLocation((*itr)->startPosition);
-					(*itr)->SetActorRotation((*itr)->startRotation);
-					(*itr)->arrow->Destroy();
-					(*itr)->brain->Destroy();
-					(*itr)->hasBrain = false;
-
-					UWorld* const World = GetWorld();
-					ACollectableItem* Brain = (ACollectableItem*)World->SpawnActor(BrainBP);
-					Brain->SetActorLocation(newBrainLocation);
-				}
-			}
-		}
-		else if (currentItem == ItemTypes::Swap)
-		{
-			if (spawnCtrl->brainBaseSet)
-			{
-				for (TActorIterator<ABrainBase> ActorItr(GetWorld()); ActorItr; ++ActorItr)
-				{
-					ActorItr->Destroy();
-				}
-				spawnCtrl->SpawnBrainBase();
-				arrow->GetBase();
-			}
-		}
-
-		hasItem = false;
-		myControllerHUD->PlayerHasItem = false;
-	}
+	currentItem->Activate(this);
 }
 
 void ACapTheBrainCharacter::TickItem(float deltaSeconds)
 {
-	if (isSlow)
-	{
-		slowTimer += deltaSeconds;
-		if (slowTimer > itemTimerDelay)
-		{
-			isSlow = false;
-			slowTimer = 0;
-			SpeedBuffer /= 10.;
-		}
-	}
-	if (isFast)
-	{
-		fastTimer += deltaSeconds;
-		if (fastTimer > itemTimerDelay)
-		{
-			isFast = false;
-			fastTimer = 0;
-			SpeedBuffer *= 3.;;
-		}
-	}
-	if (hasShield)
-	{
-		shieldTimer += deltaSeconds;
-		if (shieldTimer > itemTimerDelay)
-		{
-			hasShield = false;
-			shieldTimer = 0;
-		}
-	}
+	ItemManager::GetInstance()->TickEffect(this, deltaSeconds);
 }
 
 void ACapTheBrainCharacter::SpawnArrow()
@@ -362,9 +246,10 @@ void ACapTheBrainCharacter::SpawnArrow()
 	if (ArrowBP)
 	{
 		UWorld* const World = GetWorld();
-		arrow = (AArrow*)World->SpawnActor(ArrowBP);
+		AArrow* arrow = (AArrow*)World->SpawnActor(ArrowBP);
 		arrow->Capsule->AttachTo(RootComponent);
 		arrow->SetActorTransform(this->GetTransform());
 		arrow->SetActorRelativeLocation(FVector(0, 0, ArrowZLocation));
+		ActorAdmin->arrow = arrow;
 	}
 }

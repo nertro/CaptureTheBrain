@@ -9,6 +9,7 @@
 #include "CapTheBrainCharacter.generated.h"
 
 class ABrainPickup;
+class ItemEffect;
 
 UCLASS(config=Game)
 class ACapTheBrainCharacter : public ACharacter
@@ -47,8 +48,26 @@ class ACapTheBrainCharacter : public ACharacter
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Camera)
 		float ArrowZLocation = 180;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Spawn)
+		TSubclassOf<class ACollectableItem> BrainBP;
+
 	virtual void Tick(float deltaSeconds) override;
 	virtual void BeginPlay() override;
+
+	bool hasItem;
+	bool isSlow, isFast, hasShield;
+
+	ACharacterHUD* myControllerHUD;
+	ItemEffect* currentItem;
+
+	float slowTimer, fastTimer, shieldTimer;
+	float itemTimerDelay = 5.;
+
+	void DestroyArrowPointer();
+	bool hasBrain;
+
+	FVector startPosition;
+	FRotator startRotation;
 
 protected:
 
@@ -77,25 +96,13 @@ protected:
 	void TouchStopped(ETouchIndex::Type FingerIndex, FVector Location);
 
 	/**My Stuff */
-	ACharacterHUD* myControllerHUD;
-
-	FVector startPosition;
-	FRotator startRotation;
 	bool firstUpdate;
 
 	void PickUpItem();
 
-	bool hasBrain;
+	//enum ItemTypes{ Slow, Fast, Shield, Swap, Zapp };
 
-	bool isLoosingBrain;
-
-	bool hasItem;
-
-	bool isSlow, isFast, hasShield;
-
-	enum ItemTypes{ Slow, Fast, Shield, Swap, Zapp };
-
-	ItemTypes currentItem;
+	//ItemTypes currentItem;
 
 	void ReceiveHit(
 	class UPrimitiveComponent * MyComp,
@@ -114,18 +121,6 @@ protected:
 	void TickItem(float deltaSeconds);
 
 	void SpawnArrow();
-
-	float slowTimer, fastTimer, shieldTimer;
-	float itemTimerDelay = 5.;
-	std::vector<ACapTheBrainCharacter*> otherPlayers;
-
-	ASpawnCtrl* spawnCtrl;
-
-	AArrow* arrow;
-	ABrainPickup* brain;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Spawn)
-		TSubclassOf<class ACollectableItem> BrainBP;
 
 	int score;
 

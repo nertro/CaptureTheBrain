@@ -23,9 +23,11 @@ class CAPTHEBRAIN_API ABrainPickup : public ACollectableItem
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Item)
 		bool GotCollected;
-
+	
+	//used in animation blueprint
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Item)
 		ACapTheBrainCharacter* myPlayer;
 	
 	void AttachToHead(ACapTheBrainCharacter* player);
+	void DetachFromHead(ACapTheBrainCharacter* player, FVector newLocation);
 };

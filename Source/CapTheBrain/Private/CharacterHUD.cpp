@@ -14,8 +14,8 @@ ACharacterHUD::ACharacterHUD(const class FPostConstructInitializeProperties& PCI
 void ACharacterHUD::BeginPlay()
 {
 	Super::BeginPlay();
-	ItemImgs.push_back(SlowImg);
 	ItemImgs.push_back(FastImg);
+	ItemImgs.push_back(SlowImg);
 	ItemImgs.push_back(ShieldImg);
 	ItemImgs.push_back(SwapImg);
 	ItemImgs.push_back(ZappImg);

@@ -2,6 +2,7 @@
 
 #include "CapTheBrain.h"
 #include "Arrow.h"
+#include "ActorAdministrator.h"
 #include "EngineUtils.h"
 
 
@@ -15,6 +16,7 @@ AArrow::AArrow(const class FPostConstructInitializeProperties& PCIP)
 	MeshComponent = PCIP.CreateDefaultSubobject<UStaticMeshComponent>(this, TEXT("Mesh"));
 	MeshComponent->AttachTo(Capsule);
 	MeshComponent->SetRelativeLocation(FVector(-20, -3, -20));
+	ActorAdministrator::GetInstance()->arrow = this;
 }
 
 void AArrow::PointToBase()
