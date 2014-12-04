@@ -32,14 +32,10 @@ void ItemEffectZapp::Zapp(ACapTheBrainCharacter* player)
 		if (!(*itr)->hasShield && (*itr)->hasBrain)
 		{
 			FVector newBrainLocation = (*itr)->GetActorLocation();
-			(*itr)->SetActorLocation((*itr)->startPosition);
-			(*itr)->SetActorRotation((*itr)->startRotation);
-			ActorAdministrator::GetInstance()->brain->Destroy();
+			(*itr)->GotHit = true;
+			ActorAdministrator::GetInstance()->arrow->Destroy();
+			ActorAdministrator::GetInstance()->brain->SetActorLocation(newBrainLocation);
 			(*itr)->hasBrain = false;
-
-			UWorld* const World = player->GetWorld();
-			ACollectableItem* Brain = (ACollectableItem*)World->SpawnActor(player->BrainBP);
-			Brain->SetActorLocation(newBrainLocation);
 		}
 	}
 }

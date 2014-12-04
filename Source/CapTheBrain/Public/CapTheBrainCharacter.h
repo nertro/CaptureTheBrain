@@ -100,8 +100,6 @@ protected:
 
 	void PickUpItem();
 
-	bool isLoosingBrain;
-
 	//enum ItemTypes{ Slow, Fast, Shield, Swap, Zapp };
 
 	//ItemTypes currentItem;

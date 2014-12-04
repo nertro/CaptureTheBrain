@@ -149,35 +149,18 @@ void ACapTheBrainCharacter::Tick(float deltaSeconds)
 
 	if (firstUpdate)
 	{
-
-		/*for (TActorIterator<ASpawnCtrl>SpawnItr(GetWorld()); SpawnItr; ++SpawnItr)
-		{
-			if (!spawnCtrl)
-			{
-				spawnCtrl = *SpawnItr;
-			}
-		}*/
-
 		ActorAdmin->players.push_back(this);
 
 		firstUpdate = false;
 	}
 
 	TickItem(deltaSeconds);
-	if (isLoosingBrain)
+	if (FellDown)
 	{
-		if (FellDown)
-		{
-			GotHit = false;
-			SetActorLocation(startPosition);
-			SetActorRotation(startRotation);
-			FVector acloc = this->GetActorLocation();
-			float dist = startPosition.Z - GetActorLocation().Z;
-			if (isLoosingBrain && dist <= 100)
-			{
-				isLoosingBrain = false;
-			}
-		}
+		GotHit = false;
+		FellDown = false;
+		SetActorLocation(startPosition);
+		SetActorRotation(startRotation);
 	}
 }
 
@@ -218,25 +201,24 @@ class UPrimitiveComponent * OtherComp,
 				ABrainBase* other = (ABrainBase*)Other;
 				other->MySpawnPoint->occupied = false;
 				Other->Destroy();
+				ActorAdmin->arrow->Destroy();
+				ActorAdmin->brain->Destroy();
 				ActorAdmin->spawnCtrl->SpawnBrain();
 				ActorAdmin->spawnCtrl->brainBaseSet = false;
-
 				hasBrain = false;
 				score++;
-				DestroyArrowPointer();
-				ActorAdmin->brain->Destroy();
 			}
 		}
 		else if (Other->IsA(ACapTheBrainCharacter::StaticClass()))
 		{
 			ACapTheBrainCharacter* other = (ACapTheBrainCharacter*)Other;
-			if (hasBrain &! other->isLoosingBrain)
+			if (hasBrain &! other->GotHit)
 			{
 				GotHit = true;
 				hasBrain = false;
 				other->hasBrain = true;
+				ActorAdmin->arrow->Destroy();
 				ActorAdmin->brain->AttachToHead(other);
-				isLoosingBrain = true;
 				other->SpawnArrow();
 			}
 		}
