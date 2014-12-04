@@ -15,10 +15,11 @@ ABrainPickup::ABrainPickup(const class FPostConstructInitializeProperties& PCIP)
 	ActorAdministrator::GetInstance()->brain = this;
 }
 
-
+//Detach Brain from Base, deactivate CollisionCapsule & Snap Mesh to Player
 void ABrainPickup::AttachToHead(ACapTheBrainCharacter* player)
 {
 	myPlayer = player;
+	RootComponent->DetachFromParent();
 	RootComponent = MeshComponent;
 	if (Capsule->IsActive())
 	{
@@ -26,4 +27,20 @@ void ABrainPickup::AttachToHead(ACapTheBrainCharacter* player)
 	}
 	this->RootComponent->SnapTo(player->Mesh , "brainSocket");
 	GotCollected = true;
+}
+
+//Detach from Player, activate collisionCapsule & set mesh local position back to default
+void ABrainPickup::DetachFromHead(ACapTheBrainCharacter* player, FVector newLocation)
+{
+	RootComponent->DetachFromParent();
+	GotCollected = false;
+	myPlayer = NULL;
+	if (!Capsule->IsActive())
+	{
+		Capsule->Activate();
+	}
+	RootComponent = Capsule;
+	MeshComponent->AttachTo(Capsule);
+	MeshComponent->SetRelativeLocation(FVector(0,0,-20));
+	SetActorLocation(newLocation);
 }

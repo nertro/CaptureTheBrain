@@ -159,6 +159,7 @@ void ACapTheBrainCharacter::Tick(float deltaSeconds)
 	{
 		GotHit = false;
 		FellDown = false;
+		ActorAdmin->brain->DetachFromHead(this, this->GetActorLocation());
 		SetActorLocation(startPosition);
 		SetActorRotation(startRotation);
 	}
@@ -178,7 +179,7 @@ class UPrimitiveComponent * OtherComp,
 	{
 		if (Other->IsA(ACollectableItem::StaticClass()))
 		{
-			if (Other->IsA(ABrainPickup::StaticClass()) &! hasBrain)
+			if (Other->IsA(ABrainPickup::StaticClass()) &! hasBrain &! GotHit)
 			{
 				this->hasBrain = true;
 				if (ActorAdmin->brain->MySpawnPoint)

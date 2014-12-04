@@ -31,10 +31,8 @@ void ItemEffectZapp::Zapp(ACapTheBrainCharacter* player)
 	{
 		if (!(*itr)->hasShield && (*itr)->hasBrain)
 		{
-			FVector newBrainLocation = (*itr)->GetActorLocation();
 			(*itr)->GotHit = true;
 			ActorAdministrator::GetInstance()->arrow->Destroy();
-			ActorAdministrator::GetInstance()->brain->SetActorLocation(newBrainLocation);
 			(*itr)->hasBrain = false;
 		}
 	}
