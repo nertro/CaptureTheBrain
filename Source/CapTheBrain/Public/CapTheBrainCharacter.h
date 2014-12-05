@@ -43,6 +43,9 @@ class ACapTheBrainCharacter : public ACharacter
 		bool GotHit = false;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Camera)
+		bool isJumping = false;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Camera)
 		bool FellDown = false;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Camera)
@@ -95,14 +98,13 @@ protected:
 	/** Handler for when a touch input stops. */
 	void TouchStopped(ETouchIndex::Type FingerIndex, FVector Location);
 
+	/** Start Jump Animation, wich triggers jump movement*/
+	void StartJump();
+
 	/**My Stuff */
 	bool firstUpdate;
 
 	void PickUpItem();
-
-	//enum ItemTypes{ Slow, Fast, Shield, Swap, Zapp };
-
-	//ItemTypes currentItem;
 
 	void ReceiveHit(
 	class UPrimitiveComponent * MyComp,

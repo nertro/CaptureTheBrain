@@ -61,7 +61,7 @@ void ACapTheBrainCharacter::SetupPlayerInputComponent(class UInputComponent* Inp
 {
 	// Set up gameplay key bindings
 	check(InputComponent);
-	InputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
+	InputComponent->BindAction("Jump", IE_Pressed, this, &ACapTheBrainCharacter::StartJump);
 	InputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 
 	InputComponent->BindAction("Fire", IE_Pressed, this, &ACapTheBrainCharacter::UseItem);
@@ -140,6 +140,11 @@ void ACapTheBrainCharacter::MoveRight(float Value)
 			ActorAdmin->arrow->PointToBase();
 		}
 	}
+}
+
+void ACapTheBrainCharacter::StartJump()
+{
+	isJumping = true;
 }
 
 /**My Stuff */
