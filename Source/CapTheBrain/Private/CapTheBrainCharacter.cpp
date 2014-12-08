@@ -224,8 +224,6 @@ class UPrimitiveComponent * OtherComp,
 				hasBrain = false;
 				other->hasBrain = true;
 				ActorAdmin->arrow->Destroy();
-				ActorAdmin->brain->AttachToHead(other);
-				other->SpawnArrow();
 			}
 		}
 	}
@@ -238,7 +236,10 @@ void ACapTheBrainCharacter::CollectItem()
 
 void ACapTheBrainCharacter::UseItem()
 {
-	currentItem->Activate(this);
+	if (currentItem)
+	{
+		currentItem->Activate(this);
+	}
 }
 
 void ACapTheBrainCharacter::TickItem(float deltaSeconds)
