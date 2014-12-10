@@ -39,16 +39,16 @@ class ACapTheBrainCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Spawn)
 		TSubclassOf<class AArrow> ArrowBP;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Animation)
 		bool GotHit = false;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Camera)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Animation)
 		bool isJumping = false;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Camera)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Animation)
 		bool FellDown = false;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Camera)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Animation)
 		float ArrowZLocation = 180;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Spawn)

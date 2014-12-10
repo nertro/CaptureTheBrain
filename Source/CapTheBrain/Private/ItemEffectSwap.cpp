@@ -30,7 +30,7 @@ void ItemEffectSwap::SwapBase(ACapTheBrainCharacter* player)
 	if (ActorAdministrator::GetInstance()->spawnCtrl->brainBaseSet)
 	{
 		ActorAdministrator::GetInstance()->brainBase->Destroy();
+		ActorAdministrator::GetInstance()->brainBase = nullptr;
 		ActorAdministrator::GetInstance()->spawnCtrl->SpawnBrainBase();
-		ActorAdministrator::GetInstance()->arrow->GetBase();
 	}
 }

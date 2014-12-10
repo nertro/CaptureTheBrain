@@ -6,6 +6,7 @@
 #include "BrainBase.h"
 #include "CapTheBrainCharacter.h"
 #include "SpawnCtrl.h"
+#include <vector>
 /**
  * 
  */
@@ -25,10 +26,22 @@ public:
 
 	std::vector<ACapTheBrainCharacter*> players;
 	ASpawnCtrl* spawnCtrl;
+
+	UPROPERTY()
 	ABrainPickup* brain;
+
+	UPROPERTY()
 	AArrow* arrow;
+
+	UPROPERTY()
 	ABrainBase* brainBase;
 
+
+	std::vector<ASpawnPoint*> itemSpawnPoints;
+	std::vector<ASpawnPoint*> brainBases;
+
+	UPROPERTY()
+	ASpawnPoint* BrainSpawnPoint;
 private:
 	static ActorAdministrator* instance;
 	ActorAdministrator();

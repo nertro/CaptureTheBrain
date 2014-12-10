@@ -24,10 +24,5 @@ class CAPTHEBRAIN_API AArrow : public AActor
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
 		UStaticMesh* StaticMesh;
 
-	ABrainBase* base;
-
 	void PointToBase();
-
-	void GetBase();
-	
 };

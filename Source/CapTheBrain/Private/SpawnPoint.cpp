@@ -14,6 +14,22 @@ ASpawnPoint::ASpawnPoint(const class FPostConstructInitializeProperties& PCIP)
 	RootComponent = SpawnBox;
 }
 
+void ASpawnPoint::BeginPlay()
+{
+	if (ItemBP)
+	{
+		ActorAdministrator::GetInstance()->itemSpawnPoints.push_back(this);
+	}
+	else if (BrainBaseBP)
+	{
+		ActorAdministrator::GetInstance()->brainBases.push_back(this);
+	}
+	else if (BrainBP)
+	{
+		ActorAdministrator::GetInstance()->BrainSpawnPoint = this;
+	}
+}
+
 void ASpawnPoint::SpawnNewItem()
 {
 	if (ItemBP)

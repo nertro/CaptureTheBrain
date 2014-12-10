@@ -8,6 +8,7 @@
 #include "ActorAdministrator.h"
 #include "EngineUtils.h"
 
+#define ActorAdmin ActorAdministrator::GetInstance()
 
 ASpawnCtrl::ASpawnCtrl(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
@@ -24,26 +25,10 @@ void ASpawnCtrl::BeginPlay()
 {
 	Super::BeginPlay();
 
-	for (TActorIterator<ASpawnPoint>SpawnItr(GetWorld()); SpawnItr; ++SpawnItr)
-	{
-		if (SpawnItr->ItemBP)
-		{
-			itemSpawnPoints.push_back(*SpawnItr);
-		}
-		else if (SpawnItr->BrainBaseBP)
-		{
-			brainBases.push_back(*SpawnItr);
-		}
-		else if (SpawnItr->BrainBP)
-		{
-			BrainSpawnPoint = *SpawnItr;
-		}
-	}
-
-	this->SpawnBrain();
 	ActorAdministrator::GetInstance()->spawnCtrl = this;
 
 	beginPlayReady = true;
+	this->SpawnBrain();
 }
 
 void ASpawnCtrl::Tick(float DeltaSeconds)
@@ -54,11 +39,11 @@ void ASpawnCtrl::Tick(float DeltaSeconds)
 		timer += DeltaSeconds;
 		if (timer > delay)
 		{
-			float pointNo = FMath::FRandRange(0, itemSpawnPoints.size());
+			float pointNo = FMath::FRandRange(0, ActorAdmin->itemSpawnPoints.size());
 			int newPoint = (int)pointNo;
-			if (!itemSpawnPoints[newPoint]->occupied)
+			if (!ActorAdmin->itemSpawnPoints[newPoint]->occupied)
 			{
-				itemSpawnPoints[newPoint]->SpawnNewItem();
+				ActorAdmin->itemSpawnPoints[newPoint]->SpawnNewItem();
 			}
 			timer = 0;
 		}
@@ -67,17 +52,17 @@ void ASpawnCtrl::Tick(float DeltaSeconds)
 
 void ASpawnCtrl::SpawnBrain()
 {
-	BrainSpawnPoint->SpawnNewBrain();
+	ActorAdmin->BrainSpawnPoint->SpawnNewBrain();
 }
 
 void ASpawnCtrl::SpawnBrainBase()
 {
-	float pointNo = FMath::FRandRange(0, brainBases.size());
+	float pointNo = FMath::FRandRange(0, ActorAdmin->brainBases.size());
 	int newPoint = (int)pointNo;
 	if (currentSpawn != newPoint)
 	{
 		currentSpawn = newPoint;
-		brainBases[newPoint]->SpawnNewBase();
+		ActorAdmin->brainBases[newPoint]->SpawnNewBase();
 		brainBaseSet = true;
 	}
 	else

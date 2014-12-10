@@ -113,7 +113,7 @@ void ACapTheBrainCharacter::MoveForward(float Value)
 
 		//Set Animation
 
-		if (hasBrain && ActorAdmin->arrow)
+		if (hasBrain && ActorAdmin->arrow != nullptr)
 		{
 			ActorAdmin->arrow->PointToBase();
 		}
@@ -135,7 +135,7 @@ void ACapTheBrainCharacter::MoveRight(float Value)
 
 		//Set Animation
 
-		if (hasBrain && ActorAdmin->arrow)
+		if (hasBrain && ActorAdmin->arrow != nullptr)
 		{
 			ActorAdmin->arrow->PointToBase();
 		}
@@ -162,11 +162,11 @@ void ACapTheBrainCharacter::Tick(float deltaSeconds)
 	TickItem(deltaSeconds);
 	if (FellDown)
 	{
-		GotHit = false;
-		FellDown = false;
 		ActorAdmin->brain->DetachFromHead(this, this->GetActorLocation());
 		SetActorLocation(startPosition);
 		SetActorRotation(startRotation);
+		GotHit = false;
+		FellDown = false;
 	}
 }
 
@@ -191,7 +191,10 @@ class UPrimitiveComponent * OtherComp,
 				{
 					ActorAdmin->brain->MySpawnPoint->occupied = false;
 				}
-				ActorAdmin->spawnCtrl->SpawnBrainBase();
+				if (ActorAdmin->brainBase == nullptr)
+				{
+					ActorAdmin->spawnCtrl->SpawnBrainBase();
+				}
 				ActorAdmin->brain->AttachToHead(this);
 				SpawnArrow();
 			}
@@ -207,8 +210,11 @@ class UPrimitiveComponent * OtherComp,
 				ABrainBase* other = (ABrainBase*)Other;
 				other->MySpawnPoint->occupied = false;
 				Other->Destroy();
+				ActorAdmin->brainBase = nullptr;
 				ActorAdmin->arrow->Destroy();
+				ActorAdmin->arrow = nullptr;
 				ActorAdmin->brain->Destroy();
+				ActorAdmin->brain = nullptr;
 				ActorAdmin->spawnCtrl->SpawnBrain();
 				ActorAdmin->spawnCtrl->brainBaseSet = false;
 				hasBrain = false;
@@ -222,8 +228,8 @@ class UPrimitiveComponent * OtherComp,
 			{
 				GotHit = true;
 				hasBrain = false;
-				other->hasBrain = true;
 				ActorAdmin->arrow->Destroy();
+				ActorAdmin->arrow = nullptr;
 			}
 		}
 	}

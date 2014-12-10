@@ -30,8 +30,4 @@ private:
 	float timer;
 	bool beginPlayReady;
 	int currentSpawn;
-
-	std::vector<ASpawnPoint*> itemSpawnPoints;
-	std::vector<ASpawnPoint*> brainBases;
-	ASpawnPoint* BrainSpawnPoint;
 };

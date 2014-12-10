@@ -2,7 +2,6 @@
 
 #pragma once
 #include "GameFramework/Actor.h"
-#include <vector>
 
 #include "SpawnPoint.generated.h"
 
@@ -20,6 +19,8 @@ class CAPTHEBRAIN_API ASpawnPoint : public AActor
 	void SpawnNewItem();
 	void SpawnNewBrain();
 	void SpawnNewBase();
+
+	virtual void BeginPlay() override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Spawn)
 		TSubclassOf<class ACollectableItem> ItemBP;

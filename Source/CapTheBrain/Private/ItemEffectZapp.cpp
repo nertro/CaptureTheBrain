@@ -33,6 +33,7 @@ void ItemEffectZapp::Zapp(ACapTheBrainCharacter* player)
 		{
 			(*itr)->GotHit = true;
 			ActorAdministrator::GetInstance()->arrow->Destroy();
+			ActorAdministrator::GetInstance()->arrow = nullptr;
 			(*itr)->hasBrain = false;
 		}
 	}

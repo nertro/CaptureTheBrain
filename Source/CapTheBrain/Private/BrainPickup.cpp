@@ -34,7 +34,7 @@ void ABrainPickup::DetachFromHead(ACapTheBrainCharacter* player, FVector newLoca
 {
 	RootComponent->DetachFromParent();
 	GotCollected = false;
-	myPlayer = NULL;
+	myPlayer = nullptr;
 	if (!Capsule->IsActive())
 	{
 		Capsule->Activate();

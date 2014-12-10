@@ -7,8 +7,12 @@ ActorAdministrator* ActorAdministrator::instance = 0;
 
 ActorAdministrator::ActorAdministrator()
 {
+	brainBase = nullptr;
 }
 
 ActorAdministrator::~ActorAdministrator()
 {
+	delete brainBase;
+	delete arrow;
+	delete brain;
 }

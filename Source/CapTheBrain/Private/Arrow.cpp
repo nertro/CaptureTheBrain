@@ -16,27 +16,11 @@ AArrow::AArrow(const class FPostConstructInitializeProperties& PCIP)
 	MeshComponent = PCIP.CreateDefaultSubobject<UStaticMeshComponent>(this, TEXT("Mesh"));
 	MeshComponent->AttachTo(Capsule);
 	MeshComponent->SetRelativeLocation(FVector(-20, -3, -20));
-	ActorAdministrator::GetInstance()->arrow = this;
 }
 
 void AArrow::PointToBase()
 {
-	if (!base)
-	{
-		GetBase();
-	}
-	else
-	{
-		FVector direction = GetActorLocation() - base->GetActorLocation();
+		FVector direction = GetActorLocation() - ActorAdministrator::GetInstance()->brainBase->GetActorLocation();
 		SetActorRotation(direction.Rotation());
-	}
-}
-
-void AArrow::GetBase()
-{
-	for (TActorIterator<ABrainBase> ActorItr(GetWorld()); ActorItr; ++ActorItr)
-	{
-		base = *ActorItr;
-	}
 }
 
