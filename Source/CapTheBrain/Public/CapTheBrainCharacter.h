@@ -60,7 +60,9 @@ class ACapTheBrainCharacter : public ACharacter
 	bool hasItem;
 	bool isSlow, isFast, hasShield;
 
+	UPROPERTY()
 	ACharacterHUD* myControllerHUD;
+
 	ItemEffect* currentItem;
 
 	float slowTimer, fastTimer, shieldTimer;

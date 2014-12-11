@@ -3,6 +3,8 @@
 #pragma once
 
 #include "AIController.h"
+#include "ActorAdministrator.h"
+
 #include "CTBAIController.generated.h"
 
 /**
@@ -13,6 +15,8 @@ class CAPTHEBRAIN_API ACTBAIController : public AAIController
 {
 	GENERATED_UCLASS_BODY()
 
-	
-	
+	void GetBrain();
+	void GetItem(){}
+	void ChasePlayer(){}
+	void GoToBase();
 };

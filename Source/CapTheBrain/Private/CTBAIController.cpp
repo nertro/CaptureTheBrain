@@ -10,4 +10,13 @@ ACTBAIController::ACTBAIController(const class FPostConstructInitializePropertie
 
 }
 
+void ACTBAIController::GetBrain()
+{
+	MoveToActor(ActorAdministrator::GetInstance()->brain);
+}
+
+void ACTBAIController::GoToBase()
+{
+	MoveToActor(ActorAdministrator::GetInstance()->brainBase);
+}
 

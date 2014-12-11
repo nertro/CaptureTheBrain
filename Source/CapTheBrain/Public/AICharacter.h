@@ -19,7 +19,8 @@ class CAPTHEBRAIN_API AAICharacter : public ACapTheBrainCharacter
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = BlueprintDefaults)
 		FVector startLocation;
 
-	void ReceiveHit(
+	UFUNCTION(BlueprintCallable, Category = Hit)
+	void CollectSphereReceiveHit(
 	class UPrimitiveComponent * MyComp,
 	class AActor * Other,
 	class UPrimitiveComponent * OtherComp,
@@ -27,6 +28,10 @@ class CAPTHEBRAIN_API AAICharacter : public ACapTheBrainCharacter
 		FVector HitLocation,
 		FVector HitNormal,
 		FVector NormalImpulse,
-		const FHitResult & Hit) override;
+		const FHitResult & Hit);
+
+	virtual void Tick(float deltaSeconds) override;
+
+	bool hasNoGoal;
 	
 };

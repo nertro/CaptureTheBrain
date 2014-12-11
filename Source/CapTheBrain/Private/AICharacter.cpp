@@ -16,7 +16,26 @@ void AAICharacter::BeginPlay()
 	ACharacter::BeginPlay();
 }
 
-void AAICharacter::ReceiveHit(
+void AAICharacter::Tick(float deltaSeconds)
+{
+	Super::Tick(deltaSeconds);
+
+	ACTBAIController* ctrl = Cast<ACTBAIController>(Controller);
+	if (ctrl->GetMoveStatus() == EPathFollowingStatus::Idle)
+	{
+		MoveForward(40);
+		if (hasBrain)
+		{
+			ctrl->GoToBase();
+		}
+		else if (!hasBrain)
+		{
+			ctrl->GetBrain();
+		}
+	}
+}
+
+void AAICharacter::CollectSphereReceiveHit(
 class UPrimitiveComponent * MyComp,
 class AActor * Other,
 class UPrimitiveComponent * OtherComp,

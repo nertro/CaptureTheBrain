@@ -24,7 +24,10 @@ public:
 
 	~ActorAdministrator();
 
+	UPROPERTY()
 	std::vector<ACapTheBrainCharacter*> players;
+
+	UPROPERTY()
 	ASpawnCtrl* spawnCtrl;
 
 	UPROPERTY()
@@ -36,8 +39,10 @@ public:
 	UPROPERTY()
 	ABrainBase* brainBase;
 
-
+	UPROPERTY()
 	std::vector<ASpawnPoint*> itemSpawnPoints;
+
+	UPROPERTY()
 	std::vector<ASpawnPoint*> brainBases;
 
 	UPROPERTY()
