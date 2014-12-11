@@ -3,6 +3,7 @@
 #include "CapTheBrain.h"
 #include "CapTheBrainCharacter.h"
 #include "EngineUtils.h"
+#include "BrainzlapGameInstance.h"
 
 #include "CollectableItem.h"
 #include "ItemPickup.h"
@@ -69,6 +70,7 @@ void ACapTheBrainCharacter::SetupPlayerInputComponent(class UInputComponent* Inp
 
 void ACapTheBrainCharacter::BeginPlay()
 {
+	gameInstance = Cast<UBrainzlapGameInstance>(GetGameInstance());
 	Super::BeginPlay();
 	ActorAdmin->brainBase = nullptr;
 	ActorAdmin->arrow = nullptr;

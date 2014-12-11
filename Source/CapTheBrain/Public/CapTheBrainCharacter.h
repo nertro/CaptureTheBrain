@@ -10,6 +10,7 @@
 
 class ABrainPickup;
 class ItemEffect;
+class UBrainzlapGameInstance;
 
 UCLASS(config=Game)
 class ACapTheBrainCharacter : public ACharacter
@@ -66,6 +67,8 @@ class ACapTheBrainCharacter : public ACharacter
 	FRotator startRotation;
 
 protected:
+
+	UBrainzlapGameInstance* gameInstance;
 
 	/** Called for forwards/backward input */
 	void MoveForward(float Value);
