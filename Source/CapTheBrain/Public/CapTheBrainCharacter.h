@@ -106,7 +106,7 @@ protected:
 
 	void PickUpItem();
 
-	void ReceiveHit(
+	virtual void ReceiveHit(
 	class UPrimitiveComponent * MyComp,
 	class AActor * Other,
 	class UPrimitiveComponent * OtherComp,
@@ -114,7 +114,7 @@ protected:
 		FVector HitLocation,
 		FVector HitNormal,
 		FVector NormalImpulse,
-		const FHitResult & Hit) OVERRIDE;
+		const FHitResult & Hit) override;
 
 	void CollectItem();
 
