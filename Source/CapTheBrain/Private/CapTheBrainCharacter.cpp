@@ -39,17 +39,6 @@ ACapTheBrainCharacter::ACapTheBrainCharacter(const class FPostConstructInitializ
 	CharacterMovement->JumpZVelocity = 200.f;
 	CharacterMovement->AirControl = 0.2f;
 
-	// Create a camera boom (pulls in towards the player if there is a collision)
-	CameraBoom = PCIP.CreateDefaultSubobject<USpringArmComponent>(this, TEXT("CameraBoom"));
-	CameraBoom->AttachTo(RootComponent);
-	CameraBoom->TargetArmLength = 300.0f; // The camera follows at this distance behind the character	
-	CameraBoom->bUsePawnControlRotation = true; // Rotate the arm based on the controller
-
-	// Create a follow camera
-	FollowCamera = PCIP.CreateDefaultSubobject<UCameraComponent>(this, TEXT("FollowCamera"));
-	FollowCamera->AttachTo(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
-	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
-
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++) 
 }
@@ -81,10 +70,10 @@ void ACapTheBrainCharacter::SetupPlayerInputComponent(class UInputComponent* Inp
 void ACapTheBrainCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	ActorAdmin->brainBase = nullptr;
+	ActorAdmin->arrow = nullptr;
 	startPosition = this->GetActorLocation();
 	startRotation = this->GetActorRotation();
-	APlayerController* ctrler = Cast<APlayerController>(Controller);
-	myControllerHUD = Cast<ACharacterHUD>(ctrler->GetHUD());
 }
 
 void ACapTheBrainCharacter::TurnAtRate(float Rate)
@@ -186,7 +175,6 @@ class UPrimitiveComponent * OtherComp,
 		{
 			if (Other->IsA(ABrainPickup::StaticClass()) &! hasBrain &! GotHit)
 			{
-				this->hasBrain = true;
 				if (ActorAdmin->brain->MySpawnPoint)
 				{
 					ActorAdmin->brain->MySpawnPoint->occupied = false;
@@ -197,6 +185,7 @@ class UPrimitiveComponent * OtherComp,
 				}
 				ActorAdmin->brain->AttachToHead(this);
 				SpawnArrow();
+				this->hasBrain = true;
 			}
 			else if (Other->IsA(AItemPickup::StaticClass()) &! hasItem)
 			{
@@ -259,7 +248,7 @@ void ACapTheBrainCharacter::SpawnArrow()
 	{
 		UWorld* const World = GetWorld();
 		AArrow* arrow = (AArrow*)World->SpawnActor(ArrowBP);
-		arrow->Capsule->AttachTo(RootComponent);
+		arrow->MeshComponent->AttachTo(RootComponent);
 		arrow->SetActorTransform(this->GetTransform());
 		arrow->SetActorRelativeLocation(FVector(0, 0, ArrowZLocation));
 		ActorAdmin->arrow = arrow;

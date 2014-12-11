@@ -13,7 +13,7 @@ AAICharacter::AAICharacter(const class FPostConstructInitializeProperties& PCIP)
 
 void AAICharacter::BeginPlay()
 {
-	ACharacter::BeginPlay();
+	Super::BeginPlay();
 }
 
 void AAICharacter::Tick(float deltaSeconds)
@@ -28,22 +28,13 @@ void AAICharacter::Tick(float deltaSeconds)
 		{
 			ctrl->GoToBase();
 		}
-		else if (!hasBrain)
+		else if (!hasBrain && ActorAdministrator::GetInstance()->brainBase == nullptr)
 		{
 			ctrl->GetBrain();
 		}
+		else
+		{
+			ctrl->GoToBase();
+		}
 	}
-}
-
-void AAICharacter::CollectSphereReceiveHit(
-class UPrimitiveComponent * MyComp,
-class AActor * Other,
-class UPrimitiveComponent * OtherComp,
-	bool bSelfMoved,
-	FVector HitLocation,
-	FVector HitNormal,
-	FVector NormalImpulse,
-	const FHitResult & Hit)
-{
-	Super::ReceiveHit(MyComp, Other, OtherComp, bSelfMoved, HitLocation, HitNormal, NormalImpulse, Hit);
 }

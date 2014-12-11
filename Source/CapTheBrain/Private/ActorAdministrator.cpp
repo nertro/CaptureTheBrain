@@ -16,3 +16,5 @@ ActorAdministrator::~ActorAdministrator()
 	delete arrow;
 	delete brain;
 }
+
+

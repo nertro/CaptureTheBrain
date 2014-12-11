@@ -15,15 +15,6 @@ UCLASS(config=Game)
 class ACapTheBrainCharacter : public ACharacter
 {
 	GENERATED_UCLASS_BODY()
-
-	/** Camera boom positioning the camera behind the character */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
-	TSubobjectPtr<class USpringArmComponent> CameraBoom;
-
-	/** Follow camera */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
-		TSubobjectPtr<class UCameraComponent> FollowCamera;
-
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 		float BaseTurnRate;

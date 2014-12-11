@@ -21,10 +21,11 @@ void ABrainPickup::AttachToHead(ACapTheBrainCharacter* player)
 	myPlayer = player;
 	RootComponent->DetachFromParent();
 	RootComponent = MeshComponent;
-	if (Capsule->IsActive())
+	/*if (Capsule->IsActive())
 	{
 		Capsule->Deactivate();
-	}
+	}*/
+	MeshComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	this->RootComponent->SnapTo(player->Mesh , "brainSocket");
 	GotCollected = true;
 }

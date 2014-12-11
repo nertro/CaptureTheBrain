@@ -9,13 +9,9 @@
 AArrow::AArrow(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
 {
-	PrimaryActorTick.bCanEverTick = true;
-	Capsule = PCIP.CreateDefaultSubobject<UCapsuleComponent>(this, TEXT("CapsuleCollider"));
-	Capsule->InitCapsuleSize(10.f, 10.f);
-	RootComponent = Capsule;
 	MeshComponent = PCIP.CreateDefaultSubobject<UStaticMeshComponent>(this, TEXT("Mesh"));
-	MeshComponent->AttachTo(Capsule);
 	MeshComponent->SetRelativeLocation(FVector(-20, -3, -20));
+	RootComponent = MeshComponent;
 }
 
 void AArrow::PointToBase()
