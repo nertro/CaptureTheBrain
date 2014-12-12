@@ -18,6 +18,9 @@ class CAPTHEBRAIN_API AAICharacter : public ACapTheBrainCharacter
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = BlueprintDefaults)
 		FVector startLocation;
 
+	UFUNCTION(BlueprintCallable, Category = AICharacter)
+		bool GetHasBrain();
+
 	virtual void Tick(float deltaSeconds) override;
 
 	bool hasNoGoal;

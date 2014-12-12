@@ -14,8 +14,12 @@ class CAPTHEBRAIN_API ACTBAIController : public AAIController
 {
 	GENERATED_UCLASS_BODY()
 
-	void GetBrain();
-	void GetItem(){}
-	void ChasePlayer(){}
-	void GoToBase();
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = AIController)
+		UBlackboardData* Blackboard;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = AIController)
+		UBehaviorTree* BehaviorTree;
+
+protected:
+	void BeginPlay() override;
 };

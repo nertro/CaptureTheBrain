@@ -8,18 +8,15 @@
 ACTBAIController::ACTBAIController(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
 {
-
+	
 }
 
-void ACTBAIController::GetBrain()
+void ACTBAIController::BeginPlay()
 {
-	UBrainzlapGameInstance* gameInstance = Cast<UBrainzlapGameInstance>(GetGameInstance());
-	MoveToActor((AActor*)gameInstance->brain);
-}
-
-void ACTBAIController::GoToBase()
-{
-	UBrainzlapGameInstance* gameInstance = Cast<UBrainzlapGameInstance>(GetGameInstance());
-	MoveToActor(gameInstance->brainBase);
+	if (Blackboard && BehaviorTree)
+	{
+		UseBlackboard(Blackboard);
+		RunBehaviorTree(BehaviorTree);
+	}
 }
 
