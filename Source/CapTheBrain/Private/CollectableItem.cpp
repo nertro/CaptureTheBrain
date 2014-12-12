@@ -2,6 +2,7 @@
 
 #include "CapTheBrain.h"
 #include "CollectableItem.h"
+#include "BrainzlapGameInstance.h"
 
 
 ACollectableItem::ACollectableItem(const class FPostConstructInitializeProperties& PCIP)
@@ -15,4 +16,7 @@ ACollectableItem::ACollectableItem(const class FPostConstructInitializePropertie
 	RootComponent = Capsule;
 }
 
-
+void ACollectableItem::BeginPlay()
+{
+	gameInstance = Cast<UBrainzlapGameInstance>(GetGameInstance());
+}

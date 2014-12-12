@@ -23,9 +23,10 @@ void ItemEffect::MakeSound()
 
 void ItemEffect::ChangeSpeed(ACapTheBrainCharacter* player, float speedChange, bool onOthers)
 {
+	gameInstance = Cast<UBrainzlapGameInstance>(player->GetGameInstance());
 	if (onOthers)
 	{
-		for (std::vector<ACapTheBrainCharacter*>::iterator itr = ActorAdministrator::GetInstance()->players.begin(); itr != ActorAdministrator::GetInstance()->players.end(); itr++)
+		for (std::vector<ACapTheBrainCharacter*>::iterator itr = gameInstance->players.begin(); itr != gameInstance->players.end(); itr++)
 		{
 			if ((*itr) != player && !(*itr)->hasShield && !(*itr)->isSlow)
 			{

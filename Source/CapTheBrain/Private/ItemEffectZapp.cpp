@@ -5,7 +5,6 @@
 #include "CapTheBrainCharacter.h"
 #include "ItemManager.h"
 #include "BrainPickup.h"
-#include "ActorAdministrator.h"
 
 ItemEffectZapp::ItemEffectZapp()
 {
@@ -27,13 +26,13 @@ void ItemEffectZapp::Deactivate(ACapTheBrainCharacter* player)
 
 void ItemEffectZapp::Zapp(ACapTheBrainCharacter* player)
 {
-	for (std::vector<ACapTheBrainCharacter*>::iterator itr = ActorAdministrator::GetInstance()->players.begin(); itr != ActorAdministrator::GetInstance()->players.end(); itr++)
+	gameInstance = Cast<UBrainzlapGameInstance>(player->GetGameInstance());
+	for (std::vector<ACapTheBrainCharacter*>::iterator itr = gameInstance->players.begin(); itr != gameInstance->players.end(); itr++)
 	{
 		if (!(*itr)->hasShield && (*itr)->hasBrain)
 		{
 			(*itr)->GotHit = true;
-			ActorAdministrator::GetInstance()->arrow->Destroy();
-			ActorAdministrator::GetInstance()->arrow = nullptr;
+			gameInstance->arrow->Destroy();
 			(*itr)->hasBrain = false;
 		}
 	}

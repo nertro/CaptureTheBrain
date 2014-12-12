@@ -10,10 +10,7 @@
 #include "BrainPickup.h"
 #include "BrainBase.h"
 #include "ItemEffect.h"
-#include "ActorAdministrator.h"
 #include "ItemManager.h"
-
-#define ActorAdmin ActorAdministrator::GetInstance()
 
 //////////////////////////////////////////////////////////////////////////
 // ACapTheBrainCharacter
@@ -72,8 +69,6 @@ void ACapTheBrainCharacter::BeginPlay()
 {
 	gameInstance = Cast<UBrainzlapGameInstance>(GetGameInstance());
 	Super::BeginPlay();
-	ActorAdmin->brainBase = nullptr;
-	ActorAdmin->arrow = nullptr;
 	startPosition = this->GetActorLocation();
 	startRotation = this->GetActorRotation();
 }
@@ -104,9 +99,9 @@ void ACapTheBrainCharacter::MoveForward(float Value)
 
 		//Set Animation
 
-		if (hasBrain && ActorAdmin->arrow != nullptr)
+		if (hasBrain)
 		{
-			ActorAdmin->arrow->PointToBase();
+			gameInstance->arrow->PointToBase();
 		}
 	}
 }
@@ -126,9 +121,9 @@ void ACapTheBrainCharacter::MoveRight(float Value)
 
 		//Set Animation
 
-		if (hasBrain && ActorAdmin->arrow != nullptr)
+		if (hasBrain)
 		{
-			ActorAdmin->arrow->PointToBase();
+			gameInstance->arrow->PointToBase();
 		}
 	}
 }
@@ -145,7 +140,7 @@ void ACapTheBrainCharacter::Tick(float deltaSeconds)
 
 	if (firstUpdate)
 	{
-		ActorAdmin->players.push_back(this);
+		gameInstance->players.push_back(this);
 
 		firstUpdate = false;
 	}
@@ -153,7 +148,7 @@ void ACapTheBrainCharacter::Tick(float deltaSeconds)
 	TickItem(deltaSeconds);
 	if (FellDown)
 	{
-		ActorAdmin->brain->DetachFromHead(this, this->GetActorLocation());
+		gameInstance->brain->DetachFromHead(this, this->GetActorLocation());
 		SetActorLocation(startPosition);
 		SetActorRotation(startRotation);
 		GotHit = false;
@@ -177,15 +172,15 @@ class UPrimitiveComponent * OtherComp,
 		{
 			if (Other->IsA(ABrainPickup::StaticClass()) &! hasBrain &! GotHit)
 			{
-				if (ActorAdmin->brain->MySpawnPoint)
+				if (gameInstance->brain->MySpawnPoint)
 				{
-					ActorAdmin->brain->MySpawnPoint->occupied = false;
+					gameInstance->brain->MySpawnPoint->occupied = false;
 				}
-				if (ActorAdmin->brainBase == nullptr)
+				if (!gameInstance->spawnCtrl->brainBaseSet)
 				{
-					ActorAdmin->spawnCtrl->SpawnBrainBase();
+					gameInstance->spawnCtrl->SpawnBrainBase();
 				}
-				ActorAdmin->brain->AttachToHead(this);
+				gameInstance->brain->AttachToHead(this);
 				SpawnArrow();
 				this->hasBrain = true;
 			}
@@ -201,13 +196,10 @@ class UPrimitiveComponent * OtherComp,
 				ABrainBase* other = (ABrainBase*)Other;
 				other->MySpawnPoint->occupied = false;
 				Other->Destroy();
-				ActorAdmin->brainBase = nullptr;
-				ActorAdmin->arrow->Destroy();
-				ActorAdmin->arrow = nullptr;
-				ActorAdmin->brain->Destroy();
-				ActorAdmin->brain = nullptr;
-				ActorAdmin->spawnCtrl->SpawnBrain();
-				ActorAdmin->spawnCtrl->brainBaseSet = false;
+				gameInstance->arrow->Destroy();
+				gameInstance->brain->Destroy();
+				gameInstance->spawnCtrl->SpawnBrain();
+				gameInstance->spawnCtrl->brainBaseSet = false;
 				hasBrain = false;
 				score++;
 			}
@@ -219,8 +211,7 @@ class UPrimitiveComponent * OtherComp,
 			{
 				GotHit = true;
 				hasBrain = false;
-				ActorAdmin->arrow->Destroy();
-				ActorAdmin->arrow = nullptr;
+				gameInstance->arrow->Destroy();
 			}
 		}
 	}
@@ -253,6 +244,6 @@ void ACapTheBrainCharacter::SpawnArrow()
 		arrow->MeshComponent->AttachTo(RootComponent);
 		arrow->SetActorTransform(this->GetTransform());
 		arrow->SetActorRelativeLocation(FVector(0, 0, ArrowZLocation));
-		ActorAdmin->arrow = arrow;
+		gameInstance->arrow = arrow;
 	}
 }

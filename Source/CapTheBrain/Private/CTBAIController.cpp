@@ -2,6 +2,7 @@
 
 #include "CapTheBrain.h"
 #include "CTBAIController.h"
+#include "BrainzlapGameInstance.h"
 
 
 ACTBAIController::ACTBAIController(const class FPostConstructInitializeProperties& PCIP)
@@ -12,11 +13,13 @@ ACTBAIController::ACTBAIController(const class FPostConstructInitializePropertie
 
 void ACTBAIController::GetBrain()
 {
-	MoveToActor(ActorAdministrator::GetInstance()->brain);
+	UBrainzlapGameInstance* gameInstance = Cast<UBrainzlapGameInstance>(GetGameInstance());
+	MoveToActor((AActor*)gameInstance->brain);
 }
 
 void ACTBAIController::GoToBase()
 {
-	MoveToActor(ActorAdministrator::GetInstance()->brainBase);
+	UBrainzlapGameInstance* gameInstance = Cast<UBrainzlapGameInstance>(GetGameInstance());
+	MoveToActor(gameInstance->brainBase);
 }
 

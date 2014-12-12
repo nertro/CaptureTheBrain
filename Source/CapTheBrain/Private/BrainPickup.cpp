@@ -2,7 +2,6 @@
 
 #include "CapTheBrain.h"
 #include "BrainPickup.h"
-#include "ActorAdministrator.h"
 
 
 ABrainPickup::ABrainPickup(const class FPostConstructInitializeProperties& PCIP)
@@ -12,7 +11,6 @@ ABrainPickup::ABrainPickup(const class FPostConstructInitializeProperties& PCIP)
 	MeshComponent->AttachTo(Capsule);
 	MeshComponent->SetRelativeLocation(FVector(0, 0, -20));
 	Capsule->SetCapsuleSize(30, 15);
-	ActorAdministrator::GetInstance()->brain = this;
 }
 
 //Detach Brain from Base, deactivate CollisionCapsule & Snap Mesh to Player

@@ -2,6 +2,7 @@
 
 #include "CapTheBrain.h"
 #include "AICharacter.h"
+#include "BrainzlapGameInstance.h"
 
 
 AAICharacter::AAICharacter(const class FPostConstructInitializeProperties& PCIP)
@@ -28,7 +29,7 @@ void AAICharacter::Tick(float deltaSeconds)
 		{
 			ctrl->GoToBase();
 		}
-		else if (!hasBrain && ActorAdministrator::GetInstance()->brainBase == nullptr)
+		else if (!hasBrain && gameInstance->brainBase == nullptr)
 		{
 			ctrl->GetBrain();
 		}

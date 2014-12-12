@@ -2,7 +2,7 @@
 
 #include "CapTheBrain.h"
 #include "Arrow.h"
-#include "ActorAdministrator.h"
+#include "BrainzlapGameInstance.h"
 #include "EngineUtils.h"
 
 
@@ -16,7 +16,8 @@ AArrow::AArrow(const class FPostConstructInitializeProperties& PCIP)
 
 void AArrow::PointToBase()
 {
-		FVector direction = GetActorLocation() - ActorAdministrator::GetInstance()->brainBase->GetActorLocation();
-		SetActorRotation(direction.Rotation());
+	UBrainzlapGameInstance* instance = Cast<UBrainzlapGameInstance>(GetGameInstance());
+	FVector direction = GetActorLocation() - instance->brainBase->GetActorLocation();
+	SetActorRotation(direction.Rotation());
 }
 

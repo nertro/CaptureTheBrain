@@ -3,7 +3,6 @@
 #pragma once
 
 #include "AIController.h"
-#include "ActorAdministrator.h"
 
 #include "CTBAIController.generated.h"
 

@@ -9,6 +9,9 @@
 /**
  * 
  */
+
+class UBrainzlapGameInstance;
+
 UCLASS()
 class CAPTHEBRAIN_API ACollectableItem : public AActor
 {
@@ -20,4 +23,8 @@ class CAPTHEBRAIN_API ACollectableItem : public AActor
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Item)
 		ASpawnPoint* MySpawnPoint;
 	
+protected:
+	UBrainzlapGameInstance* gameInstance;
+
+	void BeginPlay() override;
 };
