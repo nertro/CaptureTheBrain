@@ -4,6 +4,7 @@
 #include "ItemEffect.h"
 #include "CapTheBrainCharacter.h"
 #include "ItemManager.h"
+#include "PlayerCharacter.h"
 
 ItemEffect::ItemEffect()
 {
@@ -15,7 +16,10 @@ ItemEffect::~ItemEffect()
 
 void ItemEffect::ChangeUI(ACapTheBrainCharacter* player)
 {
-	player->myControllerHUD->PlayerHasItem = false;
+	if (player->IsA(APlayerCharacter::StaticClass()))
+	{
+		player->myControllerHUD->PlayerHasItem = false;
+	}
 }
 
 void ItemEffect::MakeSound()

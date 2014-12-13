@@ -2,6 +2,7 @@
 
 #include "CapTheBrain.h"
 #include "ItemManager.h"
+#include "PlayerCharacter.h"
 
 ItemManager* ItemManager::instance = 0;
 
@@ -52,10 +53,13 @@ void ItemManager::TickEffect(ACapTheBrainCharacter* player, float deltaSeconds)
 void ItemManager::SetItem(ACapTheBrainCharacter* player)
 {
 	player->hasItem = true;
-	player->myControllerHUD->PlayerHasItem = true;
 	FRandomStream* str = new FRandomStream();
 	str->GenerateNewSeed();
 	int newItem = str->RandRange(0, itemEffects.size() - 1);
 	player->currentItem = itemEffects[newItem];
-	player->myControllerHUD->currentItem = newItem;
+	if (player->IsA(APlayerCharacter::StaticClass()))
+	{
+		player->myControllerHUD->PlayerHasItem = true;
+		player->myControllerHUD->currentItem = newItem;
+	}
 }

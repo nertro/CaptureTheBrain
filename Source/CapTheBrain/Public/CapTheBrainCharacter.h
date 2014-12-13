@@ -49,7 +49,9 @@ class ACapTheBrainCharacter : public ACharacter
 	virtual void Tick(float deltaSeconds) override;
 	virtual void BeginPlay() override;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Item)
 	bool hasItem;
+
 	bool isSlow, isFast, hasShield;
 
 	UPROPERTY()
@@ -114,6 +116,7 @@ protected:
 
 	void CollectItem();
 
+	UFUNCTION(BlueprintCallable, Category = Item)
 	void UseItem();
 
 	void TickItem(float deltaSeconds);
