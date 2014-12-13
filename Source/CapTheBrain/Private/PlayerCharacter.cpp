@@ -23,7 +23,10 @@ APlayerCharacter::APlayerCharacter(const class FPostConstructInitializePropertie
 void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	APlayerController* ctrler = Cast<APlayerController>(Controller);
-	myControllerHUD = Cast<ACharacterHUD>(ctrler->GetHUD());
+	if (Controller)
+	{
+		APlayerController* ctrler = Cast<APlayerController>(Controller);
+		myControllerHUD = Cast<ACharacterHUD>(ctrler->GetHUD());
+	}
 }
 
