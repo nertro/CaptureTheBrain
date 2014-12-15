@@ -11,3 +11,16 @@ UBrainzlapGameInstance::UBrainzlapGameInstance(const class FPostConstructInitial
 }
 
 
+ASpawnPoint* UBrainzlapGameInstance::GetTargetItem()
+{
+	for (std::vector<ASpawnPoint*>::iterator itr = itemSpawnPoints.begin(); itr != itemSpawnPoints.end(); itr++)
+	{
+		if ((*itr)->occupied)
+		{
+			return (*itr);
+		}
+	}
+
+	return itemSpawnPoints[0];
+}
+

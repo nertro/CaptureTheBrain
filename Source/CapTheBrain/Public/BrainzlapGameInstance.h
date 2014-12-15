@@ -19,6 +19,9 @@ class CAPTHEBRAIN_API UBrainzlapGameInstance : public UGameInstance
 
 	std::vector<ACapTheBrainCharacter*> players;
 
+	UFUNCTION(BlueprintCallable, Category = GameInstance)
+	ASpawnPoint* GetTargetItem();
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = GameInstance)
 	ABrainPickup* brain;
 
@@ -28,7 +31,9 @@ class CAPTHEBRAIN_API UBrainzlapGameInstance : public UGameInstance
 	ABrainBase* brainBase;
 
 	ASpawnCtrl* spawnCtrl;
+
 	std::vector<ASpawnPoint*> itemSpawnPoints;
+
 	std::vector<ASpawnPoint*> brainBases;
 	ASpawnPoint* BrainSpawnPoint;
 	
