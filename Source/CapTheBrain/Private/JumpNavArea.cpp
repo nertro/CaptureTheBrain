@@ -7,7 +7,7 @@
 UJumpNavArea::UJumpNavArea(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
 {
-
+	
 }
 
 
