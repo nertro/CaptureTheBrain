@@ -15,9 +15,6 @@ class CAPTHEBRAIN_API AArrow : public AActor
 {
 	GENERATED_UCLASS_BODY()
 
-	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Item)
-	TSubobjectPtr<class UCapsuleComponent> Capsule;
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Item)
 	TSubobjectPtr<class UStaticMeshComponent> MeshComponent;
 

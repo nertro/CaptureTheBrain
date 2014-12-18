@@ -10,20 +10,12 @@
 
 class ABrainPickup;
 class ItemEffect;
+class UBrainzlapGameInstance;
 
 UCLASS(config=Game)
 class ACapTheBrainCharacter : public ACharacter
 {
 	GENERATED_UCLASS_BODY()
-
-	/** Camera boom positioning the camera behind the character */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
-	TSubobjectPtr<class USpringArmComponent> CameraBoom;
-
-	/** Follow camera */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
-		TSubobjectPtr<class UCameraComponent> FollowCamera;
-
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 		float BaseTurnRate;
@@ -57,10 +49,14 @@ class ACapTheBrainCharacter : public ACharacter
 	virtual void Tick(float deltaSeconds) override;
 	virtual void BeginPlay() override;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Item)
 	bool hasItem;
+
 	bool isSlow, isFast, hasShield;
 
+	UPROPERTY()
 	ACharacterHUD* myControllerHUD;
+
 	ItemEffect* currentItem;
 
 	float slowTimer, fastTimer, shieldTimer;
@@ -73,6 +69,8 @@ class ACapTheBrainCharacter : public ACharacter
 	FRotator startRotation;
 
 protected:
+
+	UBrainzlapGameInstance* gameInstance;
 
 	/** Called for forwards/backward input */
 	void MoveForward(float Value);
@@ -106,7 +104,7 @@ protected:
 
 	void PickUpItem();
 
-	void ReceiveHit(
+	virtual void ReceiveHit(
 	class UPrimitiveComponent * MyComp,
 	class AActor * Other,
 	class UPrimitiveComponent * OtherComp,
@@ -114,10 +112,11 @@ protected:
 		FVector HitLocation,
 		FVector HitNormal,
 		FVector NormalImpulse,
-		const FHitResult & Hit) OVERRIDE;
+		const FHitResult & Hit) override;
 
 	void CollectItem();
 
+	UFUNCTION(BlueprintCallable, Category = Item)
 	void UseItem();
 
 	void TickItem(float deltaSeconds);

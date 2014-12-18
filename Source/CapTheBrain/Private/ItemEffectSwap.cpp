@@ -27,10 +27,11 @@ void ItemEffectSwap::Deactivate(ACapTheBrainCharacter* player)
 
 void ItemEffectSwap::SwapBase(ACapTheBrainCharacter* player)
 {
-	if (ActorAdministrator::GetInstance()->spawnCtrl->brainBaseSet)
+	gameInstance = Cast<UBrainzlapGameInstance>(player->GetGameInstance());
+	if (gameInstance->spawnCtrl->brainBaseSet)
 	{
-		ActorAdministrator::GetInstance()->brainBase->Destroy();
-		ActorAdministrator::GetInstance()->brainBase = nullptr;
-		ActorAdministrator::GetInstance()->spawnCtrl->SpawnBrainBase();
+		gameInstance->brainBase->Destroy();
+		gameInstance->brainBase = nullptr;
+		gameInstance->spawnCtrl->SpawnBrainBase();
 	}
 }

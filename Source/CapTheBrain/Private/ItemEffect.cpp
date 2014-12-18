@@ -4,6 +4,7 @@
 #include "ItemEffect.h"
 #include "CapTheBrainCharacter.h"
 #include "ItemManager.h"
+#include "PlayerCharacter.h"
 
 ItemEffect::ItemEffect()
 {
@@ -15,7 +16,10 @@ ItemEffect::~ItemEffect()
 
 void ItemEffect::ChangeUI(ACapTheBrainCharacter* player)
 {
-	player->myControllerHUD->PlayerHasItem = false;
+	if (player->IsA(APlayerCharacter::StaticClass()))
+	{
+		player->myControllerHUD->PlayerHasItem = false;
+	}
 }
 
 void ItemEffect::MakeSound()
@@ -23,9 +27,10 @@ void ItemEffect::MakeSound()
 
 void ItemEffect::ChangeSpeed(ACapTheBrainCharacter* player, float speedChange, bool onOthers)
 {
+	gameInstance = Cast<UBrainzlapGameInstance>(player->GetGameInstance());
 	if (onOthers)
 	{
-		for (std::vector<ACapTheBrainCharacter*>::iterator itr = ActorAdministrator::GetInstance()->players.begin(); itr != ActorAdministrator::GetInstance()->players.end(); itr++)
+		for (std::vector<ACapTheBrainCharacter*>::iterator itr = gameInstance->players.begin(); itr != gameInstance->players.end(); itr++)
 		{
 			if ((*itr) != player && !(*itr)->hasShield && !(*itr)->isSlow)
 			{

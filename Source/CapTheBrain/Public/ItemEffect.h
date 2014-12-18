@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
-#include "ActorAdministrator.h"
+#include "BrainzlapGameInstance.h"
 #include <vector>
 
 class ACapTheBrainCharacter;
@@ -24,4 +24,6 @@ protected:
 	void ResetSpeed(ACapTheBrainCharacter* player, float speedChange);
 
 	bool onOthers;
+
+	UBrainzlapGameInstance* gameInstance;
 };

@@ -1,10 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "CapTheBrain.h"
+#include "BrainzlapGameInstance.h"
 #include "SpawnPoint.h"
-#include "ActorAdministrator.h"
 #include "CollectableItem.h"
 
+#define GameInstance Cast<UBrainzlapGameInstance>(GetGameInstance())
 
 ASpawnPoint::ASpawnPoint(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
@@ -18,15 +19,15 @@ void ASpawnPoint::BeginPlay()
 {
 	if (ItemBP)
 	{
-		ActorAdministrator::GetInstance()->itemSpawnPoints.push_back(this);
+		GameInstance->itemSpawnPoints.push_back(this);
 	}
 	else if (BrainBaseBP)
 	{
-		ActorAdministrator::GetInstance()->brainBases.push_back(this);
+		GameInstance->brainBases.push_back(this);
 	}
 	else if (BrainBP)
 	{
-		ActorAdministrator::GetInstance()->BrainSpawnPoint = this;
+		GameInstance->BrainSpawnPoint = this;
 	}
 }
 
@@ -53,6 +54,7 @@ void ASpawnPoint::SpawnNewBrain()
 		SpawnItem->Capsule->AttachTo(RootComponent);
 		SpawnItem->SetActorTransform(this->GetTransform());
 		SpawnItem->MySpawnPoint = this;
+		GameInstance->brain = (ABrainPickup*)SpawnItem;
 	}
 }
 
@@ -66,7 +68,7 @@ void ASpawnPoint::SpawnNewBase()
 		SpawnItem->Capsule->AttachTo(RootComponent);
 		SpawnItem->SetActorTransform(this->GetTransform());
 		SpawnItem->MySpawnPoint = this;
-		ActorAdministrator::GetInstance()->brainBase = (ABrainBase*)SpawnItem;
+		GameInstance->brainBase = (ABrainBase*)SpawnItem;
 	}
 }
 
