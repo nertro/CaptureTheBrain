@@ -7,7 +7,7 @@
 
 
 ACTBAIController::ACTBAIController(const class FPostConstructInitializeProperties& PCIP)
-	: Super(PCIP.SetDefaultSubobjectClass<UPathFollowingComponent>(TEXT("PathFollowingComponent")))
+	: Super(PCIP.SetDefaultSubobjectClass<UBrainzlabPathFollowingComponent>(TEXT("PathFollowingComponent")))
 {
 	
 }
