@@ -3,10 +3,11 @@
 #include "CapTheBrain.h"
 #include "CTBAIController.h"
 #include "BrainzlapGameInstance.h"
+#include "BrainzlabPathFollowingComponent.h"
 
 
 ACTBAIController::ACTBAIController(const class FPostConstructInitializeProperties& PCIP)
-	: Super(PCIP)
+	: Super(PCIP.SetDefaultSubobjectClass<UPathFollowingComponent>(TEXT("PathFollowingComponent")))
 {
 	
 }

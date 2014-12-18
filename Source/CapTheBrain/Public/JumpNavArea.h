@@ -35,7 +35,5 @@ UCLASS()
 class CAPTHEBRAIN_API UJumpNavArea : public UNavArea
 {
 	GENERATED_UCLASS_BODY()
-
-	UJumpNavArea();
 	
 };
