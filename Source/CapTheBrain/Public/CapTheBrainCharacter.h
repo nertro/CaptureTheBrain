@@ -68,6 +68,8 @@ class ACapTheBrainCharacter : public ACharacter
 	FVector startPosition;
 	FRotator startRotation;
 
+	int GetScore();
+
 protected:
 
 	UBrainzlapGameInstance* gameInstance;

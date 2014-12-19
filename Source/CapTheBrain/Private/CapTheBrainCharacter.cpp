@@ -18,6 +18,7 @@
 ACapTheBrainCharacter::ACapTheBrainCharacter(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
 {
+	score = 0;
 	firstUpdate = true;
 	// Set size for collision capsule
 	CapsuleComponent->InitCapsuleSize(42.f, 96.0f);
@@ -67,10 +68,11 @@ void ACapTheBrainCharacter::SetupPlayerInputComponent(class UInputComponent* Inp
 
 void ACapTheBrainCharacter::BeginPlay()
 {
-	gameInstance = Cast<UBrainzlapGameInstance>(GetGameInstance());
 	Super::BeginPlay();
+	gameInstance = Cast<UBrainzlapGameInstance>(GetGameInstance());
 	startPosition = this->GetActorLocation();
 	startRotation = this->GetActorRotation();
+	score = 0;
 }
 
 void ACapTheBrainCharacter::TurnAtRate(float Rate)
@@ -246,4 +248,9 @@ void ACapTheBrainCharacter::SpawnArrow()
 		arrow->SetActorRelativeLocation(FVector(0, 0, ArrowZLocation));
 		gameInstance->arrow = arrow;
 	}
+}
+
+int ACapTheBrainCharacter::GetScore()
+{
+	return this->score;
 }
