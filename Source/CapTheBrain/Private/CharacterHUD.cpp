@@ -31,6 +31,7 @@ void ACharacterHUD::DrawBasicUIElements(float screenWidth, float screenHeight)
 		Super::DrawTexture(BrainImg, screenWidth - UIPaddingBottomRight, screenHeight - UIPaddingBottomRight, screenWidth, screenHeight, 0, 0, offset, 1, FLinearColor::White, BLEND_Translucent, UIImgScale, false, 0, FVector2D::ZeroVector);
 		int score = Cast<ACapTheBrainCharacter>(GetOwningPawn())->GetScore();
 		Super::DrawText(FString::FromInt(score), FLinearColor::Black, screenWidth - UITextPaddingBottomRight, screenHeight - UITextPaddingBottom, GUIFont, UIFontScale, false);
+		Super::DrawTexture(TimerImg, (screenWidth / 2) - ((TimerImg->GetSizeX()*UIImgScale) / 2), (screenHeight / 2) - ((TimerImg->GetSizeY()*UIImgScale) / 2), screenWidth, screenHeight, 0, 0, offset, 1, FLinearColor::White, BLEND_Translucent, UIImgScale, false, 0, FVector2D::ZeroVector);
 	}
 }
 
