@@ -7,7 +7,7 @@
 UBrainzlapGameInstance::UBrainzlapGameInstance(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
 {
-
+	playerCount = 1;
 }
 
 
