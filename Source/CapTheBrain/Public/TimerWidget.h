@@ -19,8 +19,11 @@ class CAPTHEBRAIN_API UTimerWidget : public UUserWidget
 	UFUNCTION(BlueprintCallable, Category = Widget)
 	int32 SetSeconds();
 
-	//UFUNCTION()
-	//void SetTimerVisibility(ESlateVisibility singleTimerVisibility, ESlateVisibility multiTimerVisibility);
+	UFUNCTION(BlueprintCallable, Category = Widget)
+	ESlateVisibility::Type SetTimerVisibilitySingle();
+
+	UFUNCTION(BlueprintCallable, Category = Widget)
+	ESlateVisibility::Type SetTimerVisibilityMulti(ESlateVisibility::Type singleVisibility);
 
 private:
 	int32 totalMinutes;

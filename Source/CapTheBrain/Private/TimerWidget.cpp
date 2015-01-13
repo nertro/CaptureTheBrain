@@ -3,6 +3,9 @@
 #include "CapTheBrain.h"
 #include "TimerWidget.h"
 
+#include "BrainzlapGameInstance.h"
+#include "EngineUtils.h"
+
 
 UTimerWidget::UTimerWidget(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
@@ -40,6 +43,26 @@ int32 UTimerWidget::SetMinutes()
 	secondsPassedOnLastUpdate = secondsPassed;
 
 	return minutesLeft;
+}
 
+ESlateVisibility::Type UTimerWidget::SetTimerVisibilitySingle()
+{
+	UBrainzlapGameInstance* instance = Cast<UBrainzlapGameInstance>(GetWorld()->GetGameInstance());
+	if (instance->playerCount > 1)
+	{
+		return ESlateVisibility::Hidden;
+	}
+
+	return ESlateVisibility::Visible;
+}
+
+ESlateVisibility::Type UTimerWidget::SetTimerVisibilityMulti(ESlateVisibility::Type singleVisibility)
+{
+	if (singleVisibility == ESlateVisibility::Hidden)
+	{
+		return ESlateVisibility::Visible;
+	}
+
+	return ESlateVisibility::Hidden;
 }
 
