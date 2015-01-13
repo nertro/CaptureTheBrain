@@ -13,6 +13,20 @@ class CAPTHEBRAIN_API UTimerWidget : public UUserWidget
 {
 	GENERATED_UCLASS_BODY()
 
-	
-	
+	UFUNCTION(BlueprintCallable, Category = Widget)
+	int32 SetMinutes();
+
+	UFUNCTION(BlueprintCallable, Category = Widget)
+	int32 SetSeconds();
+
+	//UFUNCTION()
+	//void SetTimerVisibility(ESlateVisibility singleTimerVisibility, ESlateVisibility multiTimerVisibility);
+
+private:
+	int32 totalMinutes;
+	int32 totalSeconds;
+	int32 minutesLeft;
+	int32 secondsLeft;
+	float secondsPassed;
+	float secondsPassedOnLastUpdate;
 };
