@@ -36,5 +36,7 @@ class CAPTHEBRAIN_API UBrainzlapGameInstance : public UGameInstance
 
 	std::vector<ASpawnPoint*> brainBases;
 	ASpawnPoint* BrainSpawnPoint;
+
+	int32 playerCount;
 	
 };
