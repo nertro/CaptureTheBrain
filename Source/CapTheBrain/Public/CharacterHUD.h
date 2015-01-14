@@ -6,6 +6,8 @@
 #include "GameFramework/HUD.h"
 #include "CharacterHUD.generated.h"
 
+class ACapTheBrainCharacter;
+
 /**
  * 
  */
@@ -17,6 +19,8 @@ class CAPTHEBRAIN_API ACharacterHUD : public AHUD
 	bool PlayerHasItem;
 
 	virtual void BeginPlay() override;
+
+	ACapTheBrainCharacter* owner;
 
 	/** Basic UI Elements*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = GUI)
@@ -36,6 +40,18 @@ class CAPTHEBRAIN_API ACharacterHUD : public AHUD
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = GUI)
 		float UIImgScale;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = GUI)
+		float UISmallPaddingLeft;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = GUI)
+		float UISmallPaddingBottom;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = GUI)
+		float UISmallImgScale;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = GUI)
+		float UISmallImgSpace;
 
 	UFUNCTION(BlueprintCallable, Category = HUD)
 		void DrawBasicUIElements(float screenWidth, float screenHeight);

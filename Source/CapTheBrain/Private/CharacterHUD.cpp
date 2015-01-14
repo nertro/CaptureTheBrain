@@ -6,7 +6,7 @@
 #include <vector>
 #include "BrainzlapGameInstance.h"
 #include "EngineUtils.h"
-
+#include "CapTheBrainCharacter.h"
 
 
 ACharacterHUD::ACharacterHUD(const class FPostConstructInitializeProperties& PCIP)
@@ -27,10 +27,16 @@ void ACharacterHUD::BeginPlay()
 	if (instance->playerCount == 1)
 	{
 		UIImgScale = 0.2;
+		UISmallImgScale = 0.12;
+		UISmallPaddingLeft = 125;
+		UISmallPaddingBottom = 65;
+		UISmallImgSpace = 20;
 		UIPaddingBottomRight = 120;
 		UITextPaddingBottom = 120;
 		UITextPaddingBottomRight = 90;
 	}
+
+	owner = Cast<ACapTheBrainCharacter>(GetOwningPlayerController()->GetPawn());
 }
 
 void ACharacterHUD::DrawBasicUIElements(float screenWidth, float screenHeight)
@@ -54,6 +60,18 @@ void ACharacterHUD::DrawCounterElements(float screenWidth, float screenHeight)
 		{
 			Super::DrawTexture(ItemImgs[currentItem], UIPaddingLeft, screenHeight - (SplatterImg->GetSizeY() * UIImgScale) - UIPaddingBottomRight, screenWidth, screenHeight, 0, 0, offset, 1, FLinearColor::White, BLEND_Translucent, UIImgScale, false, 0, FVector2D::ZeroVector);
 		}
+	}
+	if (owner->isFast)
+	{
+		Super::DrawTexture(ItemImgs[0], UISmallPaddingLeft + (SplatterImg->GetSizeX()*UIImgScale), screenHeight - (ItemImgs[0]->GetSizeY() * UISmallImgScale) - UISmallPaddingBottom, screenWidth, screenHeight, 0, 0, offset, 1, FLinearColor::White, BLEND_Translucent, UISmallImgScale, false, 0, FVector2D::ZeroVector);
+	}
+	if (owner->isSlow)
+	{
+		Super::DrawTexture(ItemImgs[1], UISmallPaddingLeft + ((SplatterImg->GetSizeX()*UIImgScale) * 2) + UISmallImgSpace, screenHeight - (ItemImgs[0]->GetSizeY() * UISmallImgScale) - UISmallPaddingBottom, screenWidth, screenHeight, 0, 0, offset, 1, FLinearColor::White, BLEND_Translucent, UISmallImgScale, false, 0, FVector2D::ZeroVector);
+	}
+	if (owner->hasShield)
+	{
+		Super::DrawTexture(ItemImgs[2], UISmallPaddingLeft + ((SplatterImg->GetSizeX()*UIImgScale) * 3) + (UISmallImgSpace*2), screenHeight - (ItemImgs[0]->GetSizeY() * UISmallImgScale) - UISmallPaddingBottom, screenWidth, screenHeight, 0, 0, offset, 1, FLinearColor::White, BLEND_Translucent, UISmallImgScale, false, 0, FVector2D::ZeroVector);
 	}
 }
 
