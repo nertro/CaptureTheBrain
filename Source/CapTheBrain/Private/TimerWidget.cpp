@@ -11,7 +11,7 @@ UTimerWidget::UTimerWidget(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
 {
 	totalMinutes = minutesLeft = 1;
-	totalSeconds = 10;
+	totalSeconds = 20;
 	secondsPassedOnLastUpdate = 0;
 }
 

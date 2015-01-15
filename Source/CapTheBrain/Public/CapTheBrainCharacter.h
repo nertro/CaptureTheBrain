@@ -46,6 +46,9 @@ class ACapTheBrainCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Spawn)
 		TSubclassOf<class ACollectableItem> BrainBP;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Animation)
+		bool won;
+
 	virtual void Tick(float deltaSeconds) override;
 	virtual void BeginPlay() override;
 
@@ -69,8 +72,6 @@ class ACapTheBrainCharacter : public ACharacter
 	FRotator startRotation;
 
 	int GetScore();
-
-	bool won;
 
 protected:
 
