@@ -5,12 +5,13 @@
 
 #include "BrainzlapGameInstance.h"
 #include "EngineUtils.h"
+#include "CapTheBrainArenaGameMode.h"
 
 
 UTimerWidget::UTimerWidget(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
 {
-	totalMinutes = minutesLeft = 7;
+	totalMinutes = minutesLeft = 1;
 	totalSeconds = 60;
 	secondsPassedOnLastUpdate = 0;
 }
@@ -24,7 +25,7 @@ int32 UTimerWidget::SetSeconds()
 
 	if (secondsLeft == 60)
 	{
-		return 0;
+		secondsLeft = 0;
 	}
 
 	return secondsLeft;
@@ -41,6 +42,12 @@ int32 UTimerWidget::SetMinutes()
 	}
 
 	secondsPassedOnLastUpdate = secondsPassed;
+
+	if (minutesLeft == 0 && secondsLeft == 0)
+	{
+		ACapTheBrainArenaGameMode* gameMode = Cast<ACapTheBrainArenaGameMode>(GetWorld()->GetAuthGameMode());
+		gameMode->GameOver();
+	}
 
 	return minutesLeft;
 }

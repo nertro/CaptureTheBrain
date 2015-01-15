@@ -70,6 +70,8 @@ class ACapTheBrainCharacter : public ACharacter
 
 	int GetScore();
 
+	bool won;
+
 protected:
 
 	UBrainzlapGameInstance* gameInstance;

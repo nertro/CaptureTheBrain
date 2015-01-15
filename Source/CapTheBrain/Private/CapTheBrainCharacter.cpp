@@ -143,6 +143,7 @@ void ACapTheBrainCharacter::Tick(float deltaSeconds)
 	if (firstUpdate)
 	{
 		gameInstance->players.push_back(this);
+		won = false;
 
 		firstUpdate = false;
 	}
