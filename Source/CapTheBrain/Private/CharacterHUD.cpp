@@ -4,7 +4,6 @@
 #include "CharacterHUD.h"
 #include "CapTheBrainCharacter.h"
 #include <vector>
-#include "BrainzlapGameInstance.h"
 #include "EngineUtils.h"
 #include "CapTheBrainCharacter.h"
 
@@ -23,8 +22,7 @@ void ACharacterHUD::BeginPlay()
 	ItemImgs.push_back(SwapImg);
 	ItemImgs.push_back(ZappImg);
 
-	UBrainzlapGameInstance* instance = Cast<UBrainzlapGameInstance>(GetGameInstance());
-	if (instance->playerCount == 1)
+	if (GetWorld()->GetAuthGameMode()->NumPlayers == 1)
 	{
 		UIImgScale = 0.2;
 		UISmallImgScale = 0.12;

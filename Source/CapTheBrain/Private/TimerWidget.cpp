@@ -3,7 +3,6 @@
 #include "CapTheBrain.h"
 #include "TimerWidget.h"
 
-#include "BrainzlapGameInstance.h"
 #include "EngineUtils.h"
 #include "CapTheBrainArenaGameMode.h"
 
@@ -54,8 +53,7 @@ int32 UTimerWidget::SetMinutes()
 
 ESlateVisibility::Type UTimerWidget::SetTimerVisibilitySingle()
 {
-	UBrainzlapGameInstance* instance = Cast<UBrainzlapGameInstance>(GetWorld()->GetGameInstance());
-	if (instance->playerCount > 1)
+	if (GetWorld()->GetAuthGameMode()->NumPlayers > 1)
 	{
 		return ESlateVisibility::Hidden;
 	}
