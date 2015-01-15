@@ -21,8 +21,12 @@ class CAPTHEBRAIN_API APlayerCharacter : public ACapTheBrainCharacter
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 		TSubobjectPtr<class UCameraComponent> FollowCamera;
 
-protected:
+	void OrbitCamera();
 
+protected:
 	void BeginPlay() override;
-	
+
+	void Tick(float deltaSeconds) override;
+
+	float step;
 };

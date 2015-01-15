@@ -59,17 +59,20 @@ void ACharacterHUD::DrawCounterElements(float screenWidth, float screenHeight)
 			Super::DrawTexture(ItemImgs[currentItem], UIPaddingLeft, screenHeight - (SplatterImg->GetSizeY() * UIImgScale) - UIPaddingBottomRight, screenWidth, screenHeight, 0, 0, offset, 1, FLinearColor::White, BLEND_Translucent, UIImgScale, false, 0, FVector2D::ZeroVector);
 		}
 	}
-	if (owner->isFast)
+	if (owner)
 	{
-		Super::DrawTexture(ItemImgs[0], UISmallPaddingLeft + (SplatterImg->GetSizeX()*UIImgScale), screenHeight - (ItemImgs[0]->GetSizeY() * UISmallImgScale) - UISmallPaddingBottom, screenWidth, screenHeight, 0, 0, offset, 1, FLinearColor::White, BLEND_Translucent, UISmallImgScale, false, 0, FVector2D::ZeroVector);
-	}
-	if (owner->isSlow)
-	{
-		Super::DrawTexture(ItemImgs[1], UISmallPaddingLeft + ((SplatterImg->GetSizeX()*UIImgScale) * 2) + UISmallImgSpace, screenHeight - (ItemImgs[0]->GetSizeY() * UISmallImgScale) - UISmallPaddingBottom, screenWidth, screenHeight, 0, 0, offset, 1, FLinearColor::White, BLEND_Translucent, UISmallImgScale, false, 0, FVector2D::ZeroVector);
-	}
-	if (owner->hasShield)
-	{
-		Super::DrawTexture(ItemImgs[2], UISmallPaddingLeft + ((SplatterImg->GetSizeX()*UIImgScale) * 3) + (UISmallImgSpace*2), screenHeight - (ItemImgs[0]->GetSizeY() * UISmallImgScale) - UISmallPaddingBottom, screenWidth, screenHeight, 0, 0, offset, 1, FLinearColor::White, BLEND_Translucent, UISmallImgScale, false, 0, FVector2D::ZeroVector);
+		if (owner->isFast)
+		{
+			Super::DrawTexture(ItemImgs[0], UISmallPaddingLeft + (SplatterImg->GetSizeX()*UIImgScale), screenHeight - (ItemImgs[0]->GetSizeY() * UISmallImgScale) - UISmallPaddingBottom, screenWidth, screenHeight, 0, 0, offset, 1, FLinearColor::White, BLEND_Translucent, UISmallImgScale, false, 0, FVector2D::ZeroVector);
+		}
+		if (owner->isSlow)
+		{
+			Super::DrawTexture(ItemImgs[1], UISmallPaddingLeft + ((SplatterImg->GetSizeX()*UIImgScale) * 2) + UISmallImgSpace, screenHeight - (ItemImgs[0]->GetSizeY() * UISmallImgScale) - UISmallPaddingBottom, screenWidth, screenHeight, 0, 0, offset, 1, FLinearColor::White, BLEND_Translucent, UISmallImgScale, false, 0, FVector2D::ZeroVector);
+		}
+		if (owner->hasShield)
+		{
+			Super::DrawTexture(ItemImgs[2], UISmallPaddingLeft + ((SplatterImg->GetSizeX()*UIImgScale) * 3) + (UISmallImgSpace * 2), screenHeight - (ItemImgs[0]->GetSizeY() * UISmallImgScale) - UISmallPaddingBottom, screenWidth, screenHeight, 0, 0, offset, 1, FLinearColor::White, BLEND_Translucent, UISmallImgScale, false, 0, FVector2D::ZeroVector);
+		}
 	}
 }
 

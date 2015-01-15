@@ -18,12 +18,23 @@ ACapTheBrainArenaGameMode::ACapTheBrainArenaGameMode(const class FPostConstructI
 void ACapTheBrainArenaGameMode::GameOver()
 {
 	UBrainzlapGameInstance* gameInstance = Cast<UBrainzlapGameInstance>(GetGameInstance());
+	gameInstance->gameOver = true;
+
+	ACapTheBrainCharacter* winner = nullptr;
+
 	for (std::vector<ACapTheBrainCharacter*>::iterator itr = gameInstance->players.begin(); itr != gameInstance->players.end(); itr++)
 	{
-		if ((*itr)->IsA(APlayerCharacter::StaticClass()))
+		if (winner == nullptr)
 		{
-			APlayerController* ctrl = Cast<APlayerController>((*itr)->Controller);
-			ctrl->SetCinematicMode(true, true, false);
+			winner = (*itr);
+			winner->won = true;
+		}
+		else if (winner->GetScore() < (*itr)->GetScore())
+		{
+			winner->won = false;
+
+			winner = (*itr);
+			winner->won = true;
 		}
 	}
 }

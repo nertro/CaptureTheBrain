@@ -7,6 +7,7 @@
 UBrainzlapGameInstance::UBrainzlapGameInstance(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
 {
+	gameOver = false;
 }
 
 

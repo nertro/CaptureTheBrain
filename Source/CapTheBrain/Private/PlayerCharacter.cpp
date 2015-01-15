@@ -2,7 +2,7 @@
 
 #include "CapTheBrain.h"
 #include "PlayerCharacter.h"
-
+#include "BrainzlapGameInstance.h"
 
 APlayerCharacter::APlayerCharacter(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
@@ -17,6 +17,8 @@ APlayerCharacter::APlayerCharacter(const class FPostConstructInitializePropertie
 	FollowCamera = PCIP.CreateDefaultSubobject<UCameraComponent>(this, TEXT("FollowCamera"));
 	FollowCamera->AttachTo(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
+
+	step = 0.1;
 }
 
 
@@ -28,5 +30,33 @@ void APlayerCharacter::BeginPlay()
 		APlayerController* ctrler = Cast<APlayerController>(Controller);
 		myControllerHUD = Cast<ACharacterHUD>(ctrler->GetHUD());
 	}
+}
+
+void APlayerCharacter::Tick(float deltaSeconds)
+{
+	Super::Tick(deltaSeconds);
+
+	if (gameInstance->gameOver)
+	{
+		OrbitCamera();
+	}
+}
+
+void APlayerCharacter::OrbitCamera()
+{
+		APlayerController* ctrl = Cast<APlayerController>(Controller);
+
+		if (!ctrl->bCinematicMode)
+		{
+			ctrl->SetCinematicMode(true, false, true, true, true);
+			CameraBoom->TargetArmLength /= 3;
+		}
+
+		float radius = CameraBoom->TargetArmLength*2;
+		CameraBoom->SetWorldLocation(FVector(GetActorLocation().X + (sinf(step) * radius), GetActorLocation().Y + (cosf(step) * radius), GetActorLocation().Z + 10), true);
+		step += 0.01;
+		FVector camDirection = GetActorLocation() - FollowCamera->GetComponentLocation();
+		camDirection.Z += 40;
+		FollowCamera->SetWorldRotation(camDirection.Rotation());
 }
 

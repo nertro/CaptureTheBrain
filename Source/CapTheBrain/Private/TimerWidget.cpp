@@ -11,18 +11,23 @@ UTimerWidget::UTimerWidget(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
 {
 	totalMinutes = minutesLeft = 1;
-	totalSeconds = 60;
+	totalSeconds = 10;
 	secondsPassedOnLastUpdate = 0;
 }
 
 
 int32 UTimerWidget::SetSeconds()
 {
+	if (minutesLeft == 0 && secondsLeft == 0)
+	{
+		return secondsLeft;
+	}
+
 	secondsPassed = GetWorld()->TimeSeconds;
 	secondsPassed = (int32)secondsPassed % totalSeconds;
 	secondsLeft = totalSeconds - secondsPassed;
 
-	if (secondsLeft == 60)
+	if (secondsLeft == totalSeconds)
 	{
 		secondsLeft = 0;
 	}
@@ -34,7 +39,7 @@ int32 UTimerWidget::SetMinutes()
 {
 	if (minutesLeft > 0 && secondsPassed - secondsPassedOnLastUpdate >= 1)
 	{
-		if (secondsLeft == 59)
+		if (secondsLeft == totalSeconds-1)
 		{
 			minutesLeft -= 1;
 		}
