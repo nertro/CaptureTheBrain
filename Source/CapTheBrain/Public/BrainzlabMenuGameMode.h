@@ -13,6 +13,6 @@ class CAPTHEBRAIN_API ABrainzlabMenuGameMode : public AGameMode
 {
 	GENERATED_UCLASS_BODY()
 
-	
+	void StartNewGame();
 	
 };
