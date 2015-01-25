@@ -17,7 +17,8 @@ namespace ENavAreaFlag
 	enum Type
 	{
 		Jump,
-		Fall
+		Fall,
+		Walk
 	};
 }
 
@@ -29,6 +30,7 @@ namespace FNavAreaHelper
 	FORCEINLINE bool IsNavLink(const FNavPathPoint& PathVert) { return (FNavMeshNodeFlags(PathVert.Flags).PathFlags & RECAST_STRAIGHTPATH_OFFMESH_CONNECTION) != 0; }
 	FORCEINLINE bool HasJumpFlag(const FNavPathPoint& PathVert) { return IsSet(FNavMeshNodeFlags(PathVert.Flags).AreaFlags, ENavAreaFlag::Jump); }
 	FORCEINLINE bool HasFallFlag(const FNavPathPoint& PathVert) { return IsSet(FNavMeshNodeFlags(PathVert.Flags).AreaFlags, ENavAreaFlag::Fall); }
+	FORCEINLINE bool HasWalkFLag(const FNavPathPoint& PathVert) { return IsSet(FNavMeshNodeFlags(PathVert.Flags).AreaFlags, ENavAreaFlag::Walk); }
 }
 
 UCLASS()
