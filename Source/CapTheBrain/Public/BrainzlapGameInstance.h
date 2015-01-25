@@ -39,5 +39,4 @@ class CAPTHEBRAIN_API UBrainzlapGameInstance : public UGameInstance
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = GameInstance)
 	bool gameOver;
-	
 };
