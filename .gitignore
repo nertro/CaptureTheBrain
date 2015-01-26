@@ -4,3 +4,7 @@ Binaries/Win64/CapTheBrain-Win64-DebugGame.exp
 Binaries/Win64/CapTheBrain-Win64-DebugGame.lib
 Binaries/Win64/CapTheBrain-Win64-DebugGame.pdb
 Binaries/Win64/CapTheBrain-Win64-DebugGame.exe
+Binaries/Win32/CapTheBrain-Win32-Shipping.exe
+Binaries/Win32/CapTheBrain-Win32-Shipping.exp
+Binaries/Win32/CapTheBrain-Win32-Shipping.lib
+Binaries/Win32/CapTheBrain-Win32-Shipping.pdb
