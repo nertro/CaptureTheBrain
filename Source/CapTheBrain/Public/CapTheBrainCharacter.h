@@ -73,6 +73,9 @@ class ACapTheBrainCharacter : public ACharacter
 
 	int GetScore();
 
+	UFUNCTION(BlueprintCallable, Category = Character)
+	void LooseBrain();
+
 protected:
 
 	UBrainzlapGameInstance* gameInstance;

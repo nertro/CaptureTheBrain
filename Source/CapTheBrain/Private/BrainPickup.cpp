@@ -19,6 +19,7 @@ void ABrainPickup::AttachToHead(ACapTheBrainCharacter* player)
 	myPlayer = player;
 	RootComponent->DetachFromParent();
 	RootComponent = MeshComponent;
+	Capsule->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	MeshComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	this->RootComponent->SnapTo(player->Mesh , "brainSocket");
 	GotCollected = true;
@@ -34,6 +35,7 @@ void ABrainPickup::DetachFromHead(ACapTheBrainCharacter* player, FVector newLoca
 	{
 		Capsule->Activate();
 	}
+	Capsule->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	RootComponent = Capsule;
 	MeshComponent->AttachTo(Capsule);
 	MeshComponent->SetRelativeLocation(FVector(0,0,-20));

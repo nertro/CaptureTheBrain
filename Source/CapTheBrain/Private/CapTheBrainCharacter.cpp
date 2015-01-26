@@ -151,11 +151,6 @@ void ACapTheBrainCharacter::Tick(float deltaSeconds)
 	TickItem(deltaSeconds);
 	if (FellDown)
 	{
-		gameInstance->brain->DetachFromHead(this, this->GetActorLocation());
-		SetActorLocation(startPosition);
-		SetActorRotation(startRotation);
-		GotHit = false;
-		FellDown = false;
 	}
 }
 
@@ -254,4 +249,14 @@ void ACapTheBrainCharacter::SpawnArrow()
 int ACapTheBrainCharacter::GetScore()
 {
 	return this->score;
+}
+
+void ACapTheBrainCharacter::LooseBrain()
+{
+	GotHit = false;
+	FellDown = false;
+	FVector newBrainPosition = this->GetActorLocation();
+	SetActorLocation(startPosition);
+	SetActorRotation(startRotation);
+	gameInstance->brain->DetachFromHead(this, newBrainPosition);
 }
