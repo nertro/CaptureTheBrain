@@ -22,6 +22,9 @@ class CAPTHEBRAIN_API UBrainzlapGameInstance : public UGameInstance
 	UFUNCTION(BlueprintCallable, Category = GameInstance)
 	ASpawnPoint* GetTargetItem();
 
+	UFUNCTION(BlueprintCallable, Category = GameInstance)
+	void CleanUp();
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = GameInstance)
 	ABrainPickup* brain;
 
@@ -39,4 +42,7 @@ class CAPTHEBRAIN_API UBrainzlapGameInstance : public UGameInstance
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = GameInstance)
 	bool gameOver;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = GameMode)
+	bool loadCredits;
 };

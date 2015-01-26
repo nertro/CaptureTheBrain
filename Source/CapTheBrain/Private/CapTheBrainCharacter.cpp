@@ -4,7 +4,7 @@
 #include "CapTheBrainCharacter.h"
 #include "EngineUtils.h"
 #include "BrainzlapGameInstance.h"
-
+#include "CapTheBrainArenaGameMode.h"
 #include "CollectableItem.h"
 #include "ItemPickup.h"
 #include "BrainPickup.h"
@@ -56,6 +56,8 @@ void ACapTheBrainCharacter::SetupPlayerInputComponent(class UInputComponent* Inp
 
 	InputComponent->BindAxis("MoveForward", this, &ACapTheBrainCharacter::MoveForward);
 	InputComponent->BindAxis("MoveRight", this, &ACapTheBrainCharacter::MoveRight);
+
+	InputComponent->BindAction("Start", IE_Pressed, this, &ACapTheBrainCharacter::LoadCredits);
 
 	// We have 2 versions of the rotation bindings to handle different kinds of devices differently
 	// "turn" handles devices that provide an absolute delta, such as a mouse.
@@ -265,4 +267,12 @@ void ACapTheBrainCharacter::LooseBrain()
 void ACapTheBrainCharacter::SetMaterial(UMaterialInterface* newMaterial)
 {
 	Mesh->SetMaterial(0, newMaterial);
+}
+
+void ACapTheBrainCharacter::LoadCredits()
+{
+	if (gameInstance->gameOver)
+	{
+		gameInstance->loadCredits = true;
+	}
 }
