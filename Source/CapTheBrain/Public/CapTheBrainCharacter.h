@@ -76,6 +76,9 @@ class ACapTheBrainCharacter : public ACharacter
 	UFUNCTION(BlueprintCallable, Category = Character)
 	void LooseBrain();
 
+	UFUNCTION(BlueprintCallable, Category = Character)
+	void SetMaterial(UMaterialInterface* newMaterial);
+
 protected:
 
 	UBrainzlapGameInstance* gameInstance;

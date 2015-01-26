@@ -15,6 +15,14 @@ ACapTheBrainArenaGameMode::ACapTheBrainArenaGameMode(const class FPostConstructI
 	}*/
 }
 
+void ACapTheBrainArenaGameMode::SetPlayerMaterial(APawn* pawn, UMaterialInterface* newMaterial)
+{
+	if (pawn->IsA(ACapTheBrainCharacter::StaticClass()))
+	{
+		Cast<ACapTheBrainCharacter>(pawn)->SetMaterial(newMaterial);
+	}
+}
+
 void ACapTheBrainArenaGameMode::GameOver()
 {
 	UBrainzlapGameInstance* gameInstance = Cast<UBrainzlapGameInstance>(GetGameInstance());

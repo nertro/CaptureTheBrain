@@ -260,3 +260,9 @@ void ACapTheBrainCharacter::LooseBrain()
 	SetActorRotation(startRotation);
 	gameInstance->brain->DetachFromHead(this, newBrainPosition);
 }
+
+
+void ACapTheBrainCharacter::SetMaterial(UMaterialInterface* newMaterial)
+{
+	Mesh->SetMaterial(0, newMaterial);
+}
