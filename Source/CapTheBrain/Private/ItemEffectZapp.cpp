@@ -32,7 +32,7 @@ void ItemEffectZapp::Zapp(ACapTheBrainCharacter* player)
 		if (!(*itr)->hasShield && (*itr)->hasBrain)
 		{
 			(*itr)->GotHit = true;
-			gameInstance->arrow->Destroy();
+			gameInstance->playerWithBrain = nullptr;
 			(*itr)->hasBrain = false;
 		}
 	}

@@ -103,10 +103,7 @@ void ACapTheBrainCharacter::MoveForward(float Value)
 
 		//Set Animation
 
-		if (hasBrain)
-		{
-			gameInstance->arrow->PointToBase();
-		}
+		SetArrowDirection();
 	}
 }
 
@@ -125,10 +122,7 @@ void ACapTheBrainCharacter::MoveRight(float Value)
 
 		//Set Animation
 
-		if (hasBrain)
-		{
-			gameInstance->arrow->PointToBase();
-		}
+		SetArrowDirection();
 	}
 }
 
@@ -144,7 +138,9 @@ void ACapTheBrainCharacter::Tick(float deltaSeconds)
 
 	if (firstUpdate)
 	{
+		id = gameInstance->players.size();
 		gameInstance->players.push_back(this);
+		SpawnArrow();
 		won = false;
 
 		firstUpdate = false;
@@ -181,8 +177,8 @@ class UPrimitiveComponent * OtherComp,
 					gameInstance->spawnCtrl->SpawnBrainBase();
 				}
 				gameInstance->brain->AttachToHead(this);
-				SpawnArrow();
 				this->hasBrain = true;
+				gameInstance->playerWithBrain = this;
 			}
 			else if (Other->IsA(AItemPickup::StaticClass()) &! hasItem)
 			{
@@ -196,11 +192,11 @@ class UPrimitiveComponent * OtherComp,
 				ABrainBase* other = (ABrainBase*)Other;
 				other->MySpawnPoint->occupied = false;
 				Other->Destroy();
-				gameInstance->arrow->Destroy();
 				gameInstance->brain->Destroy();
 				gameInstance->spawnCtrl->SpawnBrain();
 				gameInstance->spawnCtrl->brainBaseSet = false;
 				hasBrain = false;
+				gameInstance->playerWithBrain = nullptr;
 				score++;
 			}
 		}
@@ -211,7 +207,7 @@ class UPrimitiveComponent * OtherComp,
 			{
 				GotHit = true;
 				hasBrain = false;
-				gameInstance->arrow->Destroy();
+				gameInstance->playerWithBrain = nullptr;
 			}
 		}
 	}
@@ -244,8 +240,28 @@ void ACapTheBrainCharacter::SpawnArrow()
 		arrow->MeshComponent->AttachTo(RootComponent);
 		arrow->SetActorTransform(this->GetTransform());
 		arrow->SetActorRelativeLocation(FVector(0, 0, ArrowZLocation));
-		gameInstance->arrow = arrow;
+
+		gameInstance->arrows.push_back(arrow);
 	}
+}
+
+void ACapTheBrainCharacter::SetArrowDirection()
+{
+	AActor* target = this;
+	if (!hasBrain &! gameInstance->brain->GotCollected)
+	{
+		target = gameInstance->brain;
+	}
+	else if (!hasBrain && gameInstance->brain->GotCollected && gameInstance->playerWithBrain != nullptr)
+	{
+		target = gameInstance->brain;
+	}
+	else if (hasBrain && gameInstance->brainBase != nullptr)
+	{
+		target = gameInstance->brain;
+	}
+
+	gameInstance->arrows[id]->PointToTarget(target);
 }
 
 int ACapTheBrainCharacter::GetScore()

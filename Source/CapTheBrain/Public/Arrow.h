@@ -7,6 +7,7 @@
 
 #include "Arrow.generated.h"
 
+class ACapTheBrainCharacter;
 /**
  * 
  */
@@ -21,5 +22,5 @@ class CAPTHEBRAIN_API AArrow : public AActor
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
 		UStaticMesh* StaticMesh;
 
-	void PointToBase();
+	void PointToTarget(AActor*);
 };

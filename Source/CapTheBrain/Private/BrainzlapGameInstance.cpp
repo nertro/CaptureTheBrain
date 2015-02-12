@@ -31,8 +31,6 @@ void UBrainzlapGameInstance::CleanUp()
 
 	brain = nullptr;
 
-	arrow = nullptr;
-
 	brainBase = nullptr;
 
 	spawnCtrl = nullptr;
@@ -43,6 +41,11 @@ void UBrainzlapGameInstance::CleanUp()
 	BrainSpawnPoint = nullptr;
 
 	for (std::vector<ACapTheBrainCharacter*>::iterator itr = players.begin(); itr != players.end(); itr++)
+	{
+		(*itr) = nullptr;
+	}
+
+	for (std::vector<AArrow*>::iterator itr = arrows.begin(); itr != arrows.end(); itr++)
 	{
 		(*itr) = nullptr;
 	}

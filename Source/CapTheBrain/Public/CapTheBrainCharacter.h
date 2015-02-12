@@ -73,6 +73,8 @@ class ACapTheBrainCharacter : public ACharacter
 
 	int GetScore();
 
+	int id;
+
 	UFUNCTION(BlueprintCallable, Category = Character)
 	void LooseBrain();
 
@@ -135,6 +137,8 @@ protected:
 	void TickItem(float deltaSeconds);
 
 	void SpawnArrow();
+
+	void SetArrowDirection();
 
 	int score;
 
