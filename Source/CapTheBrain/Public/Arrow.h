@@ -20,7 +20,18 @@ class CAPTHEBRAIN_API AArrow : public AActor
 	TSubobjectPtr<class UStaticMeshComponent> MeshComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
+		UMaterialInterface* redMaterial;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
+		UMaterialInterface* blueMaterial;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
+		UMaterialInterface* greenMaterial;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
 		UStaticMesh* StaticMesh;
 
 	void PointToTarget(AActor*);
+
+	void ChangeMaterial(bool red, bool green, bool blue);
 };

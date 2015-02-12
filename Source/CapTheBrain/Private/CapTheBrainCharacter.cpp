@@ -147,9 +147,6 @@ void ACapTheBrainCharacter::Tick(float deltaSeconds)
 	}
 
 	TickItem(deltaSeconds);
-	if (FellDown)
-	{
-	}
 }
 
 void ACapTheBrainCharacter::ReceiveHit(
@@ -179,6 +176,14 @@ class UPrimitiveComponent * OtherComp,
 				gameInstance->brain->AttachToHead(this);
 				this->hasBrain = true;
 				gameInstance->playerWithBrain = this;
+				gameInstance->arrows[id]->ChangeMaterial(false, true, false);
+				for (std::vector<ACapTheBrainCharacter*>::iterator itr = gameInstance->players.begin(); itr != gameInstance->players.end(); itr++)
+				{
+					if ((*itr) != this)
+					{
+						gameInstance->arrows[(*itr)->id]->ChangeMaterial(true, false, false);
+					}
+				}
 			}
 			else if (Other->IsA(AItemPickup::StaticClass()) &! hasItem)
 			{
@@ -197,6 +202,10 @@ class UPrimitiveComponent * OtherComp,
 				gameInstance->spawnCtrl->brainBaseSet = false;
 				hasBrain = false;
 				gameInstance->playerWithBrain = nullptr;
+				for (std::vector<ACapTheBrainCharacter*>::iterator itr = gameInstance->players.begin(); itr != gameInstance->players.end(); itr++)
+				{
+					gameInstance->arrows[(*itr)->id]->ChangeMaterial(false, false, true);
+				}
 				score++;
 			}
 		}
@@ -240,6 +249,7 @@ void ACapTheBrainCharacter::SpawnArrow()
 		arrow->MeshComponent->AttachTo(RootComponent);
 		arrow->SetActorTransform(this->GetTransform());
 		arrow->SetActorRelativeLocation(FVector(0, 0, ArrowZLocation));
+		arrow->ChangeMaterial(false, false, true);
 
 		gameInstance->arrows.push_back(arrow);
 	}
@@ -277,6 +287,10 @@ void ACapTheBrainCharacter::LooseBrain()
 	SetActorLocation(startPosition);
 	SetActorRotation(startRotation);
 	gameInstance->brain->DetachFromHead(this, newBrainPosition);
+	for (std::vector<ACapTheBrainCharacter*>::iterator itr = gameInstance->players.begin(); itr != gameInstance->players.end(); itr++)
+	{
+		gameInstance->arrows[(*itr)->id]->ChangeMaterial(false, false, true);
+	}
 }
 
 

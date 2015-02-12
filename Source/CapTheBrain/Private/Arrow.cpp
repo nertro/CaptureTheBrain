@@ -20,3 +20,23 @@ void AArrow::PointToTarget(AActor* target)
 	SetActorRotation(direction.Rotation());
 }
 
+void AArrow::ChangeMaterial(bool red, bool green, bool blue)
+{
+	UMaterialInterface* newMat = blueMaterial;
+
+	if (red)
+	{
+		newMat = redMaterial;
+	}
+	else if (blue)
+	{
+		newMat = blueMaterial;
+	}
+	else if (green)
+	{
+		newMat = greenMaterial;
+	}
+
+	MeshComponent->SetMaterial(0, newMat);
+}
+
