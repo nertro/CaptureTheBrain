@@ -5,12 +5,13 @@
 
 #include "EngineUtils.h"
 #include "CapTheBrainArenaGameMode.h"
+#include "BrainzlapGameInstance.h"
 
 
 UTimerWidget::UTimerWidget(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
 {
-	totalMinutes = minutesLeft = 5;
+	totalMinutes = minutesLeft = 1;
 	totalSeconds = 60;
 	secondsPassedOnLastUpdate = 0;
 }

@@ -47,4 +47,7 @@ class CAPTHEBRAIN_API UBrainzlapGameInstance : public UGameInstance
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = GameMode)
 	bool loadCredits;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = GameMode)
+    int64 minutes;
 };

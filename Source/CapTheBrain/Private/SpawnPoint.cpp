@@ -28,6 +28,7 @@ void ASpawnPoint::BeginPlay()
 	else if (BrainBP)
 	{
 		GameInstance->BrainSpawnPoint = this;
+		MeshComponent->AttachTo(RootComponent);
 	}
 }
 

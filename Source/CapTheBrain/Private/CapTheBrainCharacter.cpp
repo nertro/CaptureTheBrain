@@ -268,7 +268,7 @@ void ACapTheBrainCharacter::SetArrowDirection()
 	}
 	else if (hasBrain && gameInstance->brainBase != nullptr)
 	{
-		target = gameInstance->brain;
+		target = gameInstance->brainBase;
 	}
 
 	gameInstance->arrows[id]->PointToTarget(target);

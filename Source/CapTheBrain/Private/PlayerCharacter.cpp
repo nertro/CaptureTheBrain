@@ -48,7 +48,7 @@ void APlayerCharacter::OrbitCamera()
 
 		if (!ctrl->bCinematicMode)
 		{
-			ctrl->SetCinematicMode(true, false, true, true, true);
+			ctrl->SetCinematicMode(true, false, false, true, true);
 			CameraBoom->TargetArmLength /= 3;
 		}
 
