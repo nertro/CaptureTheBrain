@@ -41,7 +41,7 @@ class ACapTheBrainCharacter : public ACharacter
 		bool FellDown = false;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Animation)
-		float ArrowZLocation = 180;
+		float ArrowZLocation = 130;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Spawn)
 		TSubclassOf<class ACollectableItem> BrainBP;
@@ -75,6 +75,11 @@ class ACapTheBrainCharacter : public ACharacter
 
 	UFUNCTION(BlueprintCallable, Category = Character)
 	void LooseBrain();
+
+	UFUNCTION(BlueprintCallable, Category = Character)
+	void SetMaterial(UMaterialInterface* newMaterial);
+
+	void LoadCredits();
 
 protected:
 

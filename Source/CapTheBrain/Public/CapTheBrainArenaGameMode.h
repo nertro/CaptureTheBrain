@@ -15,6 +15,8 @@ class CAPTHEBRAIN_API ACapTheBrainArenaGameMode : public AGameMode
 
 	void GameOver();
 
+	UFUNCTION(BlueprintCallable, Category = GameMode)
+	void SetPlayerMaterial(APawn* pawn, UMaterialInterface* newMaterial);
 /*
 	virtual void StartNewPlayer(APlayerController*) override;
 	
