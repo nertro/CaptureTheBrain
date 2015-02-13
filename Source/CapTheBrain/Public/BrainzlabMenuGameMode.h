@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "BrainPickup.h"
+
 #include "GameFramework/GameMode.h"
 #include "BrainzlabMenuGameMode.generated.h"
 
@@ -15,4 +17,21 @@ class CAPTHEBRAIN_API ABrainzlabMenuGameMode : public AGameMode
 
 	void StartNewGame();
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = GameMode)
+	TArray<UMaterialInterface*> profMats;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = GameMode)
+	TArray<UMaterialInterface*> profInMats;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = GameMode)
+	USkeletalMesh* prof;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = GameMode)
+	USkeletalMesh* profIn;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = GameMode)
+	USkeletalMesh* brain;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = GameMode)
+	FVector actorPos;
 };

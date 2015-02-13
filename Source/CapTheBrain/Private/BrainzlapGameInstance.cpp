@@ -42,6 +42,7 @@ void UBrainzlapGameInstance::CleanUp()
 
 	for (std::vector<ACapTheBrainCharacter*>::iterator itr = players.begin(); itr != players.end(); itr++)
 	{
+		(*itr)->Destroy();
 		(*itr) = nullptr;
 	}
 
@@ -49,6 +50,9 @@ void UBrainzlapGameInstance::CleanUp()
 	{
 		(*itr) = nullptr;
 	}
+
+	players.clear();
+	arrows.clear();
 
 	for (std::vector<ASpawnPoint*>::iterator itr = itemSpawnPoints.begin(); itr != itemSpawnPoints.end(); itr++)
 	{
@@ -59,4 +63,6 @@ void UBrainzlapGameInstance::CleanUp()
 	{
 		(*itr) = nullptr;
 	}
+
+	playerMats.Reset();
 }

@@ -57,5 +57,9 @@ class CAPTHEBRAIN_API UBrainzlapGameInstance : public UGameInstance
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = GameMode)
 	int32 playersSet;
 
-	std::vector<UMaterialInterface*> playerMats;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = GameMode)
+	TArray<UMaterialInterface*> playerMats;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = GameMode)
+	AActor* curCharacter;
 };
