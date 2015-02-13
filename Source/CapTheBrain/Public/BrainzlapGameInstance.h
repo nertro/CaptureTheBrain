@@ -48,6 +48,14 @@ class CAPTHEBRAIN_API UBrainzlapGameInstance : public UGameInstance
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = GameMode)
 	bool loadCredits;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = GameMode)
-    int64 minutes;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = GameMode)
+    int32 minutes;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = GameMode)
+	int32 playerCount;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = GameMode)
+	int32 playersSet;
+
+	std::vector<UMaterialInterface*> playerMats;
 };
