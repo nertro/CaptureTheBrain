@@ -185,11 +185,14 @@ class UPrimitiveComponent * OtherComp,
 					}
 				}
 			}
-			else if (Other->IsA(AItemPickup::StaticClass()) &! hasItem)
+			else if (Other->IsA(AItemPickup::StaticClass()))
 			{
-				CollectItem();
-				AItemPickup* other = (AItemPickup*)Other;
-				other->MySpawnPoint->occupied = false;
+				if (!hasItem)
+				{
+					CollectItem();
+					AItemPickup* other = (AItemPickup*)Other;
+					other->MySpawnPoint->occupied = false;
+				}
 				Other->Destroy();
 			}
 			else if (Other->IsA(ABrainBase::StaticClass()) && hasBrain)

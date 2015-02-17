@@ -28,9 +28,11 @@ class CAPTHEBRAIN_API UTimerWidget : public UUserWidget
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = GameMode)
 	int32 totalMinutes;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = GameMode)
+	int32 minutesLeft;
+
 private:
 	int32 totalSeconds;
-	int32 minutesLeft;
 	int32 secondsLeft;
 	float secondsPassed;
 	float secondsPassedOnLastUpdate;
