@@ -94,6 +94,9 @@ class CAPTHEBRAIN_API ACharacterHUD : public AHUD
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = GUI)
 		float UITextPaddingBottom;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = GUI)
+		bool playItemUseSound;
+
 	int currentItem;
 
 	std::vector<UTexture2D*> ItemImgs;

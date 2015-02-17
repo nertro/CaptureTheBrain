@@ -235,6 +235,7 @@ void ACapTheBrainCharacter::UseItem()
 	if (currentItem)
 	{
 		currentItem->Activate(this);
+		myControllerHUD->playItemUseSound = true;
 	}
 }
 
