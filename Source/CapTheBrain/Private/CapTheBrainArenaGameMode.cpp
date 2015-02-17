@@ -30,18 +30,18 @@ void ACapTheBrainArenaGameMode::GameOver()
 
 	ACapTheBrainCharacter* winner = nullptr;
 
-	for (std::vector<ACapTheBrainCharacter*>::iterator itr = gameInstance->players.begin(); itr != gameInstance->players.end(); itr++)
+	for (int i = 0; i < gameInstance->players.Num(); i++)
 	{
 		if (winner == nullptr)
 		{
-			winner = (*itr);
+			winner = gameInstance->players[i];
 			winner->won = true;
 		}
-		else if (winner->GetScore() < (*itr)->GetScore())
+		else if (winner->GetScore() < gameInstance->players[i]->GetScore())
 		{
 			winner->won = false;
 
-			winner = (*itr);
+			winner = gameInstance->players[i];
 			winner->won = true;
 		}
 	}

@@ -138,11 +138,14 @@ void ACapTheBrainCharacter::Tick(float deltaSeconds)
 
 	if (firstUpdate)
 	{
-		id = gameInstance->players.size();
-		gameInstance->players.push_back(this);
+		id = gameInstance->players.Num();
+		gameInstance->players.Add(this);
 		SpawnArrow();
 		won = false;
-
+		if (id == 0 && gameInstance->playerMats.Num() > 0)
+		{
+			SetMaterial(gameInstance->playerMats[0]);
+		}
 		firstUpdate = false;
 	}
 
@@ -177,11 +180,11 @@ class UPrimitiveComponent * OtherComp,
 				this->hasBrain = true;
 				gameInstance->playerWithBrain = this;
 				gameInstance->arrows[id]->ChangeMaterial(false, true, false);
-				for (std::vector<ACapTheBrainCharacter*>::iterator itr = gameInstance->players.begin(); itr != gameInstance->players.end(); itr++)
+				for (int i = 0; i < gameInstance->players.Num(); i++)
 				{
-					if ((*itr) != this)
+					if (gameInstance->players[i] != this)
 					{
-						gameInstance->arrows[(*itr)->id]->ChangeMaterial(true, false, false);
+						gameInstance->arrows[gameInstance->players[i]->id]->ChangeMaterial(true, false, false);
 					}
 				}
 			}
@@ -205,9 +208,9 @@ class UPrimitiveComponent * OtherComp,
 				gameInstance->spawnCtrl->brainBaseSet = false;
 				hasBrain = false;
 				gameInstance->playerWithBrain = nullptr;
-				for (std::vector<ACapTheBrainCharacter*>::iterator itr = gameInstance->players.begin(); itr != gameInstance->players.end(); itr++)
+				for (int i = 0; i < gameInstance->players.Num(); i++)
 				{
-					gameInstance->arrows[(*itr)->id]->ChangeMaterial(false, false, true);
+					gameInstance->arrows[gameInstance->players[i]->id]->ChangeMaterial(false, false, true);
 				}
 				score++;
 			}
@@ -232,10 +235,13 @@ void ACapTheBrainCharacter::CollectItem()
 
 void ACapTheBrainCharacter::UseItem()
 {
-	if (currentItem)
+	if (currentItem && hasItem)
 	{
 		currentItem->Activate(this);
-		myControllerHUD->playItemUseSound = true;
+		if (myControllerHUD)
+		{
+			myControllerHUD->playItemUseSound = true;
+		}
 	}
 }
 
@@ -291,9 +297,9 @@ void ACapTheBrainCharacter::LooseBrain()
 	SetActorLocation(startPosition);
 	SetActorRotation(startRotation);
 	gameInstance->brain->DetachFromHead(this, newBrainPosition);
-	for (std::vector<ACapTheBrainCharacter*>::iterator itr = gameInstance->players.begin(); itr != gameInstance->players.end(); itr++)
+	for (int i = 0; i < gameInstance->players.Num(); i++)
 	{
-		gameInstance->arrows[(*itr)->id]->ChangeMaterial(false, false, true);
+		gameInstance->arrows[gameInstance->players[i]->id]->ChangeMaterial(false, false, true);
 	}
 }
 

@@ -30,12 +30,12 @@ void ItemEffect::ChangeSpeed(ACapTheBrainCharacter* player, float speedChange, b
 	gameInstance = Cast<UBrainzlapGameInstance>(player->GetGameInstance());
 	if (onOthers)
 	{
-		for (std::vector<ACapTheBrainCharacter*>::iterator itr = gameInstance->players.begin(); itr != gameInstance->players.end(); itr++)
+		for (int i = 0; i < gameInstance->players.Num(); i++)
 		{
-			if ((*itr) != player && !(*itr)->hasShield && !(*itr)->isSlow)
+			if (gameInstance->players[i] != player && !gameInstance->players[i]->hasShield && !gameInstance->players[i]->isSlow)
 			{
-				(*itr)->SpeedBuffer *= speedChange;
-				(*itr)->isSlow = true;
+				gameInstance->players[i]->SpeedBuffer *= speedChange;
+				gameInstance->players[i]->isSlow = true;
 			}
 		}
 	}

@@ -17,7 +17,8 @@ class CAPTHEBRAIN_API UBrainzlapGameInstance : public UGameInstance
 {
 	GENERATED_UCLASS_BODY()
 
-	std::vector<ACapTheBrainCharacter*> players;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = GameMode)
+	TArray<ACapTheBrainCharacter*> players;
 
 	std::vector<AArrow*> arrows;
 

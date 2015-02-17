@@ -27,13 +27,13 @@ void ItemEffectZapp::Deactivate(ACapTheBrainCharacter* player)
 void ItemEffectZapp::Zapp(ACapTheBrainCharacter* player)
 {
 	gameInstance = Cast<UBrainzlapGameInstance>(player->GetGameInstance());
-	for (std::vector<ACapTheBrainCharacter*>::iterator itr = gameInstance->players.begin(); itr != gameInstance->players.end(); itr++)
+	for (int i = 0; i < gameInstance->players.Num(); i++)
 	{
-		if (!(*itr)->hasShield && (*itr)->hasBrain)
+		if (!gameInstance->players[i]->hasShield && gameInstance->players[i]->hasBrain)
 		{
-			(*itr)->GotHit = true;
+			gameInstance->players[i]->GotHit = true;
 			gameInstance->playerWithBrain = nullptr;
-			(*itr)->hasBrain = false;
+			gameInstance->players[i]->hasBrain = false;
 		}
 	}
 }
