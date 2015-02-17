@@ -15,6 +15,7 @@ class CAPTHEBRAIN_API ABrainzlabMenuGameMode : public AGameMode
 {
 	GENERATED_UCLASS_BODY()
 
+	UFUNCTION()
 	void StartNewGame();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = GameMode)

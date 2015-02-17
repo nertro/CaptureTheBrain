@@ -13,4 +13,5 @@ ABrainzlabMenuGameMode::ABrainzlabMenuGameMode(const class FPostConstructInitial
 
 void ABrainzlabMenuGameMode::StartNewGame()
 {
+	RestartGame();
 }
