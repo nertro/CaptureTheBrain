@@ -9,3 +9,8 @@ Binaries/Win32/CapTheBrain-Win32-Shipping.lib
 Binaries/Win32/CapTheBrain-Win32-Shipping.pdb
 Binaries/Win32/CapTheBrain-Win32-Shipping.exe
 Content/Movies
+Binaries/Win64/CapTheBrain.exp
+Binaries/Win64/CapTheBrain.exe
+Binaries/Win64/CapTheBrain.lib
+Binaries/Win64/CapTheBrain.pdb
+CapTheBrain.opensdf
