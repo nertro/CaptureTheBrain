@@ -27,8 +27,6 @@ ASpawnPoint* UBrainzlapGameInstance::GetTargetItem()
 
 void UBrainzlapGameInstance::CleanUp()
 {
-	std::vector<ACapTheBrainCharacter*> players;
-
 	brain = nullptr;
 
 	brainBase = nullptr;
@@ -40,18 +38,13 @@ void UBrainzlapGameInstance::CleanUp()
 	std::vector<ASpawnPoint*> brainBases;
 	BrainSpawnPoint = nullptr;
 
-	for (std::vector<ACapTheBrainCharacter*>::iterator itr = players.begin(); itr != players.end(); itr++)
-	{
-		(*itr)->Destroy();
-		(*itr) = nullptr;
-	}
-
 	for (std::vector<AArrow*>::iterator itr = arrows.begin(); itr != arrows.end(); itr++)
 	{
 		(*itr) = nullptr;
 	}
 
-	players.clear();
+
+	players.Reset();
 	arrows.clear();
 
 	for (std::vector<ASpawnPoint*>::iterator itr = itemSpawnPoints.begin(); itr != itemSpawnPoints.end(); itr++)
