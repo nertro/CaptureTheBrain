@@ -65,6 +65,7 @@ void UBrainzlapGameInstance::CleanUp()
 	}
 
 	playerMats.Reset();
+	gameStarted = false;
 }
 
 void UBrainzlapGameInstance::RestartGame()

@@ -136,7 +136,7 @@ void ACapTheBrainCharacter::Tick(float deltaSeconds)
 {
 	Super::Tick(deltaSeconds);
 
-	if (firstUpdate)
+	if (firstUpdate && gameInstance->gameStarted)
 	{
 		id = gameInstance->players.Num();
 		gameInstance->players.Add(this);
