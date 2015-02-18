@@ -66,3 +66,14 @@ void UBrainzlapGameInstance::CleanUp()
 
 	playerMats.Reset();
 }
+
+void UBrainzlapGameInstance::RestartGame()
+{
+	gameOver = false;
+	loadCredits = false;
+	minutes = 3;
+	playerCount = 0;
+	playersSet = 0;
+	maleChar.Reset();
+	restart = false;
+}

@@ -28,6 +28,9 @@ class CAPTHEBRAIN_API UBrainzlapGameInstance : public UGameInstance
 	UFUNCTION(BlueprintCallable, Category = GameInstance)
 	void CleanUp();
 
+	UFUNCTION(BlueprintCallable, Category = GameInstance)
+	void RestartGame();
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = GameInstance)
 	ABrainPickup* brain;
 
