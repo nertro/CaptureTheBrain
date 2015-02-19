@@ -26,6 +26,29 @@ void ACapTheBrainArenaGameMode::SetPlayerMaterial(APawn* pawn, UMaterialInterfac
 	}
 }
 
+void ACapTheBrainArenaGameMode::SetPlayerStartPositions()
+{
+	UBrainzlapGameInstance* gameInstance = Cast<UBrainzlapGameInstance>(GetGameInstance());
+
+	if (gameInstance)
+	{
+		if (gameInstance->players.Num() > 0)
+		{
+			int i = 0;
+			for (TActorIterator<APlayerStart> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+			{
+				if (i < gameInstance->players.Num())
+				{
+					gameInstance->players[i]->startPosition = ActorItr->GetActorLocation();
+					gameInstance->players[i]->startRotation = ActorItr->GetActorRotation();
+					gameInstance->players[i]->SetActorLocationAndRotation(gameInstance->players[i]->startPosition, gameInstance->players[i]->startRotation);
+					i++;
+				}
+			}
+		}
+	}
+}
+
 void ACapTheBrainArenaGameMode::GameOver()
 {
 	UBrainzlapGameInstance* gameInstance = Cast<UBrainzlapGameInstance>(GetGameInstance());

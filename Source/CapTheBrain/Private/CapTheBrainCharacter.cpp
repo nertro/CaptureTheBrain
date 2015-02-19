@@ -72,8 +72,6 @@ void ACapTheBrainCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	gameInstance = Cast<UBrainzlapGameInstance>(GetGameInstance());
-	startPosition = this->GetActorLocation();
-	startRotation = this->GetActorRotation();
 	score = 0;
 }
 
@@ -145,6 +143,10 @@ void ACapTheBrainCharacter::Tick(float deltaSeconds)
 		if (id == 0 && gameInstance->playerMats.Num() > 0)
 		{
 			SetMaterial(gameInstance->playerMats[0]);
+		}
+		if (gameInstance->players.Num() == gameInstance->playerCount)
+		{
+			Cast<ACapTheBrainArenaGameMode>(GetWorld()->GetAuthGameMode())->SetPlayerStartPositions();
 		}
 		firstUpdate = false;
 	}
