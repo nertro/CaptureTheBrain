@@ -29,7 +29,7 @@ void ItemEffectZapp::Zapp(ACapTheBrainCharacter* player)
 	gameInstance = Cast<UBrainzlapGameInstance>(player->GetGameInstance());
 	for (int i = 0; i < gameInstance->players.Num(); i++)
 	{
-		if (!gameInstance->players[i]->hasShield && gameInstance->players[i]->hasBrain)
+		if (!gameInstance->players[i]->hasShield && gameInstance->players[i]->hasBrain && gameInstance->players[i] != player)
 		{
 			gameInstance->players[i]->GotHit = true;
 			gameInstance->playerWithBrain = nullptr;
