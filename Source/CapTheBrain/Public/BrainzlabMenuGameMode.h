@@ -15,8 +15,11 @@ class CAPTHEBRAIN_API ABrainzlabMenuGameMode : public AGameMode
 {
 	GENERATED_UCLASS_BODY()
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable, Category = GameMode)
 	void StartNewGame();
+
+	UFUNCTION(BlueprintCallable, Category = GameMode)
+	void DisableController(APlayerController* ctrl);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = GameMode)
 	TArray<UMaterialInterface*> profMats;

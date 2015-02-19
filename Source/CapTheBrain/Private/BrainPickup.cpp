@@ -16,6 +16,7 @@ ABrainPickup::ABrainPickup(const class FPostConstructInitializeProperties& PCIP)
 //Detach Brain from Base, deactivate CollisionCapsule & Snap Mesh to Player
 void ABrainPickup::AttachToHead(ACapTheBrainCharacter* player)
 {
+	Capsule->SetSimulatePhysics(false);
 	myPlayer = player;
 	RootComponent->DetachFromParent();
 	RootComponent = MeshComponent;
@@ -40,4 +41,5 @@ void ABrainPickup::DetachFromHead(ACapTheBrainCharacter* player, FVector newLoca
 	MeshComponent->AttachTo(Capsule);
 	MeshComponent->SetRelativeLocation(FVector(0,0,-20));
 	SetActorLocation(newLocation);
+	Capsule->SetSimulatePhysics(true);
 }

@@ -2,6 +2,7 @@
 
 #include "CapTheBrain.h"
 #include "BrainzlapGameInstance.h"
+#include "PlayerCharacter.h"
 
 
 UBrainzlapGameInstance::UBrainzlapGameInstance(const class FPostConstructInitializeProperties& PCIP)
@@ -43,6 +44,14 @@ void UBrainzlapGameInstance::CleanUp()
 		(*itr) = nullptr;
 	}
 
+	for (int i = 0; i < players.Num(); i++)
+	{
+		/*if (players[i]->IsA(APlayerCharacter::StaticClass()))
+		{
+
+		}
+		players[i]->Controller->Destroy();*/
+	}
 
 	players.Reset();
 	arrows.clear();

@@ -17,32 +17,38 @@ ACapTheBrainArenaGameMode::ACapTheBrainArenaGameMode(const class FPostConstructI
 
 void ACapTheBrainArenaGameMode::SetPlayerMaterial(APawn* pawn, UMaterialInterface* newMaterial)
 {
-	if (pawn->IsA(ACapTheBrainCharacter::StaticClass()))
+	if (pawn)
 	{
-		Cast<ACapTheBrainCharacter>(pawn)->SetMaterial(newMaterial);
+		if (pawn->IsA(ACapTheBrainCharacter::StaticClass()))
+		{
+			Cast<ACapTheBrainCharacter>(pawn)->SetMaterial(newMaterial);
+		}
 	}
 }
 
 void ACapTheBrainArenaGameMode::GameOver()
 {
 	UBrainzlapGameInstance* gameInstance = Cast<UBrainzlapGameInstance>(GetGameInstance());
-	gameInstance->gameOver = true;
-
-	ACapTheBrainCharacter* winner = nullptr;
-
-	for (int i = 0; i < gameInstance->players.Num(); i++)
+	if (!gameInstance->gameOver)
 	{
-		if (winner == nullptr)
-		{
-			winner = gameInstance->players[i];
-			winner->won = true;
-		}
-		else if (winner->GetScore() < gameInstance->players[i]->GetScore())
-		{
-			winner->won = false;
+		gameInstance->gameOver = true;
 
-			winner = gameInstance->players[i];
-			winner->won = true;
+		ACapTheBrainCharacter* winner = nullptr;
+
+		for (int i = 0; i < gameInstance->players.Num(); i++)
+		{
+			if (winner == nullptr)
+			{
+				winner = gameInstance->players[i];
+				winner->won = true;
+			}
+			else if (winner->GetScore() < gameInstance->players[i]->GetScore())
+			{
+				winner->won = false;
+
+				winner = gameInstance->players[i];
+				winner->won = true;
+			}
 		}
 	}
 }

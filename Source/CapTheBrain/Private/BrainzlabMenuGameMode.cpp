@@ -13,5 +13,37 @@ ABrainzlabMenuGameMode::ABrainzlabMenuGameMode(const class FPostConstructInitial
 
 void ABrainzlabMenuGameMode::StartNewGame()
 {
-	RestartGame();
+	const int maxSize = 4;
+	ULocalPlayer* PlayersToRemove[maxSize];
+	int currPlayer = 0;
+
+	for (FConstPlayerControllerIterator itr = GEngine->GameViewport->GetWorld()->GetPlayerControllerIterator(); itr; ++itr)
+	{
+		APlayerController* ctrl = *itr;
+
+		if (ctrl && ctrl->IsLocalController() && !ctrl->IsPrimaryPlayer())
+		{
+
+			ULocalPlayer* playerToRemove = Cast<ULocalPlayer>(ctrl->Player);
+			if (playerToRemove)
+			{
+				PlayersToRemove[currPlayer++] = playerToRemove;
+				ctrl->PawnPendingDestroy(ctrl->GetPawn());
+			}
+		}
+	}
+
+	for (int i = 0; i < currPlayer; ++i)
+	{
+
+		GEngine->GameViewport->RemovePlayer(PlayersToRemove[i]);
+	}
+}
+
+void ABrainzlabMenuGameMode::DisableController(APlayerController* ctrl)
+{
+	if (!ctrl->bCinematicMode)
+	{
+		ctrl->SetCinematicMode(true, true, true);
+	}
 }
