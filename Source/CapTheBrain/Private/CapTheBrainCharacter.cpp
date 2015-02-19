@@ -144,7 +144,7 @@ void ACapTheBrainCharacter::Tick(float deltaSeconds)
 		{
 			SetMaterial(gameInstance->playerMats[0]);
 		}
-		if (gameInstance->players.Num() == gameInstance->playerCount)
+		if (gameInstance->players.Num() == 4)
 		{
 			Cast<ACapTheBrainArenaGameMode>(GetWorld()->GetAuthGameMode())->SetPlayerStartPositions();
 		}

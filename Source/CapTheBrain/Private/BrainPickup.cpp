@@ -41,5 +41,5 @@ void ABrainPickup::DetachFromHead(ACapTheBrainCharacter* player, FVector newLoca
 	MeshComponent->AttachTo(Capsule);
 	MeshComponent->SetRelativeLocation(FVector(0,0,-20));
 	SetActorLocation(newLocation);
-	Capsule->SetSimulatePhysics(true);
+	//Capsule->SetSimulatePhysics(true);
 }
