@@ -65,6 +65,9 @@ class CAPTHEBRAIN_API UBrainzlapGameInstance : public UGameInstance
 	TArray<UMaterialInterface*> playerMats;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = GameMode)
+	TArray<UMaterialInterface*> KIMats;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = GameMode)
 	TArray<bool> maleChar;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = GameMode)
