@@ -39,7 +39,7 @@ void ABrainPickup::DetachFromHead(ACapTheBrainCharacter* player, FVector newLoca
 	Capsule->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	RootComponent = Capsule;
 	MeshComponent->AttachTo(Capsule);
+	Capsule->SetSimulatePhysics(true);
 	MeshComponent->SetRelativeLocation(FVector(0,0,-20));
 	SetActorLocation(newLocation);
-	//Capsule->SetSimulatePhysics(true);
 }
