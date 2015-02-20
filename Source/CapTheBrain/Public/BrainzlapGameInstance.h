@@ -81,5 +81,8 @@ class CAPTHEBRAIN_API UBrainzlapGameInstance : public UGameInstance
 	bool introPlayed;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = GameMode)
+	bool wasInExplore;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = GameMode)
 	bool gameStarted;
 };

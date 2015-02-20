@@ -10,7 +10,7 @@ ABrainPickup::ABrainPickup(const class FPostConstructInitializeProperties& PCIP)
 	MeshComponent = PCIP.CreateDefaultSubobject<USkeletalMeshComponent>(this, TEXT("Mesh"));
 	MeshComponent->AttachTo(Capsule);
 	MeshComponent->SetRelativeLocation(FVector(0, 0, -20));
-	Capsule->SetCapsuleSize(30, 15);
+	Capsule->SetCapsuleSize(50, 15);
 }
 
 //Detach Brain from Base, deactivate CollisionCapsule & Snap Mesh to Player
