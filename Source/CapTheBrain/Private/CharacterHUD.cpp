@@ -44,7 +44,11 @@ void ACharacterHUD::DrawBasicUIElements(float screenWidth, float screenHeight)
 		float offset = screenWidth / screenHeight;
 		Super::DrawTexture(SplatterImg, UIPaddingLeft, screenHeight - (SplatterImg->GetSizeY() * UIImgScale) - UIPaddingBottomRight, screenWidth, screenHeight, 0, 0, offset, 1, FLinearColor::White, BLEND_Translucent, UIImgScale, false, 0, FVector2D::ZeroVector);
 		Super::DrawTexture(BrainImg, screenWidth - (BrainImg->GetSizeX() * UIImgScale) - UIPaddingBottomRight, screenHeight - (BrainImg->GetSizeY() * UIImgScale) - UIPaddingBottomRight, screenWidth, screenHeight, 0, 0, offset, 1, FLinearColor::White, BLEND_Translucent, UIImgScale, false, 0, FVector2D::ZeroVector);
-		int score = Cast<ACapTheBrainCharacter>(GetOwningPawn())->GetScore();
+		int score = 0;
+		if (Cast<ACapTheBrainCharacter>(GetOwningPawn())->GetScore())
+		{
+			score = Cast<ACapTheBrainCharacter>(GetOwningPawn())->GetScore();
+		}
 		Super::DrawText(FString::FromInt(score), FLinearColor::Black, screenWidth - UITextPaddingBottomRight, screenHeight - UITextPaddingBottom, GUIFont, UIFontScale, false);
 	}
 	if (Cast<UBrainzlapGameInstance>(GetGameInstance())->gameOver)
@@ -59,7 +63,7 @@ void ACharacterHUD::DrawBasicUIElements(float screenWidth, float screenHeight)
 			text = "You loose!";
 		}
 
-		Super::DrawText(text, FLinearColor::Red, UIPaddingLeft*2, screenHeight / 2, GUIFont, UIFontScale * 2, false);
+		Super::DrawText(text, FLinearColor::Red, UIPaddingLeft*4, screenHeight / 2, GUIFont, UIFontScale * 2, false);
 	}
 }
 
