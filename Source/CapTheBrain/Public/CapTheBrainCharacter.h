@@ -71,7 +71,7 @@ class ACapTheBrainCharacter : public ACharacter
 	FVector startPosition;
 	FRotator startRotation;
 
-	int GetScore();
+	int score = 0;
 
 	int id;
 
@@ -139,8 +139,6 @@ protected:
 	void SpawnArrow();
 
 	void SetArrowDirection();
-
-	int score;
 
 protected:
 	// APawn interface

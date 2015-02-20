@@ -45,9 +45,9 @@ void ACharacterHUD::DrawBasicUIElements(float screenWidth, float screenHeight)
 		Super::DrawTexture(SplatterImg, UIPaddingLeft, screenHeight - (SplatterImg->GetSizeY() * UIImgScale) - UIPaddingBottomRight, screenWidth, screenHeight, 0, 0, offset, 1, FLinearColor::White, BLEND_Translucent, UIImgScale, false, 0, FVector2D::ZeroVector);
 		Super::DrawTexture(BrainImg, screenWidth - (BrainImg->GetSizeX() * UIImgScale) - UIPaddingBottomRight, screenHeight - (BrainImg->GetSizeY() * UIImgScale) - UIPaddingBottomRight, screenWidth, screenHeight, 0, 0, offset, 1, FLinearColor::White, BLEND_Translucent, UIImgScale, false, 0, FVector2D::ZeroVector);
 		int score = 0;
-		if (Cast<ACapTheBrainCharacter>(GetOwningPawn())->GetScore())
+		if (Cast<ACapTheBrainCharacter>(GetOwningPawn()))
 		{
-			score = Cast<ACapTheBrainCharacter>(GetOwningPawn())->GetScore();
+			score = Cast<ACapTheBrainCharacter>(GetOwningPawn())->score;
 		}
 		Super::DrawText(FString::FromInt(score), FLinearColor::Black, screenWidth - UITextPaddingBottomRight, screenHeight - UITextPaddingBottom, GUIFont, UIFontScale, false);
 	}
@@ -76,6 +76,10 @@ void ACharacterHUD::DrawCounterElements(float screenWidth, float screenHeight)
 		{
 			Super::DrawTexture(ItemImgs[currentItem], UIPaddingLeft, screenHeight - (SplatterImg->GetSizeY() * UIImgScale) - UIPaddingBottomRight, screenWidth, screenHeight, 0, 0, offset, 1, FLinearColor::White, BLEND_Translucent, UIImgScale, false, 0, FVector2D::ZeroVector);
 		}
+	}
+	if (!owner)
+	{
+		owner = Cast<ACapTheBrainCharacter>(GetOwningPlayerController()->GetPawn());
 	}
 	if (owner)
 	{

@@ -59,7 +59,14 @@ void ItemManager::SetItem(ACapTheBrainCharacter* player)
 	player->currentItem = itemEffects[newItem];
 	if (player->IsA(APlayerCharacter::StaticClass()))
 	{
-		player->myControllerHUD->PlayerHasItem = true;
-		player->myControllerHUD->currentItem = newItem;
+		if (!player->myControllerHUD)
+		{
+			player->myControllerHUD = Cast<ACharacterHUD>(Cast<APlayerController>(player->Controller)->GetHUD());
+		}
+		if (player->myControllerHUD)
+		{
+			player->myControllerHUD->PlayerHasItem = true;
+			player->myControllerHUD->currentItem = newItem;
+		}
 	}
 }

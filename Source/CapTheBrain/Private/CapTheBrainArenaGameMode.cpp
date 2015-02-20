@@ -8,11 +8,7 @@
 ACapTheBrainArenaGameMode::ACapTheBrainArenaGameMode(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
 {
-	/*static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/Blueprints/Characters/Professor"));
-	if (PlayerPawnBPClass.Class != NULL)
-	{
-		DefaultPawnClass = PlayerPawnBPClass.Class;
-	}*/
+	
 }
 
 void ACapTheBrainArenaGameMode::SetPlayerMaterial(APawn* pawn, UMaterialInterface* newMaterial)
@@ -65,13 +61,18 @@ void ACapTheBrainArenaGameMode::GameOver()
 				winner = gameInstance->players[i];
 				winner->won = true;
 			}
-			else if (winner->GetScore() < gameInstance->players[i]->GetScore())
+			else if (winner->score < gameInstance->players[i]->score)
 			{
 				winner->won = false;
 
 				winner = gameInstance->players[i];
 				winner->won = true;
 			}
+		}
+
+		if (winner->score == 0)
+		{
+			winner->won = false;
 		}
 	}
 }

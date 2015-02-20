@@ -18,6 +18,10 @@ void ItemEffect::ChangeUI(ACapTheBrainCharacter* player)
 {
 	if (player->IsA(APlayerCharacter::StaticClass()))
 	{
+		if (!player->myControllerHUD)
+		{
+			player->myControllerHUD = Cast<ACharacterHUD>(Cast<APlayerController>(player->Controller)->GetHUD());
+		}
 		player->myControllerHUD->PlayerHasItem = false;
 	}
 }

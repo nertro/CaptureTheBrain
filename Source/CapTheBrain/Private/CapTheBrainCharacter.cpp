@@ -66,6 +66,8 @@ void ACapTheBrainCharacter::SetupPlayerInputComponent(class UInputComponent* Inp
 	InputComponent->BindAxis("TurnRate", this, &ACapTheBrainCharacter::TurnAtRate);
 	InputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 	InputComponent->BindAxis("LookUpRate", this, &ACapTheBrainCharacter::LookUpAtRate);
+
+	score = 0;
 }
 
 void ACapTheBrainCharacter::BeginPlay()
@@ -296,10 +298,6 @@ void ACapTheBrainCharacter::SetArrowDirection()
 	gameInstance->arrows[id]->PointToTarget(target);
 }
 
-int ACapTheBrainCharacter::GetScore()
-{
-	return this->score;
-}
 
 void ACapTheBrainCharacter::LooseBrain()
 {

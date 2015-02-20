@@ -42,6 +42,7 @@ class CAPTHEBRAIN_API UBrainzlapGameInstance : public UGameInstance
 	std::vector<ASpawnPoint*> itemSpawnPoints;
 
 	std::vector<ASpawnPoint*> brainBases;
+
 	ASpawnPoint* BrainSpawnPoint;
 
 	ACapTheBrainCharacter* playerWithBrain;
