@@ -270,17 +270,27 @@ void ACapTheBrainCharacter::SpawnArrow()
 void ACapTheBrainCharacter::SetArrowDirection()
 {
 	AActor* target = this;
-	if (!hasBrain &! gameInstance->brain->GotCollected)
+	if (gameInstance->brain)
 	{
-		target = gameInstance->brain;
+		if (!hasBrain &!gameInstance->brain->GotCollected)
+		{
+			target = gameInstance->brain;
+		}
+		else if (!hasBrain && gameInstance->brain->GotCollected && gameInstance->playerWithBrain != nullptr)
+		{
+			target = gameInstance->brain;
+		}
+		else if (hasBrain && gameInstance->brainBase != nullptr)
+		{
+			target = gameInstance->brainBase;
+		}
 	}
-	else if (!hasBrain && gameInstance->brain->GotCollected && gameInstance->playerWithBrain != nullptr)
+	else
 	{
-		target = gameInstance->brain;
-	}
-	else if (hasBrain && gameInstance->brainBase != nullptr)
-	{
-		target = gameInstance->brainBase;
+		gameInstance->playerWithBrain->hasBrain = false;
+		gameInstance->playerWithBrain = nullptr;
+		gameInstance->spawnCtrl->SpawnBrain();
+		gameInstance->spawnCtrl->brainBaseSet = false;
 	}
 
 	gameInstance->arrows[id]->PointToTarget(target);
