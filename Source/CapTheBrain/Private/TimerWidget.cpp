@@ -57,7 +57,7 @@ int32 UTimerWidget::SetMinutes()
 	return minutesLeft;
 }
 
-ESlateVisibility::Type UTimerWidget::SetTimerVisibilitySingle()
+ESlateVisibility UTimerWidget::SetTimerVisibilitySingle()
 {
 	if (GetWorld()->GetAuthGameMode()->NumPlayers > 1)
 	{
@@ -67,7 +67,7 @@ ESlateVisibility::Type UTimerWidget::SetTimerVisibilitySingle()
 	return ESlateVisibility::Visible;
 }
 
-ESlateVisibility::Type UTimerWidget::SetTimerVisibilityMulti(ESlateVisibility::Type singleVisibility)
+ESlateVisibility UTimerWidget::SetTimerVisibilityMulti(ESlateVisibility singleVisibility)
 {
 	if (singleVisibility == ESlateVisibility::Hidden)
 	{

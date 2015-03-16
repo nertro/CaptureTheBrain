@@ -20,10 +20,10 @@ class CAPTHEBRAIN_API UTimerWidget : public UUserWidget
 	int32 SetSeconds();
 
 	UFUNCTION(BlueprintCallable, Category = Widget)
-	ESlateVisibility::Type SetTimerVisibilitySingle();
+	ESlateVisibility SetTimerVisibilitySingle();
 
 	UFUNCTION(BlueprintCallable, Category = Widget)
-	ESlateVisibility::Type SetTimerVisibilityMulti(ESlateVisibility::Type singleVisibility);
+	ESlateVisibility SetTimerVisibilityMulti(ESlateVisibility singleVisibility);
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = GameMode)
 	int32 totalMinutes;

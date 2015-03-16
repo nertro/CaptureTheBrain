@@ -9,30 +9,6 @@ ACapTheBrainArenaGameMode::ACapTheBrainArenaGameMode(const class FPostConstructI
 	: Super(PCIP)
 {
 
-	
-	if (GetWorld())
-	{
-		UBrainzlapGameInstance* instance = Cast<UBrainzlapGameInstance>(GetWorld()->GetGameInstance());
-		if (instance->maleChar.Num() > 0)
-		{
-			if (instance->maleChar[0])
-			{
-				static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/Blueprints/Characters/Professor"));
-				if (PlayerPawnBPClass.Class != NULL)
-				{
-					DefaultPawnClass = PlayerPawnBPClass.Class;
-				}
-			}
-			else
-			{
-				static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/Blueprints/Characters/Professorin"));
-				if (PlayerPawnBPClass.Class != NULL)
-				{
-					DefaultPawnClass = PlayerPawnBPClass.Class;
-				}
-			}
-		}
-	}
 }
 
 void ACapTheBrainArenaGameMode::SetPlayerMaterial(APawn* pawn, UMaterialInterface* newMaterial)
