@@ -14,3 +14,5 @@ Binaries/Win64/CapTheBrain.exe
 Binaries/Win64/CapTheBrain.lib
 Binaries/Win64/CapTheBrain.pdb
 CapTheBrain.opensdf
+CapTheBrain.sdf
+DerivedDataCache/Boot.ddc
