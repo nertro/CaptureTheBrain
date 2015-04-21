@@ -9,7 +9,7 @@
 ACTBAIController::ACTBAIController(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP.SetDefaultSubobjectClass<UBrainzlabPathFollowingComponent>(TEXT("PathFollowingComponent")))
 {
-	
+	bWantsPlayerState = true;
 }
 
 void ACTBAIController::BeginPlay()

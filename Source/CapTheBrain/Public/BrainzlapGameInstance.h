@@ -3,9 +3,6 @@
 #pragma once
 
 #include "Engine/GameInstance.h"
-#include "SpawnCtrl.h"
-#include "SpawnPoint.h"
-#include "CapTheBrainCharacter.h"
 
 #include "BrainzlapGameInstance.generated.h"
 
@@ -17,35 +14,14 @@ class CAPTHEBRAIN_API UBrainzlapGameInstance : public UGameInstance
 {
 	GENERATED_UCLASS_BODY()
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = GameMode)
-	TArray<ACapTheBrainCharacter*> players;
-
-	std::vector<AArrow*> arrows;
-
-	UFUNCTION(BlueprintCallable, Category = GameInstance)
-	ASpawnPoint* GetTargetItem();
+	/*UFUNCTION(BlueprintCallable, Category = GameInstance)
+	ASpawnPoint* GetTargetItem();*/
 
 	UFUNCTION(BlueprintCallable, Category = GameInstance)
 	void CleanUp();
 
 	UFUNCTION(BlueprintCallable, Category = GameInstance)
 	void RestartGame();
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = GameInstance)
-	ABrainPickup* brain;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = GameInstance)
-	ABrainBase* brainBase;
-
-	ASpawnCtrl* spawnCtrl;
-
-	std::vector<ASpawnPoint*> itemSpawnPoints;
-
-	std::vector<ASpawnPoint*> brainBases;
-
-	ASpawnPoint* BrainSpawnPoint;
-
-	ACapTheBrainCharacter* playerWithBrain;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = GameInstance)
 	bool gameOver;

@@ -2,6 +2,7 @@
 
 #include "CapTheBrain.h"
 #include "CapTheBrainArenaGameMode.h"
+#include "BrainzlabGameState.h"
 #include "BrainzlapGameInstance.h"
 #include "PlayerCharacter.h"
 
@@ -24,25 +25,28 @@ void ACapTheBrainArenaGameMode::SetPlayerMaterial(APawn* pawn, UMaterialInterfac
 
 void ACapTheBrainArenaGameMode::SetPlayerStartPositions()
 {
-	UBrainzlapGameInstance* gameInstance = Cast<UBrainzlapGameInstance>(GetGameInstance());
 
-	if (gameInstance)
+	ABrainzlabGameState* gameState = Cast<ABrainzlabGameState>(GameState);
+
+	if (gameState)
 	{
-		if (gameInstance->players.Num() > 0)
+		if (gameState->characters.Num() > 0)
 		{
 			int i = 0;
 			for (TActorIterator<APlayerStart> ActorItr(GetWorld()); ActorItr; ++ActorItr)
 			{
-				if (i < gameInstance->players.Num())
+				if (i < gameState->characters.Num())
 				{
-					gameInstance->players[i]->startPosition = ActorItr->GetActorLocation();
-					gameInstance->players[i]->startRotation = ActorItr->GetActorRotation();
-					gameInstance->players[i]->SetActorLocationAndRotation(gameInstance->players[i]->startPosition, gameInstance->players[i]->startRotation);
+					gameState->characters[i]->startPosition = ActorItr->GetActorLocation();
+					gameState->characters[i]->startRotation = ActorItr->GetActorRotation();
+					gameState->characters[i]->SetActorLocationAndRotation(gameState->characters[i]->startPosition, gameState->characters[i]->startRotation);
 					i++;
 				}
 			}
 		}
 	}
+
+	delete gameState;
 }
 
 void ACapTheBrainArenaGameMode::GameOver()
@@ -52,21 +56,26 @@ void ACapTheBrainArenaGameMode::GameOver()
 	{
 		gameInstance->gameOver = true;
 
-		ACapTheBrainCharacter* winner = nullptr;
+		TWeakObjectPtr<ACapTheBrainCharacter> winner;
+		ABrainzlabGameState* gameState = Cast<ABrainzlabGameState>(GameState);
 
-		for (int i = 0; i < gameInstance->players.Num(); i++)
+		if (gameState)
 		{
-			if (winner == nullptr)
-			{
-				winner = gameInstance->players[i];
-				winner->won = true;
-			}
-			else if (winner->score < gameInstance->players[i]->score)
-			{
-				winner->won = false;
 
-				winner = gameInstance->players[i];
-				winner->won = true;
+			for (int i = 0; i < gameState->characters.Num(); i++)
+			{
+				if (winner == NULL)
+				{
+					winner = gameState->characters[i];
+					winner->won = true;
+				}
+				else if (winner->score < gameState->characters[i]->score)
+				{
+					winner->won = false;
+
+					winner = gameState->characters[i];
+					winner->won = true;
+				}
 			}
 		}
 
@@ -74,6 +83,9 @@ void ACapTheBrainArenaGameMode::GameOver()
 		{
 			winner->won = false;
 		}
+
+		delete gameState;
+		delete gameInstance;
 	}
 }
 

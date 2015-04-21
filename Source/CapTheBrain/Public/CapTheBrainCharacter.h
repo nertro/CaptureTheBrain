@@ -11,6 +11,7 @@
 class ABrainPickup;
 class ItemEffect;
 class UBrainzlapGameInstance;
+class ABrainzlabGameState;
 
 UCLASS(config=Game)
 class ACapTheBrainCharacter : public ACharacter
@@ -86,7 +87,7 @@ class ACapTheBrainCharacter : public ACharacter
 protected:
 
 	UBrainzlapGameInstance* gameInstance;
-
+	TWeakObjectPtr<ABrainzlabGameState> gameState;
 	/** Called for forwards/backward input */
 	void MoveForward(float Value);
 

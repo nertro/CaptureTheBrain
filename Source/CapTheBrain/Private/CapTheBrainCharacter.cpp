@@ -4,6 +4,7 @@
 #include "CapTheBrainCharacter.h"
 #include "EngineUtils.h"
 #include "BrainzlapGameInstance.h"
+#include "BrainzlabGameState.h"
 #include "CapTheBrainArenaGameMode.h"
 #include "CollectableItem.h"
 #include "ItemPickup.h"
@@ -73,7 +74,7 @@ void ACapTheBrainCharacter::SetupPlayerInputComponent(class UInputComponent* Inp
 void ACapTheBrainCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	gameInstance = Cast<UBrainzlapGameInstance>(GetGameInstance());
+	gameState = Cast<ABrainzlabGameState>(GetWorld()->GameState);
 	score = 0;
 }
 
@@ -138,15 +139,15 @@ void ACapTheBrainCharacter::Tick(float deltaSeconds)
 
 	if (firstUpdate && gameInstance->gameStarted)
 	{
-		id = gameInstance->players.Num();
-		gameInstance->players.Add(this);
+		id = gameState->characters.Num();
+		gameState->characters.Add(this);
 		SpawnArrow();
 		won = false;
 		if (id == 0 && gameInstance->playerMats.Num() > 0)
 		{
 			SetMaterial(gameInstance->playerMats[0]);
 		}
-		if (gameInstance->players.Num() == 4)
+		if (gameState->characters.Num() == 4)
 		{
 			Cast<ACapTheBrainArenaGameMode>(GetWorld()->GetAuthGameMode())->SetPlayerStartPositions();
 		}
@@ -172,23 +173,23 @@ class UPrimitiveComponent * OtherComp,
 		{
 			if (Other->IsA(ABrainPickup::StaticClass()) &! hasBrain &! GotHit)
 			{
-				if (gameInstance->brain->MySpawnPoint)
+				if (gameState->brain->MySpawnPoint)
 				{
-					gameInstance->brain->MySpawnPoint->occupied = false;
+					gameState->brain->MySpawnPoint->occupied = false;
 				}
-				if (!gameInstance->spawnCtrl->brainBaseSet)
+				if (!gameState->spawnCtrl->brainBaseSet)
 				{
-					gameInstance->spawnCtrl->SpawnBrainBase();
+					gameState->spawnCtrl->SpawnBrainBase();
 				}
-				gameInstance->brain->AttachToHead(this);
+				gameState->brain->AttachToHead(this);
 				this->hasBrain = true;
-				gameInstance->playerWithBrain = this;
-				gameInstance->arrows[id]->ChangeMaterial(false, true, false);
-				for (int i = 0; i < gameInstance->players.Num(); i++)
+				gameState->playerWithBrain = this;
+				gameState->arrows[id]->ChangeMaterial(false, true, false);
+				for (int i = 0; i < gameState->characters.Num(); i++)
 				{
-					if (gameInstance->players[i] != this)
+					if (gameState->characters[i] != this)
 					{
-						gameInstance->arrows[gameInstance->players[i]->id]->ChangeMaterial(true, false, false);
+						gameState->arrows[gameState->characters[i]->id]->ChangeMaterial(true, false, false);
 					}
 				}
 			}
@@ -206,9 +207,10 @@ class UPrimitiveComponent * OtherComp,
 			{
 				ABrainBase* other = (ABrainBase*)Other;
 				other->MySpawnPoint->occupied = false;
-				Other->Destroy();
-				gameInstance->brain->Destroy();
-				gameInstance->spawnCtrl->SpawnBrain();
+				gameState->DisableActorInScene(other);
+				gameState->DisableActorInScene(gameState->brain);
+
+				gameState->spawnCtrl->SpawnBrain();
 				gameInstance->spawnCtrl->brainBaseSet = false;
 				hasBrain = false;
 				gameInstance->playerWithBrain = nullptr;
