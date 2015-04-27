@@ -10,7 +10,7 @@
  * 
  */
 
-class UBrainzlapGameInstance;
+class ABrainzlabGameState;
 
 UCLASS()
 class CAPTHEBRAIN_API ACollectableItem : public AActor
@@ -24,7 +24,7 @@ class CAPTHEBRAIN_API ACollectableItem : public AActor
 		ASpawnPoint* MySpawnPoint;
 	
 protected:
-	UBrainzlapGameInstance* gameInstance;
+	ABrainzlabGameState* gameState;
 
 	void BeginPlay() override;
 };

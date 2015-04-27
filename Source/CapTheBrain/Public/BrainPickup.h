@@ -15,8 +15,10 @@ class CAPTHEBRAIN_API ABrainPickup : public ACollectableItem
 {
 	GENERATED_UCLASS_BODY()
 
+public:
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Item)
-		TSubobjectPtr<class USkeletalMeshComponent> MeshComponent;
+		USkeletalMeshComponent* MeshComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
 		USkeletalMesh* SkeletalMesh;

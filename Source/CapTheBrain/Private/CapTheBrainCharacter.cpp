@@ -189,7 +189,7 @@ class UPrimitiveComponent * OtherComp,
 				{
 					if (gameState->characters[i] != this)
 					{
-						gameState->arrows[gameState->characters[i]->id]->ChangeMaterial(true, false, false);
+						gameState->arrows[i]->ChangeMaterial(true, false, false);
 					}
 				}
 			}
@@ -208,15 +208,18 @@ class UPrimitiveComponent * OtherComp,
 				ABrainBase* other = (ABrainBase*)Other;
 				other->MySpawnPoint->occupied = false;
 				gameState->DisableActorInScene(other);
-				gameState->DisableActorInScene(gameState->brain);
 
+
+				gameState->DisableActorInScene(gameState->brain);
 				gameState->spawnCtrl->SpawnBrain();
-				gameInstance->spawnCtrl->brainBaseSet = false;
+				gameState->EnableActorInScene(gameState->brain);
+
+				gameState->spawnCtrl->brainBaseSet = false;
 				hasBrain = false;
-				gameInstance->playerWithBrain = nullptr;
-				for (int i = 0; i < gameInstance->players.Num(); i++)
+				gameState->playerWithBrain = nullptr;
+				for (int i = 0; i < gameState->characters.Num(); i++)
 				{
-					gameInstance->arrows[gameInstance->players[i]->id]->ChangeMaterial(false, false, true);
+					gameState->arrows[gameState->characters[i]->id]->ChangeMaterial(false, false, true);
 				}
 				score++;
 			}
@@ -228,7 +231,7 @@ class UPrimitiveComponent * OtherComp,
 			{
 				GotHit = true;
 				hasBrain = false;
-				gameInstance->playerWithBrain = nullptr;
+				gameState->playerWithBrain = nullptr;
 			}
 		}
 	}
@@ -260,44 +263,43 @@ void ACapTheBrainCharacter::SpawnArrow()
 {
 	if (ArrowBP)
 	{
-		UWorld* const World = GetWorld();
-		AArrow* arrow = (AArrow*)World->SpawnActor(ArrowBP);
+		AArrow* arrow = (AArrow*)GetWorld()->SpawnActor(ArrowBP);
 		arrow->MeshComponent->AttachTo(RootComponent);
 		arrow->SetActorTransform(this->GetTransform());
 		arrow->SetActorRelativeLocation(FVector(0, 0, ArrowZLocation));
 		arrow->ChangeMaterial(false, false, true);
 
-		gameInstance->arrows.push_back(arrow);
+		gameState->arrows.Add(arrow);
 	}
 }
 
 void ACapTheBrainCharacter::SetArrowDirection()
 {
 	AActor* target = this;
-	if (gameInstance->brain)
+	if (gameState->brain)
 	{
-		if (!hasBrain &!gameInstance->brain->GotCollected)
+		if (!hasBrain &!gameState->brain->GotCollected)
 		{
-			target = gameInstance->brain;
+			target = gameState->brain;
 		}
-		else if (!hasBrain && gameInstance->brain->GotCollected && gameInstance->playerWithBrain != nullptr)
+		else if (!hasBrain && gameState->brain->GotCollected && gameState->playerWithBrain != nullptr)
 		{
-			target = gameInstance->brain;
+			target = gameState->brain;
 		}
-		else if (hasBrain && gameInstance->brainBase != nullptr)
+		else if (hasBrain && gameState->brainBase != nullptr)
 		{
-			target = gameInstance->brainBase;
+			target = gameState->brainBase;
 		}
 	}
 	else
 	{
-		gameInstance->playerWithBrain->hasBrain = false;
-		gameInstance->playerWithBrain = nullptr;
-		gameInstance->spawnCtrl->SpawnBrain();
-		gameInstance->spawnCtrl->brainBaseSet = false;
+		gameState->playerWithBrain->hasBrain = false;
+		gameState->playerWithBrain = nullptr;
+		gameState->spawnCtrl->SpawnBrain();
+		gameState->spawnCtrl->brainBaseSet = false;
 	}
 
-	gameInstance->arrows[id]->PointToTarget(target);
+	gameState->arrows[id]->PointToTarget(target);
 }
 
 
@@ -308,10 +310,10 @@ void ACapTheBrainCharacter::LooseBrain()
 	FVector newBrainPosition = this->GetActorLocation();
 	SetActorLocation(startPosition);
 	SetActorRotation(startRotation);
-	gameInstance->brain->DetachFromHead(this, newBrainPosition);
-	for (int i = 0; i < gameInstance->players.Num(); i++)
+	gameState->brain->DetachFromHead(this, newBrainPosition);
+	for (int i = 0; i < gameState->characters.Num(); i++)
 	{
-		gameInstance->arrows[gameInstance->players[i]->id]->ChangeMaterial(false, false, true);
+		gameState->arrows[gameState->characters[i]->id]->ChangeMaterial(false, false, true);
 	}
 }
 

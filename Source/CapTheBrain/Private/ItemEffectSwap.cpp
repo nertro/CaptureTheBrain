@@ -4,6 +4,7 @@
 #include "ItemEffectSwap.h"
 #include "CapTheBrainCharacter.h"
 #include "ItemManager.h"
+#include "BrainzlabGameState.h"
 #include "EngineUtils.h"
 
 ItemEffectSwap::ItemEffectSwap()
@@ -27,11 +28,11 @@ void ItemEffectSwap::Deactivate(ACapTheBrainCharacter* player)
 
 void ItemEffectSwap::SwapBase(ACapTheBrainCharacter* player)
 {
-	gameInstance = Cast<UBrainzlapGameInstance>(player->GetGameInstance());
-	if (gameInstance->spawnCtrl->brainBaseSet)
+	ABrainzlabGameState* gameState = Cast<ABrainzlabGameState>(player->GetWorld()->GameState);
+	if (gameState->spawnCtrl->brainBaseSet)
 	{
-		gameInstance->brainBase->Destroy();
-		gameInstance->brainBase = nullptr;
-		gameInstance->spawnCtrl->SpawnBrainBase();
+		gameState->brainBase->Destroy();
+		gameState->brainBase = nullptr;
+		gameState->spawnCtrl->SpawnBrainBase();
 	}
 }

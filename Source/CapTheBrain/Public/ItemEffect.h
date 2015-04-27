@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
-#include "BrainzlapGameInstance.h"
+#include "BrainzlabGameState.h"
 #include <vector>
 
 class ACapTheBrainCharacter;
@@ -25,5 +25,4 @@ protected:
 
 	bool onOthers;
 
-	UBrainzlapGameInstance* gameInstance;
 };

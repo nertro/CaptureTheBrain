@@ -2,7 +2,7 @@
 
 #include "CapTheBrain.h"
 #include "CollectableItem.h"
-#include "BrainzlapGameInstance.h"
+#include "BrainzlabGameState.h"
 
 
 ACollectableItem::ACollectableItem(const class FPostConstructInitializeProperties& PCIP)
@@ -18,5 +18,5 @@ ACollectableItem::ACollectableItem(const class FPostConstructInitializePropertie
 
 void ACollectableItem::BeginPlay()
 {
-	gameInstance = Cast<UBrainzlapGameInstance>(GetGameInstance());
+	gameState = Cast<ABrainzlabGameState>(GetWorld()->GameState);
 }

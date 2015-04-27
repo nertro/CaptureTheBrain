@@ -1,11 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "CapTheBrain.h"
-#include "BrainzlapGameInstance.h"
 #include "SpawnPoint.h"
+#include "BrainzlabGameState.h"
 #include "CollectableItem.h"
 
-#define GameInstance Cast<UBrainzlapGameInstance>(GetGameInstance())
 
 ASpawnPoint::ASpawnPoint(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
@@ -13,21 +12,22 @@ ASpawnPoint::ASpawnPoint(const class FPostConstructInitializeProperties& PCIP)
 	occupied = false;
 	SpawnBox = PCIP.CreateDefaultSubobject<UBoxComponent>(this, TEXT("SpawnPoint"));
 	RootComponent = SpawnBox;
+	gameState = Cast<ABrainzlabGameState>(GetWorld()->GameState);
 }
 
 void ASpawnPoint::BeginPlay()
 {
 	if (ItemBP)
 	{
-		GameInstance->itemSpawnPoints.push_back(this);
+		gameState->itemSpawnPoints.Add(this);
 	}
 	else if (BrainBaseBP)
 	{
-		GameInstance->brainBases.push_back(this);
+		gameState->brainBases.Add(this);
 	}
 	else if (BrainBP)
 	{
-		GameInstance->BrainSpawnPoint = this;
+		gameState->BrainSpawnPoint = this;
 	}
 }
 
@@ -36,25 +36,54 @@ void ASpawnPoint::SpawnNewItem()
 	if (ItemBP)
 	{
 		occupied = true;
-		UWorld* const World = GetWorld();
-		ACollectableItem* SpawnItem = (ACollectableItem*)World->SpawnActor(ItemBP);
+		ACollectableItem* SpawnItem = (ACollectableItem*)GetWorld()->SpawnActor(ItemBP);
 		SpawnItem->Capsule->AttachTo(RootComponent);
 		SpawnItem->SetActorTransform(this->GetTransform());
 		SpawnItem->MySpawnPoint = this;
+
+		delete SpawnItem;
 	}
 }
 
 void ASpawnPoint::SpawnNewBrain()
 {
-	if (BrainBP)
+	if (BrainBP && gameState)
 	{
 		occupied = true;
-		UWorld* const World = GetWorld();
-		ACollectableItem* SpawnItem = (ACollectableItem*)World->SpawnActor(BrainBP);
-		SpawnItem->Capsule->AttachTo(RootComponent);
-		SpawnItem->SetActorTransform(this->GetTransform());
-		SpawnItem->MySpawnPoint = this;
-		GameInstance->brain = (ABrainPickup*)SpawnItem;
+
+		//Instantiate Brain
+		if (!gameState->brain)
+		{
+			ACollectableItem* SpawnItem = (ACollectableItem*)GetWorld()->SpawnActor(BrainBP);
+			SpawnItem->Capsule->AttachTo(RootComponent);
+			SpawnItem->SetActorTransform(this->GetTransform());
+			SpawnItem->MySpawnPoint = this;
+			gameState->brain = (ABrainPickup*)SpawnItem;
+			
+			delete SpawnItem;
+		}
+
+		//Detach from Player
+		if (gameState->brain->GotCollected)
+		{
+			gameState->brain->RootComponent->DetachFromParent();
+			gameState->brain->GotCollected = false;
+			gameState->brain->myPlayer = nullptr;
+
+			if (!gameState->brain->Capsule->IsActive())
+			{
+				gameState->brain->Capsule->Activate();
+			}
+		}
+		
+		//Collision and position Setup
+		gameState->brain->Capsule->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+		gameState->brain->RootComponent = gameState->brain->Capsule;
+		gameState->brain->MeshComponent->AttachTo(gameState->brain->Capsule);
+
+		gameState->brain->MeshComponent->SetRelativeLocation(FVector(0, 0, -20));
+
+		gameState->brain->SetActorTransform(this->GetTransform());
 	}
 }
 
@@ -63,12 +92,13 @@ void ASpawnPoint::SpawnNewBase()
 	if (BrainBaseBP)
 	{
 		occupied = true;
-		UWorld* const World = GetWorld();
-		ACollectableItem* SpawnItem = (ACollectableItem*)World->SpawnActor(BrainBaseBP);
+		ACollectableItem* SpawnItem = (ACollectableItem*)GetWorld()->SpawnActor(BrainBaseBP);
 		SpawnItem->Capsule->AttachTo(RootComponent);
 		SpawnItem->SetActorTransform(this->GetTransform());
 		SpawnItem->MySpawnPoint = this;
-		GameInstance->brainBase = (ABrainBase*)SpawnItem;
+		gameState->brainBase = (ABrainBase*)SpawnItem;
+
+		delete SpawnItem;
 	}
 }
 

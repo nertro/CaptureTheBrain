@@ -2,12 +2,11 @@
 
 #include "CapTheBrain.h"
 #include "SpawnCtrl.h"
-#include "BrainzlapGameInstance.h"
+#include "BrainzlabGameState.h"
 #include "CollectableItem.h"
 #include "SpawnPoint.h"
 #include "EngineUtils.h"
 
-#define GameInstance Cast<UBrainzlapGameInstance>(GetGameInstance())
 
 ASpawnCtrl::ASpawnCtrl(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
@@ -18,13 +17,15 @@ ASpawnCtrl::ASpawnCtrl(const class FPostConstructInitializeProperties& PCIP)
 	brainBaseSet = false;
 	beginPlayReady = false;
 	currentSpawn = 300;
+
+	gameState = Cast<ABrainzlabGameState>(GetWorld()->GameState);
 }
 
 void ASpawnCtrl::BeginPlay()
 {
 	Super::BeginPlay();
 
-	GameInstance->spawnCtrl = this;
+	gameState->spawnCtrl = this;
 
 	beginPlayReady = true;
 	this->SpawnBrain();
@@ -38,11 +39,11 @@ void ASpawnCtrl::Tick(float DeltaSeconds)
 		timer += DeltaSeconds;
 		if (timer > delay)
 		{
-			float pointNo = FMath::FRandRange(0, GameInstance->itemSpawnPoints.size());
+			float pointNo = FMath::FRandRange(0, gameState->itemSpawnPoints.Num());
 			int newPoint = (int)pointNo;
-			if (!GameInstance->itemSpawnPoints[newPoint]->occupied)
+			if (!gameState->itemSpawnPoints[newPoint]->occupied)
 			{
-				GameInstance->itemSpawnPoints[newPoint]->SpawnNewItem();
+				gameState->itemSpawnPoints[newPoint]->SpawnNewItem();
 			}
 			timer = 0;
 		}
@@ -51,17 +52,17 @@ void ASpawnCtrl::Tick(float DeltaSeconds)
 
 void ASpawnCtrl::SpawnBrain()
 {
-	GameInstance->BrainSpawnPoint->SpawnNewBrain();
+	gameState->BrainSpawnPoint->SpawnNewBrain();
 }
 
 void ASpawnCtrl::SpawnBrainBase()
 {
-	float pointNo = FMath::FRandRange(0, GameInstance->brainBases.size());
+	float pointNo = FMath::FRandRange(0, gameState->brainBases.Num());
 	int newPoint = (int)pointNo;
 	if (currentSpawn != newPoint)
 	{
 		currentSpawn = newPoint;
-		GameInstance->brainBases[newPoint]->SpawnNewBase();
+		gameState->brainBases[newPoint]->SpawnNewBase();
 		brainBaseSet = true;
 	}
 	else

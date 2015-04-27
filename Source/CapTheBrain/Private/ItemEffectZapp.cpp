@@ -3,6 +3,7 @@
 #include "CapTheBrain.h"
 #include "ItemEffectZapp.h"
 #include "CapTheBrainCharacter.h"
+#include "BrainzlabGameState.h"
 #include "ItemManager.h"
 #include "BrainPickup.h"
 
@@ -26,14 +27,14 @@ void ItemEffectZapp::Deactivate(ACapTheBrainCharacter* player)
 
 void ItemEffectZapp::Zapp(ACapTheBrainCharacter* player)
 {
-	gameInstance = Cast<UBrainzlapGameInstance>(player->GetGameInstance());
-	for (int i = 0; i < gameInstance->players.Num(); i++)
+	ABrainzlabGameState* gameState = Cast<ABrainzlabGameState>(player->GetWorld()->GameState);
+	for (int i = 0; i < gameState->characters.Num(); i++)
 	{
-		if (!gameInstance->players[i]->hasShield && gameInstance->players[i]->hasBrain && gameInstance->players[i] != player)
-		{
-			gameInstance->players[i]->GotHit = true;
-			gameInstance->playerWithBrain = nullptr;
-			gameInstance->players[i]->hasBrain = false;
+		if (!gameState->characters[i]->hasShield && gameState->characters[i]->hasBrain && gameState->characters[i] != player)
+		{	 
+			gameState->characters[i]->GotHit = true;
+			gameState->playerWithBrain = nullptr;
+			gameState->characters[i]->hasBrain = false;
 		}
 	}
 }

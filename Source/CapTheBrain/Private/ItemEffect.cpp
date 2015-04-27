@@ -31,15 +31,15 @@ void ItemEffect::MakeSound()
 
 void ItemEffect::ChangeSpeed(ACapTheBrainCharacter* player, float speedChange, bool onOthers)
 {
-	gameInstance = Cast<UBrainzlapGameInstance>(player->GetGameInstance());
+	ABrainzlabGameState* gameState = Cast<ABrainzlabGameState>(player->GetWorld()->GameState);
 	if (onOthers)
 	{
-		for (int i = 0; i < gameInstance->players.Num(); i++)
+		for (int i = 0; i < gameState->characters.Num(); i++)
 		{
-			if (gameInstance->players[i] != player && !gameInstance->players[i]->hasShield && !gameInstance->players[i]->isSlow)
+			if (gameState->characters[i] != player && !gameState->characters[i]->hasShield && !gameState->characters[i]->isSlow)
 			{
-				gameInstance->players[i]->SpeedBuffer *= speedChange;
-				gameInstance->players[i]->isSlow = true;
+				gameState->characters[i]->SpeedBuffer *= speedChange;
+				gameState->characters[i]->isSlow = true;
 			}
 		}
 	}

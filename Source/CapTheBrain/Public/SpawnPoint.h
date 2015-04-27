@@ -5,6 +5,8 @@
 
 #include "SpawnPoint.generated.h"
 
+class ABrainzlabGameState;
+
 /**
  * 
  */
@@ -34,8 +36,9 @@ class CAPTHEBRAIN_API ASpawnPoint : public AActor
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Spawn)
 		bool occupied;
 
-
 private:
 	bool bfirst;
-	
+
+	UPROPERTY()
+		ABrainzlabGameState* gameState;
 };

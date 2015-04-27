@@ -8,6 +8,7 @@
 
 #include "SpawnCtrl.generated.h"
 
+class ABrainzlabGameState;
 /**
  * 
  */
@@ -30,4 +31,7 @@ private:
 	float timer;
 	bool beginPlayReady;
 	int currentSpawn;
+
+	UPROPERTY()
+		ABrainzlabGameState* gameState;
 };
