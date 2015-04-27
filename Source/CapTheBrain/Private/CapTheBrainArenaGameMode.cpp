@@ -46,7 +46,6 @@ void ACapTheBrainArenaGameMode::SetPlayerStartPositions()
 		}
 	}
 
-	delete gameState;
 }
 
 void ACapTheBrainArenaGameMode::GameOver()
@@ -84,8 +83,6 @@ void ACapTheBrainArenaGameMode::GameOver()
 			winner->won = false;
 		}
 
-		delete gameState;
-		delete gameInstance;
 	}
 }
 

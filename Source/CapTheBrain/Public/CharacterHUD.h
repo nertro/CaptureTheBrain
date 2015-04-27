@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include <vector>
 #include "GameFramework/HUD.h"
 #include "CharacterHUD.generated.h"
 
@@ -99,5 +98,6 @@ class CAPTHEBRAIN_API ACharacterHUD : public AHUD
 
 	int currentItem;
 
-	std::vector<UTexture2D*> ItemImgs;
+	UPROPERTY()
+	TArray<UTexture2D*> ItemImgs;
 };

@@ -16,11 +16,11 @@ ACharacterHUD::ACharacterHUD(const class FPostConstructInitializeProperties& PCI
 void ACharacterHUD::BeginPlay()
 {
 	Super::BeginPlay();
-	ItemImgs.push_back(FastImg);
-	ItemImgs.push_back(SlowImg);
-	ItemImgs.push_back(ShieldImg);
-	ItemImgs.push_back(SwapImg);
-	ItemImgs.push_back(ZappImg);
+	ItemImgs.Add(FastImg);
+	ItemImgs.Add(SlowImg);
+	ItemImgs.Add(ShieldImg);
+	ItemImgs.Add(SwapImg);
+	ItemImgs.Add(ZappImg);
 
 	if (GetWorld()->GetAuthGameMode()->NumPlayers == 1)
 	{

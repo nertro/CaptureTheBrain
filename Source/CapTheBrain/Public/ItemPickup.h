@@ -14,7 +14,7 @@ class CAPTHEBRAIN_API AItemPickup : public ACollectableItem
 	GENERATED_UCLASS_BODY()
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Item)
-		TSubobjectPtr<class UStaticMeshComponent> MeshComponent;
+		UStaticMeshComponent* MeshComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
 		UStaticMesh* StaticMesh;

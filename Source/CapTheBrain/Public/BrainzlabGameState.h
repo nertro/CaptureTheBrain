@@ -20,10 +20,10 @@ class CAPTHEBRAIN_API ABrainzlabGameState : public AGameState
 public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = GameMode)
-		TArray<TWeakObjectPtr<ACapTheBrainCharacter>> characters;
+		TArray<ACapTheBrainCharacter*> characters;
 
 	UPROPERTY()
-		TArray<TWeakObjectPtr<AArrow>> arrows;
+		TArray<AArrow*> arrows;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = GameInstance)
 		ABrainPickup* brain;
@@ -43,7 +43,8 @@ public:
 	UPROPERTY()
 		ASpawnPoint* BrainSpawnPoint;
 
-	TWeakObjectPtr<ACapTheBrainCharacter> playerWithBrain;
+	UPROPERTY()
+		ACapTheBrainCharacter* playerWithBrain;
 
 	void DisableActorInScene(AActor* actor);
 

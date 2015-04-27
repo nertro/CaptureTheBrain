@@ -4,6 +4,7 @@
 #include "GameFramework/Character.h"
 #include "SpawnCtrl.h"
 #include "Arrow.h"
+#include "ItemEffect.h"
 #include <vector>
 
 #include "CapTheBrainCharacter.generated.h"
@@ -54,12 +55,12 @@ class ACapTheBrainCharacter : public ACharacter
 	virtual void BeginPlay() override;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Item)
-	bool hasItem;
+		bool hasItem;
 
 	bool isSlow, isFast, hasShield;
 
 	UPROPERTY()
-	ACharacterHUD* myControllerHUD;
+		ACharacterHUD* myControllerHUD;
 
 	ItemEffect* currentItem;
 
@@ -85,9 +86,12 @@ class ACapTheBrainCharacter : public ACharacter
 	void LoadCredits();
 
 protected:
-
+	UPROPERTY()
 	UBrainzlapGameInstance* gameInstance;
-	TWeakObjectPtr<ABrainzlabGameState> gameState;
+
+	UPROPERTY()
+		ABrainzlabGameState* gameState;
+
 	/** Called for forwards/backward input */
 	void MoveForward(float Value);
 

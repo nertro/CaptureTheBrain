@@ -16,7 +16,7 @@ class CAPTHEBRAIN_API ASpawnPoint : public AActor
 	GENERATED_UCLASS_BODY()
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Spawn)
-	TSubobjectPtr<class UBoxComponent> SpawnBox;
+		UBoxComponent* SpawnBox;
 
 	void SpawnNewItem();
 	void SpawnNewBrain();

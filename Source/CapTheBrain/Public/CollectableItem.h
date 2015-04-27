@@ -18,13 +18,15 @@ class CAPTHEBRAIN_API ACollectableItem : public AActor
 	GENERATED_UCLASS_BODY()
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Item)
-		TSubobjectPtr<class UCapsuleComponent> Capsule;
+		UCapsuleComponent* Capsule;
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Item)
 		ASpawnPoint* MySpawnPoint;
 	
 protected:
-	ABrainzlabGameState* gameState;
+
+	UPROPERTY()
+		ABrainzlabGameState* gameState;
 
 	void BeginPlay() override;
 };

@@ -5,6 +5,7 @@
 #include "CapTheBrainCharacter.h"
 #include "ItemManager.h"
 #include "PlayerCharacter.h"
+#include "BrainzlabGameState.h"
 
 ItemEffect::ItemEffect()
 {
