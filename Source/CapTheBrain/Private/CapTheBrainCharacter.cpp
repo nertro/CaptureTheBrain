@@ -16,13 +16,13 @@
 //////////////////////////////////////////////////////////////////////////
 // ACapTheBrainCharacter
 
-ACapTheBrainCharacter::ACapTheBrainCharacter(const class FPostConstructInitializeProperties& PCIP)
+ACapTheBrainCharacter::ACapTheBrainCharacter(const class FObjectInitializer& PCIP)
 	: Super(PCIP)
 {
 	score = 0;
 	firstUpdate = true;
 	// Set size for collision capsule
-	CapsuleComponent->InitCapsuleSize(42.f, 96.0f);
+	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
 
 	// set our turn rates for input
 	BaseTurnRate = 45.f;
@@ -34,10 +34,10 @@ ACapTheBrainCharacter::ACapTheBrainCharacter(const class FPostConstructInitializ
 	bUseControllerRotationRoll = false;
 
 	// Configure character movement
-	CharacterMovement->bOrientRotationToMovement = true; // Character moves in the direction of input...	
-	CharacterMovement->RotationRate = FRotator(0.0f, 540.0f, 0.0f); // ...at this rotation rate
-	CharacterMovement->JumpZVelocity = 200.f;
-	CharacterMovement->AirControl = 0.2f;
+	GetCharacterMovement()->bOrientRotationToMovement = true; // Character moves in the direction of input...	
+	GetCharacterMovement()->RotationRate = FRotator(0.0f, 540.0f, 0.0f); // ...at this rotation rate
+	GetCharacterMovement()->JumpZVelocity = 200.f;
+	GetCharacterMovement()->AirControl = 0.2f;
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++) 
@@ -74,7 +74,8 @@ void ACapTheBrainCharacter::SetupPlayerInputComponent(class UInputComponent* Inp
 void ACapTheBrainCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	gameState = Cast<ABrainzlabGameState>(GetWorld()->GameState);
+	gameState = Cast<ABrainzlabGameState>(GetWorld()->GetGameState());
+	gameInstance = Cast<UBrainzlapGameInstance>(GetWorld()->GetGameInstance());
 	score = 0;
 }
 
@@ -320,7 +321,7 @@ void ACapTheBrainCharacter::LooseBrain()
 
 void ACapTheBrainCharacter::SetMaterial(UMaterialInterface* newMaterial)
 {
-	Mesh->SetMaterial(0, newMaterial);
+	GetMesh()->SetMaterial(0, newMaterial);
 }
 
 void ACapTheBrainCharacter::LoadCredits()

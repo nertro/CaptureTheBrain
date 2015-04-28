@@ -8,7 +8,7 @@
 #include "BrainzlapGameInstance.h"
 
 
-UTimerWidget::UTimerWidget(const class FPostConstructInitializeProperties& PCIP)
+UTimerWidget::UTimerWidget(const class FObjectInitializer& PCIP)
 	: Super(PCIP)
 {
 	totalMinutes = minutesLeft = 1;

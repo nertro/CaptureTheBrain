@@ -6,7 +6,7 @@
 #include "BrainzlapGameInstance.h"
 #include "PlayerCharacter.h"
 
-ACapTheBrainArenaGameMode::ACapTheBrainArenaGameMode(const class FPostConstructInitializeProperties& PCIP)
+ACapTheBrainArenaGameMode::ACapTheBrainArenaGameMode(const class FObjectInitializer& PCIP)
 	: Super(PCIP)
 {
 
@@ -26,7 +26,7 @@ void ACapTheBrainArenaGameMode::SetPlayerMaterial(APawn* pawn, UMaterialInterfac
 void ACapTheBrainArenaGameMode::SetPlayerStartPositions()
 {
 
-	ABrainzlabGameState* gameState = Cast<ABrainzlabGameState>(GameState);
+	ABrainzlabGameState* gameState = Cast<ABrainzlabGameState>(GetWorld()->GetGameState());
 
 	if (gameState)
 	{

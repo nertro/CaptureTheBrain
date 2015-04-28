@@ -4,7 +4,7 @@
 #include "BrainzlabCreditsGameMode.h"
 
 
-ABrainzlabCreditsGameMode::ABrainzlabCreditsGameMode(const class FPostConstructInitializeProperties& PCIP)
+ABrainzlabCreditsGameMode::ABrainzlabCreditsGameMode(const class FObjectInitializer& PCIP)
 	: Super(PCIP)
 {
 

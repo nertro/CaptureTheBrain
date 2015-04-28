@@ -5,7 +5,7 @@
 #include "BrainzlapGameInstance.h"
 
 
-AAICharacter::AAICharacter(const class FPostConstructInitializeProperties& PCIP)
+AAICharacter::AAICharacter(const class FObjectInitializer& PCIP)
 	: Super(PCIP)
 {
 	AIControllerClass = ACTBAIController::StaticClass();

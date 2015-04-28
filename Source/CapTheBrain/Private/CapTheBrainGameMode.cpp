@@ -4,7 +4,7 @@
 #include "CapTheBrainGameMode.h"
 #include "CapTheBrainCharacter.h"
 
-ACapTheBrainGameMode::ACapTheBrainGameMode(const class FPostConstructInitializeProperties& PCIP)
+ACapTheBrainGameMode::ACapTheBrainGameMode(const class FObjectInitializer& PCIP)
 	: Super(PCIP)
 {
 	// set default pawn class to our Blueprinted character

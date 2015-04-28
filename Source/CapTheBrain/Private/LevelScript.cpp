@@ -4,7 +4,7 @@
 #include "LevelScript.h"
 
 
-ALevelScript::ALevelScript(const class FPostConstructInitializeProperties& PCIP)
+ALevelScript::ALevelScript(const class FObjectInitializer& PCIP)
 	: Super(PCIP)
 {
 

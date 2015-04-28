@@ -6,7 +6,7 @@
 #include "BrainzlabPathFollowingComponent.h"
 
 
-ACTBAIController::ACTBAIController(const class FPostConstructInitializeProperties& PCIP)
+ACTBAIController::ACTBAIController(const class FObjectInitializer& PCIP)
 	: Super(PCIP.SetDefaultSubobjectClass<UBrainzlabPathFollowingComponent>(TEXT("PathFollowingComponent")))
 {
 	bWantsPlayerState = true;

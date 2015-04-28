@@ -5,7 +5,7 @@
 #include "WalkNavArea.h"
 
 
-UWalkNavArea::UWalkNavArea(const class FPostConstructInitializeProperties& PCIP)
+UWalkNavArea::UWalkNavArea(const class FObjectInitializer& PCIP)
 	: Super(PCIP)
 {
 	FNavAreaHelper::Set(AreaFlags, ENavAreaFlag::Walk);

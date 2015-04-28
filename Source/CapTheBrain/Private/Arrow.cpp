@@ -6,7 +6,7 @@
 #include "CapTheBrainCharacter.h"
 
 
-AArrow::AArrow(const class FPostConstructInitializeProperties& PCIP)
+AArrow::AArrow(const class FObjectInitializer& PCIP)
 	: Super(PCIP)
 {
 	MeshComponent = PCIP.CreateDefaultSubobject<UStaticMeshComponent>(this, TEXT("Mesh"));

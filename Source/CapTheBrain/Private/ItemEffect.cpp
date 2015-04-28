@@ -32,7 +32,7 @@ void ItemEffect::MakeSound()
 
 void ItemEffect::ChangeSpeed(ACapTheBrainCharacter* player, float speedChange, bool onOthers)
 {
-	ABrainzlabGameState* gameState = Cast<ABrainzlabGameState>(player->GetWorld()->GameState);
+	ABrainzlabGameState* gameState = Cast<ABrainzlabGameState>(player->GetWorld()->GetGameState());
 	if (onOthers)
 	{
 		for (int i = 0; i < gameState->characters.Num(); i++)

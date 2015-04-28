@@ -8,7 +8,7 @@
 #include "EngineUtils.h"
 
 
-ASpawnCtrl::ASpawnCtrl(const class FPostConstructInitializeProperties& PCIP)
+ASpawnCtrl::ASpawnCtrl(const class FObjectInitializer& PCIP)
 	: Super(PCIP)
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -17,14 +17,13 @@ ASpawnCtrl::ASpawnCtrl(const class FPostConstructInitializeProperties& PCIP)
 	brainBaseSet = false;
 	beginPlayReady = false;
 	currentSpawn = 300;
-
-	gameState = Cast<ABrainzlabGameState>(GetWorld()->GameState);
 }
 
 void ASpawnCtrl::BeginPlay()
 {
 	Super::BeginPlay();
 
+	gameState = Cast<ABrainzlabGameState>(GetWorld()->GetGameState());
 	gameState->spawnCtrl = this;
 
 	beginPlayReady = true;

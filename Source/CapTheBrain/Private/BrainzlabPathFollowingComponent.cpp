@@ -5,7 +5,7 @@
 #include "JumpNavArea.h"
 
 
-UBrainzlabPathFollowingComponent::UBrainzlabPathFollowingComponent(const class FPostConstructInitializeProperties& PCIP)
+UBrainzlabPathFollowingComponent::UBrainzlabPathFollowingComponent(const class FObjectInitializer& PCIP)
 	: Super(PCIP)
 {
 

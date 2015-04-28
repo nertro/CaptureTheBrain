@@ -4,7 +4,7 @@
 #include "ItemPickup.h"
 
 
-AItemPickup::AItemPickup(const class FPostConstructInitializeProperties& PCIP)
+AItemPickup::AItemPickup(const class FObjectInitializer& PCIP)
 	: Super(PCIP)
 {
 	MeshComponent = PCIP.CreateDefaultSubobject<UStaticMeshComponent>(this, TEXT("Mesh"));

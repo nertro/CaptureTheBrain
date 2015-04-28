@@ -5,7 +5,7 @@
 #include "BrainzlabGameState.h"
 
 
-ACollectableItem::ACollectableItem(const class FPostConstructInitializeProperties& PCIP)
+ACollectableItem::ACollectableItem(const class FObjectInitializer& PCIP)
 	: Super(PCIP)
 {
 	Capsule = PCIP.CreateDefaultSubobject<UCapsuleComponent>(this, TEXT("CapsuleCollider"));
@@ -18,5 +18,5 @@ ACollectableItem::ACollectableItem(const class FPostConstructInitializePropertie
 
 void ACollectableItem::BeginPlay()
 {
-	gameState = Cast<ABrainzlabGameState>(GetWorld()->GameState);
+	gameState = Cast<ABrainzlabGameState>(GetWorld()->GetGameState());
 }

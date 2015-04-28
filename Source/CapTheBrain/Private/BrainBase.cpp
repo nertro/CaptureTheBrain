@@ -4,7 +4,7 @@
 #include "BrainBase.h"
 
 
-ABrainBase::ABrainBase(const class FPostConstructInitializeProperties& PCIP)
+ABrainBase::ABrainBase(const class FObjectInitializer& PCIP)
 	: Super(PCIP)
 {
 	MeshComponent = PCIP.CreateDefaultSubobject<UStaticMeshComponent>(this, TEXT("Mesh"));

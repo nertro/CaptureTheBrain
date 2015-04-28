@@ -4,7 +4,7 @@
 #include "PlayerCharacter.h"
 #include "BrainzlapGameInstance.h"
 
-APlayerCharacter::APlayerCharacter(const class FPostConstructInitializeProperties& PCIP)
+APlayerCharacter::APlayerCharacter(const class FObjectInitializer& PCIP)
 	: Super(PCIP)
 {
 	// Create a camera boom (pulls in towards the player if there is a collision)

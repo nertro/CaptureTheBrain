@@ -5,7 +5,7 @@
 #include "JumpNavArea.h"
 
 
-UFallNavArea::UFallNavArea(const class FPostConstructInitializeProperties& PCIP)
+UFallNavArea::UFallNavArea(const class FObjectInitializer& PCIP)
 	: Super(PCIP)
 {
 	FNavAreaHelper::Set(AreaFlags, ENavAreaFlag::Fall);

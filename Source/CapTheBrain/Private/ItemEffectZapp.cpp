@@ -27,7 +27,7 @@ void ItemEffectZapp::Deactivate(ACapTheBrainCharacter* player)
 
 void ItemEffectZapp::Zapp(ACapTheBrainCharacter* player)
 {
-	ABrainzlabGameState* gameState = Cast<ABrainzlabGameState>(player->GetWorld()->GameState);
+	ABrainzlabGameState* gameState = Cast<ABrainzlabGameState>(player->GetWorld()->GetGameState());
 	for (int i = 0; i < gameState->characters.Num(); i++)
 	{
 		if (!gameState->characters[i]->hasShield && gameState->characters[i]->hasBrain && gameState->characters[i] != player)

@@ -4,7 +4,7 @@
 #include "BrainPickup.h"
 
 
-ABrainPickup::ABrainPickup(const class FPostConstructInitializeProperties& PCIP)
+ABrainPickup::ABrainPickup(const class FObjectInitializer& PCIP)
 	: Super(PCIP)
 {
 	MeshComponent = PCIP.CreateDefaultSubobject<USkeletalMeshComponent>(this, TEXT("Mesh"));
@@ -22,7 +22,7 @@ void ABrainPickup::AttachToHead(ACapTheBrainCharacter* player)
 	RootComponent = MeshComponent;
 	Capsule->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	MeshComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	this->RootComponent->SnapTo(player->Mesh , "brainSocket");
+	this->RootComponent->SnapTo(player->GetMesh() , "brainSocket");
 	GotCollected = true;
 }
 
@@ -42,6 +42,6 @@ void ABrainPickup::DetachFromHead(ACapTheBrainCharacter* player, FVector newLoca
 	
 	MeshComponent->SetRelativeLocation(FVector(0,0,-20));
 
-	newLocation.Z = newLocation.Z - player->CapsuleComponent->GetUnscaledCapsuleHalfHeight();
+	newLocation.Z = newLocation.Z - player->GetCapsuleComponent()->GetUnscaledCapsuleHalfHeight();
 	SetActorLocation(newLocation);
 }

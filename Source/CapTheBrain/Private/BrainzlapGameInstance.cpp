@@ -5,7 +5,7 @@
 #include "PlayerCharacter.h"
 
 
-UBrainzlapGameInstance::UBrainzlapGameInstance(const class FPostConstructInitializeProperties& PCIP)
+UBrainzlapGameInstance::UBrainzlapGameInstance(const class FObjectInitializer& PCIP)
 	: Super(PCIP)
 {
 	gameOver = false;

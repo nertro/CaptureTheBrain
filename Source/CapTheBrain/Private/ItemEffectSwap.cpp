@@ -28,7 +28,7 @@ void ItemEffectSwap::Deactivate(ACapTheBrainCharacter* player)
 
 void ItemEffectSwap::SwapBase(ACapTheBrainCharacter* player)
 {
-	ABrainzlabGameState* gameState = Cast<ABrainzlabGameState>(player->GetWorld()->GameState);
+	ABrainzlabGameState* gameState = Cast<ABrainzlabGameState>(player->GetWorld()->GetGameState());
 	if (gameState->spawnCtrl->brainBaseSet)
 	{
 		gameState->brainBase->Destroy();

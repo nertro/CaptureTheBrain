@@ -4,19 +4,21 @@
 #include "SpawnPoint.h"
 #include "BrainzlabGameState.h"
 #include "CollectableItem.h"
+#include "BrainPickup.h"
 
 
-ASpawnPoint::ASpawnPoint(const class FPostConstructInitializeProperties& PCIP)
+ASpawnPoint::ASpawnPoint(const class FObjectInitializer& PCIP)
 	: Super(PCIP)
 {
 	occupied = false;
 	SpawnBox = PCIP.CreateDefaultSubobject<UBoxComponent>(this, TEXT("SpawnPoint"));
 	RootComponent = SpawnBox;
-	gameState = Cast<ABrainzlabGameState>(GetWorld()->GameState);
 }
 
 void ASpawnPoint::BeginPlay()
 {
+	gameState = Cast<ABrainzlabGameState>(GetWorld()->GetGameState());
+
 	if (ItemBP)
 	{
 		gameState->itemSpawnPoints.Add(this);
@@ -40,8 +42,6 @@ void ASpawnPoint::SpawnNewItem()
 		SpawnItem->Capsule->AttachTo(RootComponent);
 		SpawnItem->SetActorTransform(this->GetTransform());
 		SpawnItem->MySpawnPoint = this;
-
-		delete SpawnItem;
 	}
 }
 
@@ -59,14 +59,12 @@ void ASpawnPoint::SpawnNewBrain()
 			SpawnItem->SetActorTransform(this->GetTransform());
 			SpawnItem->MySpawnPoint = this;
 			gameState->brain = (ABrainPickup*)SpawnItem;
-			
-			delete SpawnItem;
 		}
 
 		//Detach from Player
 		if (gameState->brain->GotCollected)
 		{
-			gameState->brain->RootComponent->DetachFromParent();
+			gameState->brain->GetRootComponent()->DetachFromParent();
 			gameState->brain->GotCollected = false;
 			gameState->brain->myPlayer = nullptr;
 
@@ -78,7 +76,7 @@ void ASpawnPoint::SpawnNewBrain()
 		
 		//Collision and position Setup
 		gameState->brain->Capsule->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
-		gameState->brain->RootComponent = gameState->brain->Capsule;
+		gameState->brain->SetRootComponent(gameState->brain->Capsule);
 		gameState->brain->MeshComponent->AttachTo(gameState->brain->Capsule);
 
 		gameState->brain->MeshComponent->SetRelativeLocation(FVector(0, 0, -20));
@@ -97,8 +95,6 @@ void ASpawnPoint::SpawnNewBase()
 		SpawnItem->SetActorTransform(this->GetTransform());
 		SpawnItem->MySpawnPoint = this;
 		gameState->brainBase = (ABrainBase*)SpawnItem;
-
-		delete SpawnItem;
 	}
 }
 
