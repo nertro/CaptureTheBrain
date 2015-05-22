@@ -11,7 +11,7 @@ void ABrainzlabGameState::DisableActorInScene(AActor* actor)
 
 void ABrainzlabGameState::EnableActorInScene(AActor* actor)
 {
-	actor->SetActorHiddenInGame(true);
-	actor->SetActorEnableCollision(false);
+	actor->SetActorHiddenInGame(false);
+	actor->SetActorEnableCollision(true);
 }
 
