@@ -89,12 +89,22 @@ void ASpawnPoint::SpawnNewBase()
 {
 	if (BrainBaseBP)
 	{
-		occupied = true;
-		ACollectableItem* SpawnItem = (ACollectableItem*)GetWorld()->SpawnActor(BrainBaseBP);
-		SpawnItem->Capsule->AttachTo(RootComponent);
-		SpawnItem->SetActorTransform(this->GetTransform());
-		SpawnItem->MySpawnPoint = this;
-		gameState->brainBase = (ABrainBase*)SpawnItem;
+		if (gameState->brainBase)
+		{
+			occupied = true;
+			gameState->EnableActorInScene(gameState->brainBase);
+			gameState->brainBase->SetActorTransform(this->GetTransform());
+			gameState->brainBase->MySpawnPoint = this;
+		}
+		else
+		{
+			occupied = true;
+			ACollectableItem* SpawnItem = (ACollectableItem*)GetWorld()->SpawnActor(BrainBaseBP);
+			SpawnItem->Capsule->AttachTo(RootComponent);
+			SpawnItem->SetActorTransform(this->GetTransform());
+			SpawnItem->MySpawnPoint = this;
+			gameState->brainBase = (ABrainBase*)SpawnItem;
+		}
 	}
 }
 

@@ -8,7 +8,7 @@
 ABrainzlabMenuGameMode::ABrainzlabMenuGameMode(const class FObjectInitializer& PCIP)
 	: Super(PCIP)
 {
-
+	bUseSeamlessTravel = true;
 }
 
 

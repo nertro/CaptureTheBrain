@@ -9,7 +9,7 @@
 ACapTheBrainArenaGameMode::ACapTheBrainArenaGameMode(const class FObjectInitializer& PCIP)
 	: Super(PCIP)
 {
-
+	bUseSeamlessTravel = true;
 }
 
 void ACapTheBrainArenaGameMode::SetPlayerMaterial(APawn* pawn, UMaterialInterface* newMaterial)
