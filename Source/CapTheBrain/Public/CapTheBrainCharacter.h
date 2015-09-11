@@ -124,7 +124,7 @@ protected:
 
 	void PickUpItem();
 
-	virtual void ReceiveHit(
+	virtual void NotifyHit(
 	class UPrimitiveComponent * MyComp,
 	class AActor * Other,
 	class UPrimitiveComponent * OtherComp,

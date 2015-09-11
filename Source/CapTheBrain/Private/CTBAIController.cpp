@@ -14,9 +14,10 @@ ACTBAIController::ACTBAIController(const class FObjectInitializer& PCIP)
 
 void ACTBAIController::BeginPlay()
 {
-	if (Blackboard && BehaviorTree)
+	if (MyBlackboard && BehaviorTree)
 	{
-		UseBlackboard(Blackboard);
+		//UseBlackboard(MyBlackboard);
+		UseBlackboard(MyBlackboard, Blackboard);
 		RunBehaviorTree(BehaviorTree);
 	}
 }

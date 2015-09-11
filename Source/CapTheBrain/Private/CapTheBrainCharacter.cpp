@@ -158,7 +158,7 @@ void ACapTheBrainCharacter::Tick(float deltaSeconds)
 	TickItem(deltaSeconds);
 }
 
-void ACapTheBrainCharacter::ReceiveHit(
+void ACapTheBrainCharacter::NotifyHit(
 class UPrimitiveComponent * MyComp,
 class AActor * Other,
 class UPrimitiveComponent * OtherComp,
