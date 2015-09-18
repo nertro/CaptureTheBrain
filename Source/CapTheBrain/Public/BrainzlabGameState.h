@@ -18,6 +18,8 @@ class CAPTHEBRAIN_API ABrainzlabGameState : public AGameState
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable, Category = GameInstance)
+		ASpawnPoint* GetTargetItem();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = GameMode)
 		TArray<ACapTheBrainCharacter*> characters;

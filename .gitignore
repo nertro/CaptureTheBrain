@@ -19,3 +19,11 @@ DerivedDataCache/Boot.ddc
 Binaries/Win64/UE4Editor-CapTheBrain-6176-Win64-DebugGame.pdb
 Binaries/Win64/UE4Editor-CapTheBrain-Win64-DebugGame.pdb
 CapTheBrain.v12.suo
+Binaries/Win64/CapTheBrain-Win64-Shipping.exp
+Binaries/Win64/CapTheBrain-Win64-Shipping.lib
+Binaries/Win64/CapTheBrain-Win64-Shipping.pdb
+Build/Receipts/CapTheBrain-Win64-DebugGame.target.xml
+Build/Receipts/CapTheBrain-Win64-Development.target.xml
+Build/WindowsNoEditor/FileOpenOrder/CookerOpenOrder.log
+Binaries/Win64/CapTheBrain-Win64-Shipping.exe
+Build/Receipts/CapTheBrain-Win64-Shipping.target.xml

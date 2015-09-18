@@ -14,9 +14,6 @@ class CAPTHEBRAIN_API UBrainzlapGameInstance : public UGameInstance
 {
 	GENERATED_UCLASS_BODY()
 
-	/*UFUNCTION(BlueprintCallable, Category = GameInstance)
-	ASpawnPoint* GetTargetItem();*/
-
 	UFUNCTION(BlueprintCallable, Category = GameInstance)
 	void CleanUp();
 

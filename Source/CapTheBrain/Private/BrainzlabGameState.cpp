@@ -15,3 +15,16 @@ void ABrainzlabGameState::EnableActorInScene(AActor* actor)
 	actor->SetActorEnableCollision(true);
 }
 
+ASpawnPoint* ABrainzlabGameState::GetTargetItem()
+{
+	for (int32 i = 0; i != itemSpawnPoints.Num(); i++)
+	{
+		if (itemSpawnPoints[i]->occupied)
+		{
+			return (itemSpawnPoints[i]);
+		}
+	}
+
+	return itemSpawnPoints[0];
+}
+
