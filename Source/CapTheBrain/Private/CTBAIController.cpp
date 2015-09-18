@@ -12,13 +12,25 @@ ACTBAIController::ACTBAIController(const class FObjectInitializer& PCIP)
 	bWantsPlayerState = true;
 }
 
-void ACTBAIController::BeginPlay()
-{
-	if (MyBlackboard && BehaviorTree)
-	{
-		//UseBlackboard(MyBlackboard);
-		UseBlackboard(MyBlackboard, Blackboard);
-		RunBehaviorTree(BehaviorTree);
-	}
-}
+//void ACTBAIController::BeginPlay()
+//{
+//	//if (MyBlackboard && BehaviorTree)
+//	//{
+//	//	//UseBlackboard(MyBlackboard);
+//	//	UseBlackboard(MyBlackboard, Blackboard);
+//	//	RunBehaviorTree(BehaviorTree);
+//	//}
+//}
+//
+//void ACTBAIController::OnPosses()
+//{
+//	Super::OnPossess(GetPawn());
+//
+//	if (MyBlackboard && BehaviorTree)
+//	{
+//		//UseBlackboard(MyBlackboard);
+//		UseBlackboard(MyBlackboard, Blackboard);
+//		RunBehaviorTree(BehaviorTree);
+//	}
+//}
 

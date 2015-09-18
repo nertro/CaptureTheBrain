@@ -15,11 +15,10 @@ class CAPTHEBRAIN_API ACTBAIController : public AAIController
 	GENERATED_UCLASS_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = CTBAIController)
-		UBlackboardData* MyBlackboard;
+	UBlackboardData* MyBlackboard;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = AIController)
 		UBehaviorTree* BehaviorTree;
 
 protected:
-	void BeginPlay() override;
 };
