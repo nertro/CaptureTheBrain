@@ -22,7 +22,7 @@ void ACharacterHUD::BeginPlay()
 	ItemImgs.Add(SwapImg);
 	ItemImgs.Add(ZappImg);
 
-	if (GetWorld()->GetAuthGameMode()->NumPlayers == 1)
+	if (Cast<UBrainzlapGameInstance>(GetGameInstance())->playerCount == 1)
 	{
 		UIImgScale = 0.2;
 		UISmallImgScale = 0.12;
@@ -32,6 +32,7 @@ void ACharacterHUD::BeginPlay()
 		UIPaddingBottomRight = 120;
 		UITextPaddingBottom = 120;
 		UITextPaddingBottomRight = 90;
+		UISyringeBottom = 100;
 	}
 
 	owner = Cast<ACapTheBrainCharacter>(GetOwningPlayerController()->GetPawn());
@@ -43,6 +44,7 @@ void ACharacterHUD::DrawBasicUIElements(float screenWidth, float screenHeight)
 	{
 		float offset = screenWidth / screenHeight;
 		Super::DrawTexture(SplatterImg, UIPaddingLeft, screenHeight - (SplatterImg->GetSizeY() * UIImgScale) - UIPaddingBottomRight, screenWidth, screenHeight, 0, 0, offset, 1, FLinearColor::White, BLEND_Translucent, UIImgScale, false, 0, FVector2D::ZeroVector);
+		Super::DrawTexture(SyringeImg, (screenWidth / 2) - ((SyringeImg->GetSizeX() * UIImgScale) / 2), screenHeight - (SyringeImg->GetSizeY() * UIImgScale) - UISyringeBottom, screenWidth, screenHeight, 0, 0, offset, 1, FLinearColor::White, BLEND_Translucent, 1, false, 0, FVector2D::ZeroVector);
 		Super::DrawTexture(BrainImg, screenWidth - (BrainImg->GetSizeX() * UIImgScale) - UIPaddingBottomRight, screenHeight - (BrainImg->GetSizeY() * UIImgScale) - UIPaddingBottomRight, screenWidth, screenHeight, 0, 0, offset, 1, FLinearColor::White, BLEND_Translucent, UIImgScale, false, 0, FVector2D::ZeroVector);
 		int score = 0;
 		if (Cast<ACapTheBrainCharacter>(GetOwningPawn()))
