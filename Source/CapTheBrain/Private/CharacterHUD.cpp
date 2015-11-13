@@ -44,7 +44,8 @@ void ACharacterHUD::DrawBasicUIElements(float screenWidth, float screenHeight)
 	{
 		float offset = screenWidth / screenHeight;
 		Super::DrawTexture(SplatterImg, UIPaddingLeft, screenHeight - (SplatterImg->GetSizeY() * UIImgScale) - UIPaddingBottomRight, screenWidth, screenHeight, 0, 0, offset, 1, FLinearColor::White, BLEND_Translucent, UIImgScale, false, 0, FVector2D::ZeroVector);
-		Super::DrawTexture(SyringeImg, (screenWidth / 2) - ((SyringeImg->GetSizeX() * UIImgScale) / 2), screenHeight - (SyringeImg->GetSizeY() * UIImgScale) - UISyringeBottom, screenWidth, screenHeight, 0, 0, offset, 1, FLinearColor::White, BLEND_Translucent, 1, false, 0, FVector2D::ZeroVector);
+		//Super::DrawTexture(SyringeImg, (screenWidth / 2) - ((SyringeImg->GetSizeX() * UIImgScale * 2.5 * UISyringeMultiLeft) / 2), screenHeight - (SyringeImg->GetSizeY() * UIImgScale * 2.5) + 10, screenWidth, screenHeight, 0, 0, offset, 1, FLinearColor::White, BLEND_Translucent, UIImgScale * 2.5, false, 0, FVector2D::ZeroVector);
+		//Super::DrawTexture(LiquidImg, (screenWidth / 2) - ((LiquidImg->GetSizeX() * UIImgScale * UILiquidMultiLeft) / 2), screenHeight - (LiquidImg->GetSizeY() * UIImgScale) - UILiquidBottom, screenWidth, screenHeight, UILiquidAmount, 0, offset, 1, FLinearColor::White, BLEND_Translucent, UIImgScale, false, 0, FVector2D::ZeroVector);
 		Super::DrawTexture(BrainImg, screenWidth - (BrainImg->GetSizeX() * UIImgScale) - UIPaddingBottomRight, screenHeight - (BrainImg->GetSizeY() * UIImgScale) - UIPaddingBottomRight, screenWidth, screenHeight, 0, 0, offset, 1, FLinearColor::White, BLEND_Translucent, UIImgScale, false, 0, FVector2D::ZeroVector);
 		int score = 0;
 		if (Cast<ACapTheBrainCharacter>(GetOwningPawn()))

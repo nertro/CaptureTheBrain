@@ -35,6 +35,9 @@ class CAPTHEBRAIN_API ACharacterHUD : public AHUD
 		UTexture2D* SyringeImg;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = GUI)
+		UTexture2D* LiquidImg;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = GUI)
 		float UIPaddingBottomRight;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = GUI)
@@ -45,6 +48,18 @@ class CAPTHEBRAIN_API ACharacterHUD : public AHUD
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = GUI)
 		float UISyringeBottom;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = GUI)
+		float UISyringeMultiLeft;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = GUI)
+		float UILiquidBottom;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = GUI)
+		float UILiquidMultiLeft;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = GUI)
+		float UILiquidAmount;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = GUI)
 		float UIImgScale;
