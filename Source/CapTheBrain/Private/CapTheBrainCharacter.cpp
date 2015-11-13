@@ -19,6 +19,9 @@
 ACapTheBrainCharacter::ACapTheBrainCharacter(const class FObjectInitializer& PCIP)
 	: Super(PCIP)
 {
+	buff = 100;
+	buffTimer = 0;
+	buffDelay = 2;
 	score = 0;
 	firstUpdate = true;
 	// Set size for collision capsule
@@ -54,6 +57,9 @@ void ACapTheBrainCharacter::SetupPlayerInputComponent(class UInputComponent* Inp
 	InputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 
 	InputComponent->BindAction("Fire", IE_Pressed, this, &ACapTheBrainCharacter::UseItem);
+
+	InputComponent->BindAction("Buff", IE_Pressed, this, &ACapTheBrainCharacter::UseBuff);
+	InputComponent->BindAction("Buff", IE_Released, this, &ACapTheBrainCharacter::ReleaseBuff);
 
 	InputComponent->BindAxis("MoveForward", this, &ACapTheBrainCharacter::MoveForward);
 	InputComponent->BindAxis("MoveRight", this, &ACapTheBrainCharacter::MoveRight);
@@ -156,6 +162,7 @@ void ACapTheBrainCharacter::Tick(float deltaSeconds)
 	}
 
 	TickItem(deltaSeconds);
+	TickBuff(deltaSeconds);
 }
 
 void ACapTheBrainCharacter::NotifyHit(
@@ -258,6 +265,52 @@ void ACapTheBrainCharacter::UseItem()
 void ACapTheBrainCharacter::TickItem(float deltaSeconds)
 {
 	ItemManager::GetInstance()->TickEffect(this, deltaSeconds);
+}
+
+void ACapTheBrainCharacter::UseBuff()
+{
+	if (!usesBuff && buff > 0)
+	{
+		CharacterMovement->MaxWalkSpeed *= 50;
+	}
+
+	usesBuff = true;
+}
+
+void ACapTheBrainCharacter::ReleaseBuff()
+{
+	if (buff > 0 && usesBuff)
+	{
+		CharacterMovement->MaxWalkSpeed /= 50;
+	}
+
+	usesBuff = false;
+}
+
+void ACapTheBrainCharacter::TickBuff(float deltaSeconds)
+{
+	if (myControllerHUD)
+	{
+		myControllerHUD->UILiquidAmount = (100 - buff) / 100;
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, FString::SanitizeFloat(myControllerHUD->UILiquidAmount));
+	}
+
+	if (usesBuff)
+	{
+		if (buff > 0)
+		{
+			buff-= 2;
+		}
+		else
+		{
+			CharacterMovement->MaxWalkSpeed /= 50;
+			usesBuff = false;
+		}
+	}
+	else if (buff < 100)
+	{
+		buff++;
+	}
 }
 
 void ACapTheBrainCharacter::SpawnArrow()

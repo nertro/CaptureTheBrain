@@ -57,7 +57,7 @@ class ACapTheBrainCharacter : public ACharacter
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Item)
 		bool hasItem;
 
-	bool isSlow, isFast, hasShield;
+	bool isSlow, isFast, hasShield, usesBuff;
 
 	UPROPERTY()
 		ACharacterHUD* myControllerHUD;
@@ -136,10 +136,20 @@ protected:
 
 	void CollectItem();
 
+	float buff;
+
+	float buffDelay, buffTimer;
+
 	UFUNCTION(BlueprintCallable, Category = Item)
 	void UseItem();
 
 	void TickItem(float deltaSeconds);
+
+	void UseBuff();
+
+	void ReleaseBuff();
+
+	void TickBuff(float deltaSeconds);
 
 	void SpawnArrow();
 
