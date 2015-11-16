@@ -292,7 +292,6 @@ void ACapTheBrainCharacter::TickBuff(float deltaSeconds)
 	if (myControllerHUD)
 	{
 		myControllerHUD->UILiquidAmount = (100 - buff) / 100;
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, FString::SanitizeFloat(myControllerHUD->UILiquidAmount));
 	}
 
 	if (usesBuff)
